@@ -1,17 +1,8 @@
-# infomaniak-cli
+# infomaniak
 
 CLI tool for managing your [Infomaniak](https://www.infomaniak.com) services from the terminal.
 
-Currently supports **DNS management** — more features planned.
-
-## Features
-
-- List all domains on your account
-- List, filter, and inspect DNS records
-- Create, update, and delete records (A, AAAA, CNAME, MX, TXT, SRV, NS, etc.)
-- Check if a record resolves correctly on Infomaniak's nameservers
-- Auto-detects your account ID
-- Simple `.env` or environment variable configuration
+Currently supports **DNS management** — more services planned.
 
 ## Install
 
@@ -65,39 +56,39 @@ cp .env.example .env
 
 ```bash
 # List all domains
-infomaniak-cli domains
+infomaniak dns domains
 
 # List DNS records for a domain
-infomaniak-cli records example.com
+infomaniak dns records example.com
 
 # Filter by record type
-infomaniak-cli records example.com --type CNAME
+infomaniak dns records example.com --type CNAME
 
 # Check if a record resolves correctly
-infomaniak-cli check example.com 12345
+infomaniak dns check example.com 12345
 
 # Create a new record
-infomaniak-cli add example.com A blog 93.184.216.34
-infomaniak-cli add example.com CNAME app target.example.net --ttl 300
+infomaniak dns add example.com A blog 93.184.216.34
+infomaniak dns add example.com CNAME app target.example.net --ttl 300
 
 # Update a record
-infomaniak-cli update example.com 12345 --target 93.184.216.35
-infomaniak-cli update example.com 12345 --ttl 300
+infomaniak dns update example.com 12345 --target 93.184.216.35
+infomaniak dns update example.com 12345 --ttl 300
 
 # Delete a record (with confirmation)
-infomaniak-cli delete example.com 12345
+infomaniak dns delete example.com 12345
 
 # Delete without confirmation
-infomaniak-cli delete example.com 12345 --yes
+infomaniak dns delete example.com 12345 --yes
 
 # Show version
-infomaniak-cli --version
+infomaniak --version
 ```
 
 ### Example output
 
 ```
-$ infomaniak-cli domains
+$ infomaniak dns domains
 
 Domains (2):
 
@@ -106,7 +97,7 @@ Domains (2):
   100001   example.com      yes     yes
   100002   example.org      yes     yes
 
-$ infomaniak-cli records example.com --type A
+$ infomaniak dns records example.com --type A
 
 DNS records for example.com (type=A) — 2 records:
 

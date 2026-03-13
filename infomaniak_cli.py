@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-infomaniak-cli — CLI tool for managing DNS records via the Infomaniak API.
+infomaniak — CLI for managing Infomaniak services.
 
 Usage:
-    infomaniak-cli domains                                   # List all domains
-    infomaniak-cli records <domain>                          # List DNS records
-    infomaniak-cli check <domain> <record_id>                # Check record health
-    infomaniak-cli add <domain> <type> <source> <target>     # Create record
-    infomaniak-cli update <domain> <record_id> --target X    # Update record
-    infomaniak-cli delete <domain> <record_id>               # Delete record
+    infomaniak dns domains                                   # List all domains
+    infomaniak dns records <domain>                          # List DNS records
+    infomaniak dns check <domain> <record_id>                # Check record health
+    infomaniak dns add <domain> <type> <source> <target>     # Create record
+    infomaniak dns update <domain> <record_id> --target X    # Update record
+    infomaniak dns delete <domain> <record_id>               # Delete record
 
 Configuration:
     Set INFOMANIAK_API_TOKEN as an environment variable or in a .env file.
@@ -29,7 +29,7 @@ except ImportError:
     sys.exit(1)
 
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 API_BASE = "https://api.infomaniak.com"
 
 
@@ -61,7 +61,7 @@ def get_token():
     print("Setup:")
     print("  1. Go to https://manager.infomaniak.com/v3/infomaniak-api")
     print("  2. Create a token with scopes: domain:read, dns:read, dns:write")
-    print("  3. Copy .env.example to .env and paste your token")
+    print("  3. Set INFOMANIAK_API_TOKEN in your environment or .env file")
     sys.exit(1)
 
 
@@ -149,10 +149,10 @@ def print_table(headers, rows):
         print(f"  {line}")
 
 
-# ── Commands ──────────────────────────────────────────────────────────────────
+# ── DNS Commands ──────────────────────────────────────────────────────────────
 
 
-def cmd_domains(args):
+def cmd_dns_domains(args):
     """List all domains on the account."""
     token = get_token()
     account_id = get_account_id(token)
@@ -178,7 +178,7 @@ def cmd_domains(args):
     print_table(headers, rows)
 
 
-def cmd_records(args):
+def cmd_dns_records(args):
     """List DNS records for a domain."""
     token = get_token()
     domain = args.domain
@@ -218,7 +218,7 @@ def cmd_records(args):
     print_table(headers, rows)
 
 
-def cmd_check(args):
+def cmd_dns_check(args):
     """Check if a DNS record resolves correctly."""
     token = get_token()
     data = api_request("GET", f"/2/zones/{args.domain}/records/{args.record_id}/check", token)
@@ -227,7 +227,7 @@ def cmd_check(args):
     print(json.dumps(result, indent=2))
 
 
-def cmd_add(args):
+def cmd_dns_add(args):
     """Create a new DNS record."""
     token = get_token()
 
@@ -250,7 +250,7 @@ def cmd_add(args):
     print(f"  Created record ID: {record.get('id')}")
 
 
-def cmd_update(args):
+def cmd_dns_update(args):
     """Update an existing DNS record."""
     token = get_token()
 
@@ -269,7 +269,7 @@ def cmd_update(args):
     print(f"  Record {args.record_id} updated.")
 
 
-def cmd_delete(args):
+def cmd_dns_delete(args):
     """Delete a DNS record."""
     token = get_token()
 
@@ -299,54 +299,67 @@ def main():
     load_env_file()
 
     parser = argparse.ArgumentParser(
-        prog="infomaniak-cli",
+        prog="infomaniak",
         description="Manage Infomaniak services from the command line.",
-        epilog="Token setup: https://manager.infomaniak.com/v3/infomaniak-api",
+        epilog="Docs: https://github.com/peaktwilight/infomaniak-cli",
     )
     parser.add_argument("--version", "-V", action="version", version=f"%(prog)s {__version__}")
-    subparsers = parser.add_subparsers(dest="command", required=True)
+    subparsers = parser.add_subparsers(dest="service", help="Service to manage")
 
-    # domains
-    sp_domains = subparsers.add_parser("domains", help="List all domains on your account")
-    sp_domains.set_defaults(func=cmd_domains)
+    # ── dns ────────────────────────────────────────────────────────────────
+    dns_parser = subparsers.add_parser("dns", help="Manage DNS records and domains")
+    dns_sub = dns_parser.add_subparsers(dest="command")
 
-    # records
-    sp_records = subparsers.add_parser("records", help="List DNS records for a domain")
-    sp_records.add_argument("domain", help="Domain name (e.g. example.com)")
-    sp_records.add_argument("--type", "-t", help="Filter by record type (A, AAAA, CNAME, MX, TXT, etc.)")
-    sp_records.set_defaults(func=cmd_records)
+    # dns domains
+    sp = dns_sub.add_parser("domains", help="List all domains on your account")
+    sp.set_defaults(func=cmd_dns_domains)
 
-    # check
-    sp_check = subparsers.add_parser("check", help="Check if a DNS record resolves correctly")
-    sp_check.add_argument("domain", help="Domain name")
-    sp_check.add_argument("record_id", help="Record ID to check")
-    sp_check.set_defaults(func=cmd_check)
+    # dns records
+    sp = dns_sub.add_parser("records", help="List DNS records for a domain")
+    sp.add_argument("domain", help="Domain name (e.g. example.com)")
+    sp.add_argument("--type", "-t", help="Filter by record type (A, AAAA, CNAME, MX, TXT, etc.)")
+    sp.set_defaults(func=cmd_dns_records)
 
-    # add
-    sp_add = subparsers.add_parser("add", help="Create a DNS record")
-    sp_add.add_argument("domain", help="Domain name (e.g. example.com)")
-    sp_add.add_argument("type", help="Record type (A, AAAA, CNAME, MX, TXT, SRV, NS)")
-    sp_add.add_argument("source", help="Record name (e.g. 'www', 'api', '@' for root)")
-    sp_add.add_argument("target", help="Record value (e.g. IP address, hostname)")
-    sp_add.add_argument("--ttl", type=int, default=3600, help="TTL in seconds (default: 3600)")
-    sp_add.set_defaults(func=cmd_add)
+    # dns check
+    sp = dns_sub.add_parser("check", help="Check if a DNS record resolves correctly")
+    sp.add_argument("domain", help="Domain name")
+    sp.add_argument("record_id", help="Record ID to check")
+    sp.set_defaults(func=cmd_dns_check)
 
-    # update
-    sp_update = subparsers.add_parser("update", help="Update a DNS record")
-    sp_update.add_argument("domain", help="Domain name")
-    sp_update.add_argument("record_id", help="Record ID to update")
-    sp_update.add_argument("--target", help="New target value")
-    sp_update.add_argument("--ttl", type=int, help="New TTL in seconds")
-    sp_update.set_defaults(func=cmd_update)
+    # dns add
+    sp = dns_sub.add_parser("add", help="Create a DNS record")
+    sp.add_argument("domain", help="Domain name (e.g. example.com)")
+    sp.add_argument("type", help="Record type (A, AAAA, CNAME, MX, TXT, SRV, NS)")
+    sp.add_argument("source", help="Record name (e.g. 'www', 'api', '@' for root)")
+    sp.add_argument("target", help="Record value (e.g. IP address, hostname)")
+    sp.add_argument("--ttl", type=int, default=3600, help="TTL in seconds (default: 3600)")
+    sp.set_defaults(func=cmd_dns_add)
 
-    # delete
-    sp_delete = subparsers.add_parser("delete", help="Delete a DNS record")
-    sp_delete.add_argument("domain", help="Domain name")
-    sp_delete.add_argument("record_id", help="Record ID to delete")
-    sp_delete.add_argument("--yes", "-y", action="store_true", help="Skip confirmation")
-    sp_delete.set_defaults(func=cmd_delete)
+    # dns update
+    sp = dns_sub.add_parser("update", help="Update a DNS record")
+    sp.add_argument("domain", help="Domain name")
+    sp.add_argument("record_id", help="Record ID to update")
+    sp.add_argument("--target", help="New target value")
+    sp.add_argument("--ttl", type=int, help="New TTL in seconds")
+    sp.set_defaults(func=cmd_dns_update)
+
+    # dns delete
+    sp = dns_sub.add_parser("delete", help="Delete a DNS record")
+    sp.add_argument("domain", help="Domain name")
+    sp.add_argument("record_id", help="Record ID to delete")
+    sp.add_argument("--yes", "-y", action="store_true", help="Skip confirmation")
+    sp.set_defaults(func=cmd_dns_delete)
 
     args = parser.parse_args()
+
+    if not args.service:
+        parser.print_help()
+        sys.exit(1)
+
+    if args.service == "dns" and not args.command:
+        dns_parser.print_help()
+        sys.exit(1)
+
     args.func(args)
 
 

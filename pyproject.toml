@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "infomaniak"
-version = "0.1.0"
+version = "0.2.0"
 description = "CLI tool for managing Infomaniak services — DNS records, domains, and more."
 readme = "README.md"
 license = "MIT"
@@ -40,7 +40,7 @@ Repository = "https://github.com/peaktwilight/infomaniak-cli"
 Issues = "https://github.com/peaktwilight/infomaniak-cli/issues"
 
 [project.scripts]
-infomaniak-cli = "infomaniak_cli:main"
+infomaniak = "infomaniak_cli:main"
 
 [tool.setuptools]
 py-modules = ["infomaniak_cli"]
