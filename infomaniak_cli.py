@@ -12,7 +12,7 @@ Usage:
     infomaniak dns delete <domain> <record_id>               # Delete record
     infomaniak dns export <domain>                           # Export records as JSON
     infomaniak dns import <domain> <file>                    # Import records from JSON
-    infomaniak products [--service <name>]                   # List all products
+    infomaniak products [--type <name>]                      # List all products
     infomaniak mail list                                     # List mail hostings
     infomaniak status                                        # Service status overview
 
