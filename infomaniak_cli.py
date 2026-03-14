@@ -10,6 +10,11 @@ Usage:
     infomaniak dns add <domain> <type> <source> <target>     # Create record
     infomaniak dns update <domain> <record_id> --target X    # Update record
     infomaniak dns delete <domain> <record_id>               # Delete record
+    infomaniak dns export <domain>                           # Export records as JSON
+    infomaniak dns import <domain> <file>                    # Import records from JSON
+    infomaniak products [--service <name>]                   # List all products
+    infomaniak mail list                                     # List mail hostings
+    infomaniak status                                        # Service status overview
 
 Configuration:
     Token lookup order: env var > config file > .env file
@@ -19,6 +24,8 @@ Configuration:
 
 import argparse
 import configparser
+import csv
+import io
 import json
 import os
 import re
@@ -33,7 +40,7 @@ except ImportError:
     sys.exit(1)
 
 
-__version__ = "0.3.1"
+__version__ = "0.4.0"
 API_BASE = "https://api.infomaniak.com"
 CONFIG_DIR = Path.home() / ".config" / "infomaniak"
 CONFIG_FILE = CONFIG_DIR / "config.ini"
@@ -64,6 +71,15 @@ def _visible_len(s):
 
 def _ljust(s, width):
     return str(s) + " " * (width - _visible_len(str(s)))
+
+
+# ── JSON output helper ───────────────────────────────────────────────────────
+
+
+def output_json(data):
+    """Print data as formatted JSON and exit."""
+    print(json.dumps(data, indent=2, ensure_ascii=False))
+    sys.exit(0)
 
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -189,6 +205,26 @@ def api_request(method, path, token, params=None, json_data=None):
     return data
 
 
+def api_request_paginated(path, token, params=None):
+    """Fetch all pages from a paginated Infomaniak API endpoint."""
+    if params is None:
+        params = {}
+    params["items_per_page"] = 50
+    params["page"] = 1
+
+    all_data = []
+    while True:
+        data = api_request("GET", path, token, params=params)
+        items = data.get("data", [])
+        all_data.extend(items)
+        total_pages = data.get("pages", 1)
+        if params["page"] >= total_pages:
+            break
+        params["page"] += 1
+
+    return all_data
+
+
 # ── Table formatting ──────────────────────────────────────────────────────────
 
 
@@ -304,6 +340,9 @@ def cmd_dns_domains(args):
     data = api_request("GET", f"/1/domain/account/{account_id}", token)
     domains = data.get("data", [])
 
+    if getattr(args, "json", False):
+        output_json(domains)
+
     if not domains:
         print(f"  {dim('No domains found.')}")
         return
@@ -333,13 +372,16 @@ def cmd_dns_records(args):
     data = api_request("GET", f"/2/zones/{domain}/records", token)
     records = data.get("data", [])
 
-    if not records:
-        print(f"  {dim(f'No DNS records found for {domain}.')}")
-        return
-
     if args.type:
         filter_type = args.type.upper()
         records = [r for r in records if r.get("type") == filter_type]
+
+    if getattr(args, "json", False):
+        output_json(records)
+
+    if not records:
+        print(f"  {dim(f'No DNS records found for {domain}.')}")
+        return
 
     records.sort(key=lambda r: (r.get("type", ""), r.get("source", "")))
 
@@ -372,6 +414,9 @@ def cmd_dns_check(args):
     data = api_request("GET", f"/2/zones/{args.domain}/records/{args.record_id}/check", token)
     result = data.get("data", {})
 
+    if getattr(args, "json", False):
+        output_json(result)
+
     print(f"\n  {bold(f'DNS check for record {args.record_id} in {args.domain}')}\n")
     print(json.dumps(result, indent=2))
     print()
@@ -397,6 +442,10 @@ def cmd_dns_add(args):
     data = api_request("POST", f"/2/zones/{args.domain}/records", token, json_data=body)
 
     record = data.get("data", {})
+
+    if getattr(args, "json", False):
+        output_json(record)
+
     print(f"  {green('✓')} Created record ID: {bold(str(record.get('id')))}\n")
 
 
@@ -443,6 +492,285 @@ def cmd_dns_delete(args):
     print(f"  {green('✓')} Record {bold(str(args.record_id))} deleted from {args.domain}.\n")
 
 
+def cmd_dns_export(args):
+    """Export all DNS records for a domain."""
+    token = get_token()
+    domain = args.domain
+
+    data = api_request("GET", f"/2/zones/{domain}/records", token)
+    records = data.get("data", [])
+
+    if not records:
+        print(f"  {dim(f'No DNS records found for {domain}.')}")
+        return
+
+    export_data = []
+    for r in records:
+        source = r.get("source", "@")
+        if source == ".":
+            source = "@"
+        export_data.append({
+            "type": r.get("type"),
+            "source": source,
+            "target": r.get("target"),
+            "ttl": r.get("ttl"),
+            "priority": r.get("priority"),
+        })
+
+    if args.format == "csv":
+        output = io.StringIO()
+        writer = csv.DictWriter(output, fieldnames=["type", "source", "target", "ttl", "priority"])
+        writer.writeheader()
+        writer.writerows(export_data)
+        content = output.getvalue()
+    else:
+        content = json.dumps(export_data, indent=2, ensure_ascii=False)
+
+    if args.output:
+        outpath = Path(args.output)
+        outpath.write_text(content)
+        print(f"\n  {green('✓')} Exported {len(export_data)} records to {bold(str(outpath))}\n")
+    else:
+        print(content)
+
+
+def cmd_dns_import(args):
+    """Import DNS records from a JSON or CSV file."""
+    token = get_token()
+    domain = args.domain
+    filepath = Path(args.file)
+
+    if not filepath.exists():
+        print(f"  {red('✗')} File not found: {filepath}")
+        sys.exit(1)
+
+    content = filepath.read_text()
+
+    # Detect format
+    if filepath.suffix == ".csv":
+        reader = csv.DictReader(io.StringIO(content))
+        records = list(reader)
+    else:
+        try:
+            records = json.loads(content)
+        except json.JSONDecodeError as e:
+            print(f"  {red('✗')} Invalid JSON: {e}")
+            sys.exit(1)
+
+    if not records:
+        print(f"  {dim('No records found in file.')}")
+        return
+
+    print(f"\n  Importing {bold(str(len(records)))} records into {bold(domain)}:\n")
+
+    # Preview
+    for r in records[:10]:
+        rtype = r.get("type", "?")
+        source = r.get("source", "@")
+        target = r.get("target", "?")
+        print(f"    {cyan(rtype):>8}  {source} → {target}")
+    if len(records) > 10:
+        print(f"    {dim(f'... and {len(records) - 10} more')}")
+
+    if not args.yes:
+        print()
+        confirm = input(f"  Proceed? [y/N] ")
+        if confirm.lower() not in ("y", "yes"):
+            print(f"  {dim('Aborted.')}")
+            return
+
+    print()
+    created = 0
+    failed = 0
+    for r in records:
+        source = r.get("source", "")
+        if source == "@":
+            source = ""
+
+        body = {
+            "type": r.get("type", "A").upper(),
+            "source": source,
+            "target": r.get("target", ""),
+            "ttl": int(r.get("ttl", 3600)),
+        }
+        priority = r.get("priority")
+        if priority is not None and priority != "":
+            body["priority"] = int(priority)
+
+        try:
+            api_request("POST", f"/2/zones/{domain}/records", token, json_data=body)
+            print(f"  {green('✓')} {body['type']} {r.get('source', '@')} → {body['target']}")
+            created += 1
+        except SystemExit:
+            print(f"  {red('✗')} {body['type']} {r.get('source', '@')} → {body['target']}")
+            failed += 1
+
+    print(f"\n  Done: {green(str(created))} created, {red(str(failed)) if failed else dim('0')} failed.\n")
+
+
+# ── Products Command ─────────────────────────────────────────────────────────
+
+
+def cmd_products(args):
+    """List all products on the account."""
+    token = get_token()
+    account_id = get_account_id(token)
+
+    params = {"account_id": account_id}
+    if args.service_filter:
+        params["service_name"] = args.service_filter
+
+    products = api_request_paginated("/1/products", token, params=params)
+
+    if getattr(args, "json", False):
+        output_json(products)
+
+    if not products:
+        print(f"  {dim('No products found.')}")
+        return
+
+    headers = ["ID", "Service", "Name", "Status"]
+    rows = []
+    for p in products:
+        # Build status indicator
+        if p.get("has_maintenance"):
+            status = yellow("maintenance")
+        elif p.get("is_locked"):
+            status = red("locked")
+        elif p.get("has_operation_in_progress"):
+            status = yellow("in progress")
+        else:
+            status = green("active")
+
+        rows.append([
+            p.get("id", "?"),
+            cyan(p.get("service_name", "?")),
+            p.get("customer_name", p.get("internal_name", "?")),
+            status,
+        ])
+
+    service_note = f" type={args.service_filter}" if args.service_filter else ""
+    print(f"\n  {bold(f'Products ({len(rows)})')}{dim(service_note)}\n")
+    print_table(headers, rows)
+    print()
+
+
+# ── Mail Commands ─────────────────────────────────────────────────────────────
+
+
+def cmd_mail_list(args):
+    """List mail hosting services."""
+    token = get_token()
+    account_id = get_account_id(token)
+
+    products = api_request_paginated(
+        "/1/products", token,
+        params={"account_id": account_id, "service_name": "email_hosting"},
+    )
+
+    if getattr(args, "json", False):
+        output_json(products)
+
+    if not products:
+        print(f"  {dim('No mail hostings found.')}")
+        return
+
+    headers = ["ID", "Domain", "Status"]
+    rows = []
+    for p in products:
+        if p.get("has_maintenance"):
+            status = yellow("maintenance")
+        elif p.get("is_locked"):
+            status = red("locked")
+        elif p.get("has_operation_in_progress"):
+            status = yellow("in progress")
+        else:
+            status = green("active")
+
+        rows.append([
+            p.get("id", "?"),
+            p.get("customer_name", "?"),
+            status,
+        ])
+
+    print(f"\n  {bold(f'Mail Hostings ({len(rows)})')}\n")
+    print_table(headers, rows)
+    print()
+
+
+# ── Status Command ────────────────────────────────────────────────────────────
+
+
+def cmd_status(args):
+    """Show service status overview."""
+    token = get_token()
+    account_id = get_account_id(token)
+
+    products = api_request_paginated(
+        "/1/products", token,
+        params={"account_id": account_id},
+    )
+
+    if getattr(args, "json", False):
+        output_json(products)
+
+    if not products:
+        print(f"  {dim('No products found.')}")
+        return
+
+    # Group by service
+    services = {}
+    for p in products:
+        svc = p.get("service_name", "unknown")
+        if svc not in services:
+            services[svc] = {"total": 0, "active": 0, "issues": []}
+        services[svc]["total"] += 1
+
+        name = p.get("customer_name", p.get("internal_name", "?"))
+        if p.get("has_maintenance"):
+            services[svc]["issues"].append((name, "maintenance"))
+        elif p.get("is_locked"):
+            services[svc]["issues"].append((name, "locked"))
+        elif p.get("has_operation_in_progress"):
+            services[svc]["issues"].append((name, "in progress"))
+        else:
+            services[svc]["active"] += 1
+
+    print(f"\n  {bold(f'Service Status — {len(products)} products')}\n")
+
+    headers = ["Service", "Total", "Active", "Issues"]
+    rows = []
+    for svc, info in sorted(services.items()):
+        issue_count = len(info["issues"])
+        if issue_count == 0:
+            issues = green("none")
+        else:
+            issues = yellow(str(issue_count))
+        rows.append([
+            cyan(svc),
+            info["total"],
+            green(str(info["active"])),
+            issues,
+        ])
+    print_table(headers, rows)
+
+    # Show details for any issues
+    all_issues = []
+    for svc, info in sorted(services.items()):
+        for name, issue_type in info["issues"]:
+            all_issues.append((svc, name, issue_type))
+
+    if all_issues:
+        print(f"\n  {bold('Issues:')}\n")
+        for svc, name, issue_type in all_issues:
+            icon = yellow("⚠") if issue_type == "maintenance" else red("✗")
+            print(f"    {icon} {cyan(svc)} / {name}: {yellow(issue_type)}")
+    else:
+        print(f"\n  {green('✓')} All services operational.\n")
+
+    print()
+
+
 # ── CLI setup ─────────────────────────────────────────────────────────────────
 
 
@@ -467,18 +795,21 @@ def main():
 
     # dns domains
     sp = dns_sub.add_parser("domains", help="List all domains on your account")
+    sp.add_argument("--json", action="store_true", help="Output as JSON")
     sp.set_defaults(func=cmd_dns_domains)
 
     # dns records
     sp = dns_sub.add_parser("records", help="List DNS records for a domain")
     sp.add_argument("domain", help="Domain name (e.g. example.com)")
     sp.add_argument("--type", "-t", help="Filter by record type (A, AAAA, CNAME, MX, TXT, etc.)")
+    sp.add_argument("--json", action="store_true", help="Output as JSON")
     sp.set_defaults(func=cmd_dns_records)
 
     # dns check
     sp = dns_sub.add_parser("check", help="Check if a DNS record resolves correctly")
     sp.add_argument("domain", help="Domain name")
     sp.add_argument("record_id", help="Record ID to check")
+    sp.add_argument("--json", action="store_true", help="Output as JSON")
     sp.set_defaults(func=cmd_dns_check)
 
     # dns add
@@ -488,6 +819,7 @@ def main():
     sp.add_argument("source", help="Record name (e.g. 'www', 'api', '@' for root)")
     sp.add_argument("target", help="Record value (e.g. IP address, hostname)")
     sp.add_argument("--ttl", type=int, default=3600, help="TTL in seconds (default: 3600)")
+    sp.add_argument("--json", action="store_true", help="Output as JSON")
     sp.set_defaults(func=cmd_dns_add)
 
     # dns update
@@ -505,14 +837,51 @@ def main():
     sp.add_argument("--yes", "-y", action="store_true", help="Skip confirmation")
     sp.set_defaults(func=cmd_dns_delete)
 
+    # dns export
+    sp = dns_sub.add_parser("export", help="Export DNS records as JSON or CSV")
+    sp.add_argument("domain", help="Domain name")
+    sp.add_argument("--format", "-f", choices=["json", "csv"], default="json", help="Output format (default: json)")
+    sp.add_argument("--output", "-o", help="Output file path (default: stdout)")
+    sp.set_defaults(func=cmd_dns_export)
+
+    # dns import
+    sp = dns_sub.add_parser("import", help="Import DNS records from JSON or CSV file")
+    sp.add_argument("domain", help="Domain name")
+    sp.add_argument("file", help="Path to JSON or CSV file")
+    sp.add_argument("--yes", "-y", action="store_true", help="Skip confirmation")
+    sp.set_defaults(func=cmd_dns_import)
+
+    # ── products ───────────────────────────────────────────────────────────
+    sp_products = subparsers.add_parser("products", help="List all products on your account")
+    sp_products.add_argument("--type", "-t", dest="service_filter", help="Filter by service type (e.g. domain, email_hosting)")
+    sp_products.add_argument("--json", action="store_true", help="Output as JSON")
+    sp_products.set_defaults(func=cmd_products)
+
+    # ── mail ───────────────────────────────────────────────────────────────
+    mail_parser = subparsers.add_parser("mail", help="Manage mail services")
+    mail_sub = mail_parser.add_subparsers(dest="command")
+
+    sp = mail_sub.add_parser("list", help="List mail hosting services")
+    sp.add_argument("--json", action="store_true", help="Output as JSON")
+    sp.set_defaults(func=cmd_mail_list)
+
+    # ── status ─────────────────────────────────────────────────────────────
+    sp_status = subparsers.add_parser("status", help="Service status overview")
+    sp_status.add_argument("--json", action="store_true", help="Output as JSON")
+    sp_status.set_defaults(func=cmd_status)
+
     args = parser.parse_args()
 
     if not args.service:
         parser.print_help()
         sys.exit(1)
 
-    if args.service == "dns" and not args.command:
+    if args.service == "dns" and not getattr(args, "command", None):
         dns_parser.print_help()
+        sys.exit(1)
+
+    if args.service == "mail" and not getattr(args, "command", None):
+        mail_parser.print_help()
         sys.exit(1)
 
     args.func(args)

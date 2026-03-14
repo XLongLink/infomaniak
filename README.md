@@ -6,7 +6,7 @@
 
 CLI tool for managing your [Infomaniak](https://www.infomaniak.com) services from the terminal.
 
-Currently supports **DNS management** — more services planned.
+Supports **DNS management**, **mail hosting**, **product listing**, **service status**, and more.
 
 ## Install
 
@@ -61,6 +61,8 @@ Token lookup order: environment variable → config file → `.env` file.
 
 ## Usage
 
+### DNS
+
 ```bash
 # List all domains
 infomaniak dns domains
@@ -80,16 +82,53 @@ infomaniak dns add example.com CNAME app target.example.net --ttl 300
 
 # Update a record
 infomaniak dns update example.com 12345 --target 93.184.216.35
-infomaniak dns update example.com 12345 --ttl 300
 
 # Delete a record (with confirmation)
 infomaniak dns delete example.com 12345
 
-# Delete without confirmation
-infomaniak dns delete example.com 12345 --yes
+# Export records as JSON
+infomaniak dns export example.com
+infomaniak dns export example.com --format csv --output records.csv
 
-# Show version
-infomaniak --version
+# Import records from a file
+infomaniak dns import example.com records.json
+infomaniak dns import example.com records.csv --yes
+```
+
+### Products
+
+```bash
+# List all products on your account
+infomaniak products
+
+# Filter by service type
+infomaniak products --type domain
+infomaniak products --type email_hosting
+```
+
+### Mail
+
+```bash
+# List all mail hosting services
+infomaniak mail list
+```
+
+### Status
+
+```bash
+# Service status overview — shows all products grouped by service
+infomaniak status
+```
+
+### JSON output
+
+Add `--json` to any command for machine-readable output:
+
+```bash
+infomaniak dns domains --json
+infomaniak dns records example.com --json
+infomaniak products --json
+infomaniak status --json
 ```
 
 ### Example output
@@ -104,14 +143,17 @@ $ infomaniak dns domains
   100001   example.com      yes     yes
   100002   example.org      yes     yes
 
-$ infomaniak dns records example.com --type A
+$ infomaniak status
 
-  DNS records for example.com — 2 records
+  Service Status — 5 products
 
-  ID      Type  Name  Target          TTL
-  ──────  ────  ────  ──────────────  ────
-  200001  A     @     93.184.216.34   3600
-  200002  A     www   93.184.216.34   3600
+  Service          Total  Active  Issues
+  ───────────────  ─────  ──────  ──────
+  domain           2      2       none
+  email_hosting    2      2       none
+  drive            1      1       none
+
+  ✓ All services operational.
 ```
 
 ## Why not OAuth?
@@ -124,6 +166,7 @@ Built on the [Infomaniak API](https://developer.infomaniak.com/docs/api):
 
 | Endpoint | Description |
 |---|---|
+| `GET /1/products` | List all products |
 | `GET /1/domain/account/{id}` | List domains |
 | `GET /2/zones/{zone}/records` | List DNS records |
 | `POST /2/zones/{zone}/records` | Create record |
