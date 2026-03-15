@@ -4,10 +4,13 @@ import argparse
 import sys
 
 from infomaniak_cli import __version__
+from infomaniak_cli.commands.config import cmd_config_show
 from infomaniak_cli.commands.dns import (
     cmd_dns_add,
     cmd_dns_check,
+    cmd_dns_clone,
     cmd_dns_delete,
+    cmd_dns_diff,
     cmd_dns_domains,
     cmd_dns_export,
     cmd_dns_import,
@@ -99,6 +102,27 @@ def main():
     sp.add_argument("--yes", "-y", action="store_true", help="Skip confirmation")
     sp.set_defaults(func=cmd_dns_import)
 
+    # dns diff
+    sp = dns_sub.add_parser("diff", help="Compare live DNS records against a local file")
+    sp.add_argument("domain", help="Domain name")
+    sp.add_argument("file", help="Path to JSON or CSV file to compare against")
+    sp.add_argument("--json", action="store_true", help="Output as JSON")
+    sp.set_defaults(func=cmd_dns_diff)
+
+    # dns clone
+    sp = dns_sub.add_parser("clone", help="Clone DNS records from one domain to another")
+    sp.add_argument("source_domain", help="Source domain to copy from")
+    sp.add_argument("target_domain", help="Target domain to copy to")
+    sp.add_argument("--yes", "-y", action="store_true", help="Skip confirmation")
+    sp.set_defaults(func=cmd_dns_clone)
+
+    # ── config ─────────────────────────────────────────────────────────────
+    config_parser = subparsers.add_parser("config", help="View configuration")
+    config_sub = config_parser.add_subparsers(dest="command")
+
+    sp = config_sub.add_parser("show", help="Show current configuration")
+    sp.set_defaults(func=cmd_config_show)
+
     # ── products ───────────────────────────────────────────────────────────
     sp_products = subparsers.add_parser("products", help="List all products on your account")
     sp_products.add_argument("--type", "-t", dest="service_filter", help="Filter by service type (e.g. domain, email_hosting)")
@@ -130,6 +154,10 @@ def main():
 
     if args.service == "mail" and not getattr(args, "command", None):
         mail_parser.print_help()
+        sys.exit(1)
+
+    if args.service == "config" and not getattr(args, "command", None):
+        config_parser.print_help()
         sys.exit(1)
 
     args.func(args)

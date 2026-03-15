@@ -11,9 +11,12 @@ Usage:
     infomaniak dns delete <domain> <record_id>               # Delete record
     infomaniak dns export <domain>                           # Export records as JSON
     infomaniak dns import <domain> <file>                    # Import records from JSON
+    infomaniak dns diff <domain> <file>                       # Compare live vs file
+    infomaniak dns clone <source> <target>                   # Clone records between domains
     infomaniak products [--type <name>]                      # List all products
     infomaniak mail list                                     # List mail hostings
     infomaniak status                                        # Service status overview
+    infomaniak config show                                   # Show configuration
 """
 
 __version__ = "0.5.0"

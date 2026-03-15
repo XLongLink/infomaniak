@@ -7,6 +7,8 @@ from unittest.mock import patch
 
 from infomaniak_cli.commands.dns import (
     cmd_dns_add,
+    cmd_dns_clone,
+    cmd_dns_diff,
     cmd_dns_domains,
     cmd_dns_export,
     cmd_dns_import,
@@ -171,3 +173,103 @@ class TestDnsImport:
     def test_missing_file_exits(self, fake_args, mock_token):
         with pytest.raises(SystemExit):
             cmd_dns_import(fake_args(domain="example.com", file="/nonexistent.json", yes=True))
+
+
+class TestDnsDiff:
+    def test_no_differences(self, tmp_path, capsys, mock_token, mock_api, fake_args, monkeypatch):
+        from infomaniak_cli import output
+        monkeypatch.setattr(output, "_COLOR", False)
+        _, response = mock_api
+        records = [
+            {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600, "priority": None},
+            {"type": "CNAME", "source": "app", "target": "cdn.example.com", "ttl": 300, "priority": None},
+        ]
+        response.json.return_value = {"result": "success", "data": records}
+
+        diff_file = tmp_path / "records.json"
+        diff_file.write_text(json.dumps(records))
+
+        cmd_dns_diff(fake_args(domain="example.com", file=str(diff_file)))
+        captured = capsys.readouterr()
+        assert "No differences" in captured.out
+
+    def test_shows_differences(self, tmp_path, capsys, mock_token, mock_api, fake_args, monkeypatch):
+        from infomaniak_cli import output
+        monkeypatch.setattr(output, "_COLOR", False)
+        _, response = mock_api
+        live_records = [
+            {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
+            {"type": "A", "source": "api", "target": "5.6.7.8", "ttl": 3600},
+        ]
+        file_records = [
+            {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
+            {"type": "A", "source": "new", "target": "9.9.9.9", "ttl": 300},
+        ]
+        response.json.return_value = {"result": "success", "data": live_records}
+
+        diff_file = tmp_path / "records.json"
+        diff_file.write_text(json.dumps(file_records))
+
+        cmd_dns_diff(fake_args(domain="example.com", file=str(diff_file)))
+        captured = capsys.readouterr()
+        assert "In file but not live" in captured.out
+        assert "Live but not in file" in captured.out
+        assert "9.9.9.9" in captured.out
+        assert "5.6.7.8" in captured.out
+
+    def test_missing_file_exits(self, fake_args, mock_token):
+        with pytest.raises(SystemExit):
+            cmd_dns_diff(fake_args(domain="example.com", file="/nonexistent.json"))
+
+    def test_json_output(self, tmp_path, capsys, mock_token, mock_api, fake_args):
+        _, response = mock_api
+        response.json.return_value = {
+            "result": "success",
+            "data": [{"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600}],
+        }
+        diff_file = tmp_path / "records.json"
+        diff_file.write_text('[{"type":"A","source":"new","target":"9.9.9.9","ttl":300}]')
+
+        with pytest.raises(SystemExit) as exc:
+            cmd_dns_diff(fake_args(domain="example.com", file=str(diff_file), json=True))
+        assert exc.value.code == 0
+        data = json.loads(capsys.readouterr().out)
+        assert "only_in_file" in data
+        assert "only_live" in data
+
+
+class TestDnsClone:
+    def test_clones_records(self, capsys, mock_token, mock_api, fake_args):
+        mock_req, response = mock_api
+        source_records = [
+            {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
+            {"type": "NS", "source": ".", "target": "ns1.example.com", "ttl": 3600},  # should be skipped
+            {"type": "CNAME", "source": "app", "target": "cdn.example.com", "ttl": 300},
+        ]
+        # First call returns source records, subsequent calls are POST responses
+        response.json.side_effect = [
+            {"result": "success", "data": source_records},
+            {"result": "success", "data": {"id": 1}},
+            {"result": "success", "data": {"id": 2}},
+        ]
+
+        cmd_dns_clone(fake_args(source_domain="src.com", target_domain="dst.com", yes=True))
+        captured = capsys.readouterr()
+        assert "2 created" in captured.out
+        # NS records should not appear in the cloned records list (only in the skip message)
+        lines = [l.strip() for l in captured.out.split("\n") if "→" in l and "✓" in l]
+        for line in lines:
+            assert "ns1.example.com" not in line
+
+    def test_skips_ns_and_soa(self, capsys, mock_token, mock_api, fake_args):
+        _, response = mock_api
+        response.json.side_effect = [
+            {"result": "success", "data": [
+                {"type": "NS", "source": ".", "target": "ns1.example.com", "ttl": 3600},
+                {"type": "SOA", "source": ".", "target": "ns1.example.com admin.example.com", "ttl": 3600},
+            ]},
+        ]
+
+        cmd_dns_clone(fake_args(source_domain="src.com", target_domain="dst.com", yes=True))
+        captured = capsys.readouterr()
+        assert "0 created" in captured.out

@@ -87,13 +87,19 @@ infomaniak dns update example.com 12345 --target 93.184.216.35
 # Delete a record (with confirmation)
 infomaniak dns delete example.com 12345
 
-# Export records as JSON
+# Export records as JSON or CSV
 infomaniak dns export example.com
 infomaniak dns export example.com --format csv --output records.csv
 
 # Import records from a file
 infomaniak dns import example.com records.json
 infomaniak dns import example.com records.csv --yes
+
+# Compare live records against a local file
+infomaniak dns diff example.com records.json
+
+# Clone records from one domain to another (skips NS/SOA)
+infomaniak dns clone source.com target.com
 ```
 
 ### Products
@@ -121,13 +127,21 @@ infomaniak mail list
 infomaniak status
 ```
 
+### Configuration
+
+```bash
+# Show current configuration (token source, account ID, config file path)
+infomaniak config show
+```
+
 ### JSON output
 
-Add `--json` to any command for machine-readable output:
+Add `--json` to any read command for machine-readable output:
 
 ```bash
 infomaniak dns domains --json
 infomaniak dns records example.com --json
+infomaniak dns diff example.com records.json --json
 infomaniak products --json
 infomaniak status --json
 ```
@@ -143,6 +157,25 @@ $ infomaniak dns domains
   ───────  ───────────────  ──────  ──────
   100001   example.com      yes     yes
   100002   example.org      yes     yes
+
+$ infomaniak dns diff example.com backup.json
+
+  DNS diff for example.com
+
+  File: backup.json
+  Live: 12 records, File: 10 records
+
+  In file but not live (1):
+
+    + A  old-server → 93.184.216.34  (TTL: 3600)
+
+  Live but not in file (3):
+
+    - A  new-app → 198.51.100.1  (TTL: 300)
+    - CNAME  cdn → cdn.example.net  (TTL: 300)
+    - TXT  _verify → site-verification=abc123  (TTL: 3600)
+
+  9 records match.
 
 $ infomaniak status
 
