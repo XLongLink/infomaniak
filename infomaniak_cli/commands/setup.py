@@ -1,11 +1,12 @@
 """Interactive setup wizard."""
 
+import io
 import sys
 import webbrowser
 
 from infomaniak_cli.api import api_request
 from infomaniak_cli.config import CONFIG_FILE, load_config, save_config
-from infomaniak_cli.output import bold, cyan, dim, green, red
+from infomaniak_cli.output import bold, cyan, dim, green, red, yellow
 
 
 def cmd_setup(args):
@@ -84,7 +85,35 @@ def cmd_setup(args):
 
     print(f"\r  {green('✓')} Token valid — account: {bold(account_name)} (ID: {account_id})")
 
+    # Probe scopes
+    print(f"\n  {bold('Checking scopes...')}\n")
+
+    # Probe optional scopes by hitting endpoints that require them.
+    # We check the response for scope errors specifically, not other failures.
+    optional_scopes = [
+        ("mail", f"/1/mail_hostings?account_id={account_id}", "list mailboxes"),
+        ("web", f"/1/web_hostings?account_id={account_id}", "web hosting details"),
+    ]
+
+    import requests as req_lib
+    for scope_name, path, desc in optional_scopes:
+        resp = req_lib.get(
+            f"https://api.infomaniak.com{path}",
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=10,
+        )
+        try:
+            body = resp.json()
+        except ValueError:
+            continue
+        err = body.get("error", {})
+        if err.get("code") == "all_scopes":
+            print(f"    {dim('✗')} {scope_name:12} {dim('— not enabled')} {dim(f'({desc})')}")
+        else:
+            print(f"    {green('✓')} {scope_name:12} {dim(f'({desc})')}")
+
     # Save
+    print()
     save_config(token, account_id)
     print(f"  {green('✓')} Saved to {dim(str(CONFIG_FILE))}\n")
     print(f"  You're all set! Try: {bold('infomaniak dns domains')}\n")
