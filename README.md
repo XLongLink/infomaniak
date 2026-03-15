@@ -78,6 +78,18 @@ infomaniak dns sync example.com desired.json --dry-run    # Sync (terraform-styl
 infomaniak dns clone source.com target.com                # Clone between domains
 infomaniak dns search "76.76.21"                          # Search across all domains
 infomaniak dns backup                                     # Backup all domains
+infomaniak dns audit                                      # Audit all domains (SPF/DMARC/DKIM)
+infomaniak dns audit example.com                          # Audit single domain
+infomaniak dns zone example.com                           # Generate BIND zone file
+infomaniak dns propagation example.com                    # Check global DNS propagation
+infomaniak dns propagation example.com -n www -t CNAME    # Check specific record
+```
+
+### Domains
+
+```bash
+infomaniak domains                                        # List all domains with expiry dates
+infomaniak domains --warn 60                              # Warn if expiring within 60 days
 ```
 
 ### Account & Products
@@ -165,6 +177,51 @@ $ infomaniak dns sync example.com desired.json --dry-run
     - TXT  _old-verify → verify=abc123
 
   Dry run — no changes applied.
+
+$ infomaniak dns audit
+
+  DNS Audit
+  ────────
+
+  Scanning 10 domain(s)...
+
+  ! No SPF record found — Email spoofing protection
+    → legacy-site.com
+
+  ! No DMARC record found — Email authentication policy
+    → legacy-site.com
+    → staging.org
+
+  Summary: 10 domains scanned
+    8 clean
+    2 with issues (3 total findings)
+
+$ infomaniak dns propagation example.com
+
+  DNS Propagation: A example.com
+
+  Resolver    IP              Result
+  ──────────  ──────────────  ───────────
+  Google      8.8.8.8         93.184.216.34
+  Cloudflare  1.1.1.1         93.184.216.34
+  Quad9       9.9.9.9         93.184.216.34
+  OpenDNS     208.67.222.222  93.184.216.34
+
+  All resolvers agree. DNS is fully propagated.
+
+$ infomaniak domains
+
+  Domains (3)
+
+  Domain           Expires     Days Left  Status
+  ───────────────  ──────────  ─────────  ────────
+  expiring.com     2026-04-01  17         expiring
+  example.com      2027-01-15  306        active
+  example.org      2027-06-20  462        active
+
+  Warning: 1 domain(s) expiring within 30 days:
+
+    ! expiring.com — 17 days remaining
 
 $ infomaniak status
 

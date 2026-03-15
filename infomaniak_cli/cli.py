@@ -5,6 +5,7 @@ import sys
 
 from infomaniak_cli import __version__
 from infomaniak_cli.commands.account import cmd_account
+from infomaniak_cli.commands.audit import cmd_dns_audit
 from infomaniak_cli.commands.config import cmd_config_show
 from infomaniak_cli.commands.dns import (
     cmd_dns_add,
@@ -21,9 +22,12 @@ from infomaniak_cli.commands.dns import (
     cmd_dns_sync,
     cmd_dns_update,
 )
+from infomaniak_cli.commands.domains import cmd_domains
 from infomaniak_cli.commands.drive import cmd_drive_list
 from infomaniak_cli.commands.hosting import cmd_hosting_list
 from infomaniak_cli.commands.mail import cmd_mail_list, cmd_mail_mailboxes
+from infomaniak_cli.commands.propagation import cmd_dns_propagation
+from infomaniak_cli.commands.zone import cmd_dns_zone
 from infomaniak_cli.commands.products import cmd_products
 from infomaniak_cli.commands.setup import cmd_setup
 from infomaniak_cli.commands.status import cmd_status
@@ -141,6 +145,32 @@ def main():
     sp.add_argument("--dry-run", action="store_true", help="Show plan without applying changes")
     sp.add_argument("--yes", "-y", action="store_true", help="Skip confirmation")
     sp.set_defaults(func=cmd_dns_sync)
+
+    # dns audit
+    sp = dns_sub.add_parser("audit", help="Audit DNS for misconfigurations (SPF, DMARC, DKIM, etc.)")
+    sp.add_argument("domain", nargs="?", default=None, help="Domain to audit (default: all domains)")
+    sp.add_argument("--json", action="store_true", help="Output as JSON")
+    sp.set_defaults(func=cmd_dns_audit)
+
+    # dns zone
+    sp = dns_sub.add_parser("zone", help="Generate BIND-format zone file")
+    sp.add_argument("domain", help="Domain name")
+    sp.add_argument("--output", "-o", help="Output file path (default: stdout)")
+    sp.set_defaults(func=cmd_dns_zone)
+
+    # dns propagation
+    sp = dns_sub.add_parser("propagation", help="Check DNS propagation across public resolvers")
+    sp.add_argument("domain", help="Domain name")
+    sp.add_argument("--name", "-n", default="@", help="Record name (default: @ for root)")
+    sp.add_argument("--type", "-t", default="A", help="Record type (default: A)")
+    sp.add_argument("--json", action="store_true", help="Output as JSON")
+    sp.set_defaults(func=cmd_dns_propagation)
+
+    # ── domains ────────────────────────────────────────────────────────────
+    sp_domains = subparsers.add_parser("domains", help="List domains with expiry tracking")
+    sp_domains.add_argument("--warn", type=int, default=30, help="Warn if expiring within N days (default: 30)")
+    sp_domains.add_argument("--json", action="store_true", help="Output as JSON")
+    sp_domains.set_defaults(func=cmd_domains)
 
     # ── config ─────────────────────────────────────────────────────────────
     config_parser = subparsers.add_parser("config", help="View configuration")
