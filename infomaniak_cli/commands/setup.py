@@ -27,10 +27,15 @@ def cmd_setup(args):
             print()
 
     print("  You need an API token with these scopes:\n")
+    print(f"    {bold('Required:')}")
     print(f"    {cyan('•')} accounts")
     print(f"    {cyan('•')} domain:read")
     print(f"    {cyan('•')} dns:read")
-    print(f"    {cyan('•')} dns:write\n")
+    print(f"    {cyan('•')} dns:write")
+    print(f"\n    {bold('Optional')} {dim('(for additional features)')}:")
+    print(f"    {cyan('•')} mail          {dim('— list mailboxes')}")
+    print(f"    {cyan('•')} web           {dim('— web hosting details')}")
+    print(f"    {cyan('•')} drive         {dim('— kDrive details')}\n")
 
     url = "https://manager.infomaniak.com/v3/infomaniak-api"
     choice = input(f"  Press {bold('Enter')} to open the token page, or {bold('s')} to skip: ")

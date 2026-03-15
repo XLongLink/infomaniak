@@ -44,7 +44,7 @@ The setup wizard will:
 3. Validate it against the API
 4. Save it to `~/.config/infomaniak/config.ini`
 
-You'll need a token with these scopes: `accounts`, `domain:read`, `dns:read`, `dns:write`.
+You'll need a token with these scopes: `accounts`, `domain:read`, `dns:read`, `dns:write`. Optionally add `mail`, `web`, `drive` for extended features.
 
 ### Alternative configuration
 
