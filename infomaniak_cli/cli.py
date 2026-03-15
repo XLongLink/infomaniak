@@ -7,6 +7,7 @@ from infomaniak_cli import __version__
 from infomaniak_cli.commands.config import cmd_config_show
 from infomaniak_cli.commands.dns import (
     cmd_dns_add,
+    cmd_dns_backup,
     cmd_dns_check,
     cmd_dns_clone,
     cmd_dns_delete,
@@ -15,6 +16,8 @@ from infomaniak_cli.commands.dns import (
     cmd_dns_export,
     cmd_dns_import,
     cmd_dns_records,
+    cmd_dns_search,
+    cmd_dns_sync,
     cmd_dns_update,
 )
 from infomaniak_cli.commands.mail import cmd_mail_list
@@ -115,6 +118,26 @@ def main():
     sp.add_argument("target_domain", help="Target domain to copy to")
     sp.add_argument("--yes", "-y", action="store_true", help="Skip confirmation")
     sp.set_defaults(func=cmd_dns_clone)
+
+    # dns search
+    sp = dns_sub.add_parser("search", help="Search DNS records across all domains")
+    sp.add_argument("query", help="Search term (matches name, target, or type)")
+    sp.add_argument("--json", action="store_true", help="Output as JSON")
+    sp.set_defaults(func=cmd_dns_search)
+
+    # dns backup
+    sp = dns_sub.add_parser("backup", help="Backup DNS records for all domains")
+    sp.add_argument("--output", "-o", default="dns-backup", help="Output directory (default: dns-backup)")
+    sp.add_argument("--format", "-f", choices=["json", "csv"], default="json", help="Output format (default: json)")
+    sp.set_defaults(func=cmd_dns_backup)
+
+    # dns sync
+    sp = dns_sub.add_parser("sync", help="Sync DNS records from file to live (like terraform apply)")
+    sp.add_argument("domain", help="Domain name")
+    sp.add_argument("file", help="Path to JSON or CSV file with desired state")
+    sp.add_argument("--dry-run", action="store_true", help="Show plan without applying changes")
+    sp.add_argument("--yes", "-y", action="store_true", help="Skip confirmation")
+    sp.set_defaults(func=cmd_dns_sync)
 
     # ── config ─────────────────────────────────────────────────────────────
     config_parser = subparsers.add_parser("config", help="View configuration")

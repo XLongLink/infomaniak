@@ -12,12 +12,15 @@ Usage:
     infomaniak dns export <domain>                           # Export records as JSON
     infomaniak dns import <domain> <file>                    # Import records from JSON
     infomaniak dns diff <domain> <file>                       # Compare live vs file
+    infomaniak dns sync <domain> <file>                      # Sync live to match file
     infomaniak dns clone <source> <target>                   # Clone records between domains
+    infomaniak dns search <query>                            # Search across all domains
+    infomaniak dns backup                                    # Backup all domains
     infomaniak products [--type <name>]                      # List all products
     infomaniak mail list                                     # List mail hostings
     infomaniak status                                        # Service status overview
     infomaniak config show                                   # Show configuration
 """
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 API_BASE = "https://api.infomaniak.com"

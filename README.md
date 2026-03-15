@@ -100,6 +100,18 @@ infomaniak dns diff example.com records.json
 
 # Clone records from one domain to another (skips NS/SOA)
 infomaniak dns clone source.com target.com
+
+# Search for a record across all domains
+infomaniak dns search "76.76.21"
+infomaniak dns search vercel
+
+# Backup all domains to a directory
+infomaniak dns backup
+infomaniak dns backup --output my-backup --format csv
+
+# Sync live DNS to match a file (like terraform apply)
+infomaniak dns sync example.com desired-state.json --dry-run
+infomaniak dns sync example.com desired-state.json --yes
 ```
 
 ### Products

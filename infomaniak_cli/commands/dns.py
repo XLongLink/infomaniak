@@ -445,4 +445,241 @@ def cmd_dns_clone(args):
             print(f"  {red('✗')} {r['type']} {r.get('source', '@')} → {r['target']}")
             failed += 1
 
-    print(f"\n  Done: {green(str(created))} created, {red(str(failed)) if failed else dim('0')} failed.\n")
+    print(f"\n  Done: {green(str(created))} cloned, {red(str(failed)) if failed else dim('0')} failed.\n")
+
+
+def cmd_dns_search(args):
+    """Search DNS records across all domains."""
+    token = get_token()
+    account_id = get_account_id(token)
+    query = args.query.lower()
+
+    # Get all domains
+    data = api_request("GET", f"/1/domain/account/{account_id}", token)
+    domains = data.get("data", [])
+
+    if not domains:
+        print(f"  {dim('No domains found.')}")
+        return
+
+    all_matches = []
+    for d in domains:
+        domain_name = d.get("customer_name", "")
+        try:
+            rdata = api_request("GET", f"/2/zones/{domain_name}/records", token)
+        except SystemExit:
+            continue
+        records = rdata.get("data", [])
+        for r in records:
+            source = r.get("source", "@")
+            if source == ".":
+                source = "@"
+            target = r.get("target", "")
+            rtype = r.get("type", "")
+
+            if query in source.lower() or query in target.lower() or query in rtype.lower():
+                all_matches.append({
+                    "domain": domain_name,
+                    "id": r.get("id", "?"),
+                    "type": rtype,
+                    "source": source,
+                    "target": target,
+                    "ttl": r.get("ttl", "?"),
+                })
+
+    if getattr(args, "json", False):
+        output_json(all_matches)
+
+    if not all_matches:
+        print(f"\n  {dim(f'No records matching \"{args.query}\" found across {len(domains)} domains.')}\n")
+        return
+
+    headers = ["Domain", "ID", "Type", "Name", "Target", "TTL"]
+    rows = []
+    for m in all_matches:
+        target_display = m["target"]
+        if len(str(target_display)) > 45:
+            target_display = str(target_display)[:42] + "..."
+        rows.append([
+            m["domain"],
+            m["id"],
+            cyan(m["type"]),
+            m["source"],
+            target_display,
+            m["ttl"],
+        ])
+
+    print(f"\n  {bold(f'Search: \"{args.query}\"')} — {len(all_matches)} matches across {len(domains)} domains\n")
+    print_table(headers, rows)
+    print()
+
+
+def cmd_dns_backup(args):
+    """Export DNS records for all domains into a directory."""
+    token = get_token()
+    account_id = get_account_id(token)
+
+    # Get all domains
+    data = api_request("GET", f"/1/domain/account/{account_id}", token)
+    domains = data.get("data", [])
+
+    if not domains:
+        print(f"  {dim('No domains found.')}")
+        return
+
+    outdir = Path(args.output) if args.output else Path("dns-backup")
+    outdir.mkdir(parents=True, exist_ok=True)
+
+    fmt = args.format
+
+    print(f"\n  {bold(f'Backing up DNS records for {len(domains)} domains')}\n")
+
+    backed_up = 0
+    for d in domains:
+        domain_name = d.get("customer_name", "")
+        try:
+            rdata = api_request("GET", f"/2/zones/{domain_name}/records", token)
+        except SystemExit:
+            print(f"  {red('✗')} {domain_name}")
+            continue
+
+        records = rdata.get("data", [])
+        export_data = []
+        for r in records:
+            source = r.get("source", "@")
+            if source == ".":
+                source = "@"
+            export_data.append({
+                "type": r.get("type"),
+                "source": source,
+                "target": r.get("target"),
+                "ttl": r.get("ttl"),
+                "priority": r.get("priority"),
+            })
+
+        if fmt == "csv":
+            output = io.StringIO()
+            writer = csv.DictWriter(output, fieldnames=["type", "source", "target", "ttl", "priority"])
+            writer.writeheader()
+            writer.writerows(export_data)
+            content = output.getvalue()
+            ext = "csv"
+        else:
+            content = json.dumps(export_data, indent=2, ensure_ascii=False)
+            ext = "json"
+
+        outpath = outdir / f"{domain_name}.{ext}"
+        outpath.write_text(content)
+        print(f"  {green('✓')} {domain_name} ({len(export_data)} records)")
+        backed_up += 1
+
+    print(f"\n  {green('✓')} Backed up {bold(str(backed_up))} domains to {bold(str(outdir))}/\n")
+
+
+def cmd_dns_sync(args):
+    """Sync DNS records from a file to live — like terraform apply for DNS."""
+    token = get_token()
+    domain = args.domain
+    filepath = Path(args.file)
+
+    if not filepath.exists():
+        print(f"  {red('✗')} File not found: {filepath}")
+        sys.exit(1)
+
+    # Load desired state from file
+    content = filepath.read_text()
+    if filepath.suffix == ".csv":
+        reader = csv.DictReader(io.StringIO(content))
+        desired = [_normalize_record(r) for r in reader]
+    else:
+        try:
+            raw = json.loads(content)
+        except json.JSONDecodeError as e:
+            print(f"  {red('✗')} Invalid JSON: {e}")
+            sys.exit(1)
+        desired = [_normalize_record(r) for r in raw]
+
+    # Load current live state
+    data = api_request("GET", f"/2/zones/{domain}/records", token)
+    live_raw = data.get("data", [])
+
+    # Build lookup: key → record id for deletion
+    live_by_key = {}
+    for r in live_raw:
+        nr = _normalize_record(r)
+        key = _record_key(nr)
+        live_by_key[key] = r.get("id")
+
+    desired_keys = {_record_key(r) for r in desired}
+    live_keys = set(live_by_key.keys())
+
+    to_create = [r for r in desired if _record_key(r) not in live_keys]
+    to_delete_keys = live_keys - desired_keys
+
+    # Don't delete NS or SOA records even if they're not in the file
+    skip_types = {"NS", "SOA"}
+    to_delete = []
+    for key in to_delete_keys:
+        rtype, source, target = key
+        if rtype in skip_types:
+            continue
+        to_delete.append({"type": rtype, "source": source, "target": target, "id": live_by_key[key]})
+
+    unchanged = len(desired_keys & live_keys)
+
+    print(f"\n  {bold(f'DNS sync plan for {domain}')}\n")
+    print(f"  File: {filepath}")
+    print(f"  {green(f'+ {len(to_create)} to create')}  {red(f'- {len(to_delete)} to delete')}  {dim(f'{unchanged} unchanged')}\n")
+
+    if not to_create and not to_delete:
+        print(f"  {green('✓')} Already in sync. Nothing to do.\n")
+        return
+
+    if to_create:
+        print(f"  {bold('Create:')}")
+        for r in to_create:
+            print(f"    {green('+')} {cyan(r['type'])}  {r['source']} → {r['target']}")
+        print()
+
+    if to_delete:
+        print(f"  {bold('Delete:')}")
+        for r in to_delete:
+            print(f"    {red('-')} {cyan(r['type'])}  {r['source']} → {r['target']}")
+        print()
+
+    if args.dry_run:
+        print(f"  {dim('Dry run — no changes applied.')}\n")
+        return
+
+    if not args.yes:
+        confirm = input(f"  Apply changes? [y/N] ")
+        if confirm.lower() not in ("y", "yes"):
+            print(f"  {dim('Aborted.')}")
+            return
+        print()
+
+    # Apply deletions first
+    deleted = 0
+    for r in to_delete:
+        try:
+            api_request("DELETE", f"/2/zones/{domain}/records/{r['id']}", token)
+            print(f"  {red('-')} Deleted {r['type']} {r['source']} → {r['target']}")
+            deleted += 1
+        except SystemExit:
+            print(f"  {red('✗')} Failed to delete {r['type']} {r['source']}")
+
+    # Apply creations
+    created = 0
+    for r in to_create:
+        source = r["source"]
+        if source == "@":
+            source = ""
+        body = {"type": r["type"], "source": source, "target": r["target"], "ttl": r["ttl"]}
+        try:
+            api_request("POST", f"/2/zones/{domain}/records", token, json_data=body)
+            print(f"  {green('+')} Created {r['type']} {r['source']} → {r['target']}")
+            created += 1
+        except SystemExit:
+            print(f"  {red('✗')} Failed to create {r['type']} {r['source']}")
+
+    print(f"\n  {green('✓')} Sync complete: {created} created, {deleted} deleted.\n")

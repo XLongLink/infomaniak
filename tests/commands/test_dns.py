@@ -7,12 +7,15 @@ from unittest.mock import patch
 
 from infomaniak_cli.commands.dns import (
     cmd_dns_add,
+    cmd_dns_backup,
     cmd_dns_clone,
     cmd_dns_diff,
     cmd_dns_domains,
     cmd_dns_export,
     cmd_dns_import,
     cmd_dns_records,
+    cmd_dns_search,
+    cmd_dns_sync,
     cmd_dns_update,
 )
 
@@ -255,7 +258,7 @@ class TestDnsClone:
 
         cmd_dns_clone(fake_args(source_domain="src.com", target_domain="dst.com", yes=True))
         captured = capsys.readouterr()
-        assert "2 created" in captured.out
+        assert "2 cloned" in captured.out
         # NS records should not appear in the cloned records list (only in the skip message)
         lines = [l.strip() for l in captured.out.split("\n") if "→" in l and "✓" in l]
         for line in lines:
@@ -272,4 +275,133 @@ class TestDnsClone:
 
         cmd_dns_clone(fake_args(source_domain="src.com", target_domain="dst.com", yes=True))
         captured = capsys.readouterr()
-        assert "0 created" in captured.out
+        assert "0 cloned" in captured.out
+
+
+class TestDnsSearch:
+    def test_finds_matches(self, capsys, mock_token, mock_account_id, mock_api, fake_args):
+        _, response = mock_api
+        response.json.side_effect = [
+            # domains list
+            {"result": "success", "data": [
+                {"customer_name": "example.com"},
+                {"customer_name": "test.org"},
+            ]},
+            # records for example.com
+            {"result": "success", "data": [
+                {"id": 1, "type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
+                {"id": 2, "type": "A", "source": "api", "target": "5.6.7.8", "ttl": 3600},
+            ]},
+            # records for test.org
+            {"result": "success", "data": [
+                {"id": 3, "type": "A", "source": "www", "target": "9.9.9.9", "ttl": 3600},
+            ]},
+        ]
+
+        cmd_dns_search(fake_args(query="www"))
+        captured = capsys.readouterr()
+        assert "2 matches" in captured.out
+        assert "example.com" in captured.out
+        assert "test.org" in captured.out
+
+    def test_no_matches(self, capsys, mock_token, mock_account_id, mock_api, fake_args):
+        _, response = mock_api
+        response.json.side_effect = [
+            {"result": "success", "data": [{"customer_name": "example.com"}]},
+            {"result": "success", "data": [
+                {"id": 1, "type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
+            ]},
+        ]
+
+        cmd_dns_search(fake_args(query="nonexistent"))
+        captured = capsys.readouterr()
+        assert "No records matching" in captured.out
+
+
+class TestDnsBackup:
+    def test_backs_up_all_domains(self, tmp_path, capsys, mock_token, mock_account_id, mock_api, fake_args):
+        _, response = mock_api
+        response.json.side_effect = [
+            # domains
+            {"result": "success", "data": [
+                {"customer_name": "a.com"},
+                {"customer_name": "b.com"},
+            ]},
+            # records for a.com
+            {"result": "success", "data": [
+                {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600, "priority": None},
+            ]},
+            # records for b.com
+            {"result": "success", "data": [
+                {"type": "CNAME", "source": "app", "target": "cdn.b.com", "ttl": 300, "priority": None},
+            ]},
+        ]
+
+        outdir = str(tmp_path / "backup")
+        cmd_dns_backup(fake_args(output=outdir, format="json"))
+        captured = capsys.readouterr()
+        assert "a.com" in captured.out
+        assert "b.com" in captured.out
+        assert "Backed up 2 domains" in captured.out
+        assert (tmp_path / "backup" / "a.com.json").exists()
+        assert (tmp_path / "backup" / "b.com.json").exists()
+
+
+class TestDnsSync:
+    def test_already_in_sync(self, tmp_path, capsys, mock_token, mock_api, fake_args):
+        _, response = mock_api
+        records = [{"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600}]
+        response.json.return_value = {"result": "success", "data": records}
+
+        sync_file = tmp_path / "records.json"
+        sync_file.write_text(json.dumps(records))
+
+        cmd_dns_sync(fake_args(domain="example.com", file=str(sync_file), dry_run=False, yes=True))
+        captured = capsys.readouterr()
+        assert "Already in sync" in captured.out
+
+    def test_dry_run_shows_plan(self, tmp_path, capsys, mock_token, mock_api, fake_args, monkeypatch):
+        from infomaniak_cli import output
+        monkeypatch.setattr(output, "_COLOR", False)
+        _, response = mock_api
+        live = [
+            {"id": 1, "type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
+            {"id": 2, "type": "A", "source": "old", "target": "5.6.7.8", "ttl": 3600},
+        ]
+        desired = [
+            {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
+            {"type": "A", "source": "new", "target": "9.9.9.9", "ttl": 300},
+        ]
+        response.json.return_value = {"result": "success", "data": live}
+
+        sync_file = tmp_path / "records.json"
+        sync_file.write_text(json.dumps(desired))
+
+        cmd_dns_sync(fake_args(domain="example.com", file=str(sync_file), dry_run=True, yes=False))
+        captured = capsys.readouterr()
+        assert "1 to create" in captured.out
+        assert "1 to delete" in captured.out
+        assert "1 unchanged" in captured.out
+        assert "Dry run" in captured.out
+        assert "9.9.9.9" in captured.out
+        assert "5.6.7.8" in captured.out
+
+    def test_skips_ns_soa_in_delete(self, tmp_path, capsys, mock_token, mock_api, fake_args):
+        _, response = mock_api
+        live = [
+            {"id": 1, "type": "NS", "source": ".", "target": "ns1.example.com", "ttl": 3600},
+            {"id": 2, "type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
+        ]
+        response.json.return_value = {"result": "success", "data": live}
+
+        # File only has the A record — NS should NOT be deleted
+        sync_file = tmp_path / "records.json"
+        sync_file.write_text('[{"type":"A","source":"www","target":"1.2.3.4","ttl":3600}]')
+
+        cmd_dns_sync(fake_args(domain="example.com", file=str(sync_file), dry_run=True, yes=False))
+        captured = capsys.readouterr()
+        assert "0 to delete" in captured.out
+
+    def test_missing_file_exits(self, fake_args, mock_token):
+        with pytest.raises(SystemExit):
+            cmd_dns_sync(fake_args(domain="example.com", file="/nope.json", dry_run=False, yes=True))
