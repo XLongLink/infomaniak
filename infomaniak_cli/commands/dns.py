@@ -491,8 +491,8 @@ def cmd_dns_search(args):
         output_json(all_matches)
 
     if not all_matches:
-        q = args.query
-        print(f"\n  {dim(f'No records matching \"{q}\" found across {len(domains)} domains.')}\n")
+        msg = f'No records matching "{args.query}" found across {len(domains)} domains.'
+        print(f"\n  {dim(msg)}\n")
         return
 
     headers = ["Domain", "ID", "Type", "Name", "Target", "TTL"]
@@ -510,8 +510,8 @@ def cmd_dns_search(args):
             m["ttl"],
         ])
 
-    q = args.query
-    print(f"\n  {bold(f'Search: \"{q}\"')} — {len(all_matches)} matches across {len(domains)} domains\n")
+    title = f'Search: "{args.query}"'
+    print(f"\n  {bold(title)} — {len(all_matches)} matches across {len(domains)} domains\n")
     print_table(headers, rows)
     print()
 
