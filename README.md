@@ -7,7 +7,7 @@
 
 CLI tool for managing your [Infomaniak](https://www.infomaniak.com) services from the terminal.
 
-Supports **DNS management**, **mail hosting**, **product listing**, **service status**, and more.
+Manage **DNS**, **mail**, **hosting**, **kDrive**, **products**, and more — all from one command.
 
 ## Install
 
@@ -42,132 +42,72 @@ The setup wizard will:
 1. Open the Infomaniak token page in your browser
 2. Prompt you to paste your API token
 3. Validate it against the API
-4. Save it to `~/.config/infomaniak/config.ini`
+4. Check which optional scopes are enabled
+5. Save it to `~/.config/infomaniak/config.ini`
 
-You'll need a token with these scopes: `accounts`, `domain:read`, `dns:read`, `dns:write`. Optionally add `mail`, `web`, `drive` for extended features.
+**Required scopes:** `accounts`, `domain:read`, `dns:read`, `dns:write`
+
+**Optional scopes:** `mail` (mailboxes), `web` (hosting details), `drive` (kDrive details)
 
 ### Alternative configuration
-
-You can also set the token manually:
 
 ```bash
 # Environment variable
 export INFOMANIAK_API_TOKEN=your-token-here
-
-# Or .env file
-cp .env.example .env
 ```
 
 Token lookup order: environment variable → config file → `.env` file.
 
-## Usage
+## Commands
 
 ### DNS
 
 ```bash
-# List all domains
-infomaniak dns domains
-
-# List DNS records for a domain
-infomaniak dns records example.com
-
-# Filter by record type
-infomaniak dns records example.com --type CNAME
-
-# Check if a record resolves correctly
-infomaniak dns check example.com 12345
-
-# Create a new record
-infomaniak dns add example.com A blog 93.184.216.34
-infomaniak dns add example.com CNAME app target.example.net --ttl 300
-
-# Update a record
-infomaniak dns update example.com 12345 --target 93.184.216.35
-
-# Delete a record (with confirmation)
-infomaniak dns delete example.com 12345
-
-# Export records as JSON or CSV
-infomaniak dns export example.com
-infomaniak dns export example.com --format csv --output records.csv
-
-# Import records from a file
-infomaniak dns import example.com records.json
-infomaniak dns import example.com records.csv --yes
-
-# Compare live records against a local file
-infomaniak dns diff example.com records.json
-
-# Clone records from one domain to another (skips NS/SOA)
-infomaniak dns clone source.com target.com
-
-# Search for a record across all domains
-infomaniak dns search "76.76.21"
-infomaniak dns search vercel
-
-# Backup all domains to a directory
-infomaniak dns backup
-infomaniak dns backup --output my-backup --format csv
-
-# Sync live DNS to match a file (like terraform apply)
-infomaniak dns sync example.com desired-state.json --dry-run
-infomaniak dns sync example.com desired-state.json --yes
+infomaniak dns domains                                    # List all domains
+infomaniak dns records example.com                        # List DNS records
+infomaniak dns records example.com --type CNAME           # Filter by type
+infomaniak dns check example.com 12345                    # Check record health
+infomaniak dns add example.com A blog 93.184.216.34       # Create record
+infomaniak dns update example.com 12345 --target 1.2.3.4  # Update record
+infomaniak dns delete example.com 12345                   # Delete record
+infomaniak dns export example.com                         # Export as JSON
+infomaniak dns export example.com -f csv -o records.csv   # Export as CSV
+infomaniak dns import example.com records.json            # Import from file
+infomaniak dns diff example.com records.json              # Compare live vs file
+infomaniak dns sync example.com desired.json --dry-run    # Sync (terraform-style)
+infomaniak dns clone source.com target.com                # Clone between domains
+infomaniak dns search "76.76.21"                          # Search across all domains
+infomaniak dns backup                                     # Backup all domains
 ```
 
-### Account
+### Account & Products
 
 ```bash
-# Show account overview with product summary
-infomaniak account
-```
-
-### Products
-
-```bash
-# List all products on your account
-infomaniak products
-
-# Filter by service type
-infomaniak products --type domain
-infomaniak products --type email_hosting
-```
-
-### Hosting
-
-```bash
-# List web hosting services
-infomaniak hosting list
-```
-
-### kDrive
-
-```bash
-# List kDrive instances
-infomaniak drive list
+infomaniak account                                        # Account overview
+infomaniak products                                       # List all products
+infomaniak products --type email_hosting                  # Filter by service
+infomaniak status                                         # Service status overview
 ```
 
 ### Mail
 
 ```bash
-# List all mail hosting services
-infomaniak mail list
-
-# List mailboxes (requires 'mail' scope on your token)
-infomaniak mail mailboxes <mail_hosting_id>
+infomaniak mail list                                      # List mail hostings
+infomaniak mail mailboxes <id>                            # List mailboxes (needs 'mail' scope)
 ```
 
-### Status
+### Hosting & kDrive
 
 ```bash
-# Service status overview — shows all products grouped by service
-infomaniak status
+infomaniak hosting list                                   # List web hostings
+infomaniak drive list                                     # List kDrive instances
 ```
 
 ### Configuration
 
 ```bash
-# Show current configuration (token source, account ID, config file path)
-infomaniak config show
+infomaniak config show                                    # Show token, source, scopes
+infomaniak setup                                          # Interactive setup wizard
 ```
 
 ### JSON output
@@ -177,42 +117,54 @@ Add `--json` to any read command for machine-readable output:
 ```bash
 infomaniak dns domains --json
 infomaniak dns records example.com --json
-infomaniak dns diff example.com records.json --json
+infomaniak dns search vercel --json
 infomaniak products --json
 infomaniak account --json
 infomaniak status --json
 ```
 
-### Example output
+## Example output
 
 ```
-$ infomaniak dns domains
+$ infomaniak account
 
-  Domains (2)
+  Account
 
-  ID       Domain           DNSSEC  DNS@IK
-  ───────  ───────────────  ──────  ──────
-  100001   example.com      yes     yes
-  100002   example.org      yes     yes
+  Name:  John Doe
+  ID:    12345
+  Total: 5 products
 
-$ infomaniak dns diff example.com backup.json
+  Service          Count  Examples
+  ───────────────  ─────  ─────────────────────────
+  domain           2      example.com, example.org
+  email_hosting    2      example.com, example.org
+  drive            1      example.com
 
-  DNS diff for example.com
+$ infomaniak dns search vercel
 
-  File: backup.json
-  Live: 12 records, File: 10 records
+  Search: "vercel" — 3 matches across 10 domains
 
-  In file but not live (1):
+  Domain         ID      Type   Name  Target                   TTL
+  ─────────────  ──────  ─────  ────  ───────────────────────  ────
+  example.com    200001  CNAME  @     cname.vercel-dns.com     300
+  example.com    200002  CNAME  www   cname.vercel-dns.com     300
+  example.org    300001  CNAME  @     cname.vercel-dns.com     300
 
-    + A  old-server → 93.184.216.34  (TTL: 3600)
+$ infomaniak dns sync example.com desired.json --dry-run
 
-  Live but not in file (3):
+  DNS sync plan for example.com
 
-    - A  new-app → 198.51.100.1  (TTL: 300)
-    - CNAME  cdn → cdn.example.net  (TTL: 300)
-    - TXT  _verify → site-verification=abc123  (TTL: 3600)
+  File: desired.json
+  + 1 to create  - 2 to delete  8 unchanged
 
-  9 records match.
+  Create:
+    + A  new-app → 198.51.100.1
+
+  Delete:
+    - CNAME  old-cdn → old.cdn.example.net
+    - TXT  _old-verify → verify=abc123
+
+  Dry run — no changes applied.
 
 $ infomaniak status
 
@@ -227,16 +179,13 @@ $ infomaniak status
   ✓ All services operational.
 ```
 
-## Why not OAuth?
-
-Infomaniak's OAuth2 apps only support `openid`, `profile`, `email`, and `phone` scopes. The DNS management scopes (`accounts`, `domain:read`, `dns:read`, `dns:write`) are only available through API tokens — so there's no way to implement a browser-based login flow.
-
 ## API reference
 
 Built on the [Infomaniak API](https://developer.infomaniak.com/docs/api):
 
 | Endpoint | Description |
 |---|---|
+| `GET /1/accounts` | Account info |
 | `GET /1/products` | List all products |
 | `GET /1/domain/account/{id}` | List domains |
 | `GET /2/zones/{zone}/records` | List DNS records |
@@ -244,6 +193,7 @@ Built on the [Infomaniak API](https://developer.infomaniak.com/docs/api):
 | `PUT /2/zones/{zone}/records/{id}` | Update record |
 | `DELETE /2/zones/{zone}/records/{id}` | Delete record |
 | `GET /2/zones/{zone}/records/{id}/check` | Check record health |
+| `GET /1/mail_hostings/{id}/mailboxes` | List mailboxes |
 
 ## License
 

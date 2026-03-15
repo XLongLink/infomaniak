@@ -137,7 +137,7 @@ class TestDnsExport:
         response.json.return_value = {
             "result": "success",
             "data": [
-                {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600, "priority": None},
+                {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
             ],
         }
 
@@ -150,7 +150,7 @@ class TestDnsExport:
         _, response = mock_api
         response.json.return_value = {
             "result": "success",
-            "data": [{"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600, "priority": None}],
+            "data": [{"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600}],
         }
 
         outfile = str(tmp_path / "out.json")
@@ -184,8 +184,8 @@ class TestDnsDiff:
         monkeypatch.setattr(output, "_COLOR", False)
         _, response = mock_api
         records = [
-            {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600, "priority": None},
-            {"type": "CNAME", "source": "app", "target": "cdn.example.com", "ttl": 300, "priority": None},
+            {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
+            {"type": "CNAME", "source": "app", "target": "cdn.example.com", "ttl": 300},
         ]
         response.json.return_value = {"result": "success", "data": records}
 
@@ -329,11 +329,11 @@ class TestDnsBackup:
             ]},
             # records for a.com
             {"result": "success", "data": [
-                {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600, "priority": None},
+                {"type": "A", "source": "www", "target": "1.2.3.4", "ttl": 3600},
             ]},
             # records for b.com
             {"result": "success", "data": [
-                {"type": "CNAME", "source": "app", "target": "cdn.b.com", "ttl": 300, "priority": None},
+                {"type": "CNAME", "source": "app", "target": "cdn.b.com", "ttl": 300},
             ]},
         ]
 

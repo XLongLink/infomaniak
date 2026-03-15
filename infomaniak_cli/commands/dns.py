@@ -193,12 +193,11 @@ def cmd_dns_export(args):
             "source": source,
             "target": r.get("target"),
             "ttl": r.get("ttl"),
-            "priority": r.get("priority"),
         })
 
     if args.format == "csv":
         output = io.StringIO()
-        writer = csv.DictWriter(output, fieldnames=["type", "source", "target", "ttl", "priority"])
+        writer = csv.DictWriter(output, fieldnames=["type", "source", "target", "ttl"])
         writer.writeheader()
         writer.writerows(export_data)
         content = output.getvalue()
@@ -272,9 +271,6 @@ def cmd_dns_import(args):
             "target": r.get("target", ""),
             "ttl": int(r.get("ttl", 3600)),
         }
-        priority = r.get("priority")
-        if priority is not None and priority != "":
-            body["priority"] = int(priority)
 
         try:
             api_request("POST", f"/2/zones/{domain}/records", token, json_data=body)
@@ -402,7 +398,6 @@ def cmd_dns_clone(args):
             "source": source,
             "target": r.get("target", ""),
             "ttl": r.get("ttl", 3600),
-            "priority": r.get("priority"),
         })
 
     print(f"\n  Cloning {bold(str(len(records_to_clone)))} records from {bold(source_domain)} → {bold(target_domain)}")
@@ -434,8 +429,6 @@ def cmd_dns_clone(args):
             "target": r["target"],
             "ttl": r["ttl"],
         }
-        if r.get("priority") is not None:
-            body["priority"] = r["priority"]
 
         try:
             api_request("POST", f"/2/zones/{target_domain}/records", token, json_data=body)
@@ -556,12 +549,11 @@ def cmd_dns_backup(args):
                 "source": source,
                 "target": r.get("target"),
                 "ttl": r.get("ttl"),
-                "priority": r.get("priority"),
             })
 
         if fmt == "csv":
             output = io.StringIO()
-            writer = csv.DictWriter(output, fieldnames=["type", "source", "target", "ttl", "priority"])
+            writer = csv.DictWriter(output, fieldnames=["type", "source", "target", "ttl"])
             writer.writeheader()
             writer.writerows(export_data)
             content = output.getvalue()
