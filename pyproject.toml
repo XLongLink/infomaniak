@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "infomaniak"
-version = "0.4.0"
+version = "0.5.0"
 description = "CLI tool for managing Infomaniak services — DNS records, domains, and more."
 readme = "README.md"
 license = "MIT"
@@ -39,8 +39,14 @@ Homepage = "https://github.com/peaktwilight/infomaniak-cli"
 Repository = "https://github.com/peaktwilight/infomaniak-cli"
 Issues = "https://github.com/peaktwilight/infomaniak-cli/issues"
 
-[project.scripts]
-infomaniak = "infomaniak_cli:main"
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "pytest-cov"]
 
-[tool.setuptools]
-py-modules = ["infomaniak_cli"]
+[project.scripts]
+infomaniak = "infomaniak_cli.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["infomaniak_cli*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
