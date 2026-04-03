@@ -5,7 +5,6 @@ import sys
 import requests
 
 from infomaniak import API_BASE
-from infomaniak.output import red
 
 
 def api_request(method, path, token, params=None, json_data=None):
@@ -23,19 +22,19 @@ def api_request(method, path, token, params=None, json_data=None):
     try:
         data = resp.json()
     except ValueError:
-        print(f"  {red('✗')} Non-JSON response (HTTP {resp.status_code})")
-        print(f"  {resp.text[:500]}")
+        print(f"API error: non-JSON response (HTTP {resp.status_code})")
+        print(resp.text[:500])
         sys.exit(1)
 
     if data.get("result") == "error":
         err = data.get("error", {})
         code = err.get("code", "unknown")
         desc = err.get("description", resp.text[:200])
-        print(f"  {red('✗')} API error [{code}]: {desc}")
+        print(f"API error [{code}]: {desc}")
         sys.exit(1)
 
     if resp.status_code >= 400:
-        print(f"  {red('✗')} HTTP {resp.status_code}: {resp.text[:300]}")
+        print(f"HTTP {resp.status_code}: {resp.text[:300]}")
         sys.exit(1)
 
     return data
