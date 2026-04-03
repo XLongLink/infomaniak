@@ -22,7 +22,16 @@ export default defineConfig({
       {
         text: 'Cloud',
         collapsed: true,
-        items: [{ text: 'Overview', link: '/cloud/' }],
+        items: [
+          { text: 'Overview', link: '/cloud/' },
+          { text: 'Database', link: '/cloud/database' },
+          { text: 'Database Backups', link: '/cloud/database/backups' },
+          { text: 'Database Scheduled', link: '/cloud/database/scheduled' },
+          { text: 'Database Config', link: '/cloud/database/config' },
+          { text: 'Database Data', link: '/cloud/database/data' },
+          { text: 'Database IP', link: '/cloud/database/ip' },
+          { text: 'Database Restore', link: '/cloud/database/restore' },
+        ],
       },
       {
         text: 'Core',
