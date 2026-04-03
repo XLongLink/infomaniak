@@ -1,17 +1,23 @@
 ---
-layout: false
+layout: home
+
+hero:
+  name: Infomaniak SDK for Python
+  text: API client reference
+  tagline: Documentation for the Python SDK built from the Infomaniak API structure.
+  actions:
+    - theme: brand
+      text: Browse Core Resources
+      link: /core/
+    - theme: alt
+      text: View Repository
+      link: https://github.com/XLongLink/infomaniak
 ---
 
-<script setup>
-import { onMounted } from 'vue'
-import { useRouter } from 'vitepress'
+## Structure
 
-const router = useRouter()
+The SDK documentation mirrors the resource tree in `infomaniak/resources`.
 
-onMounted(() => {
-  router.go('/core/')
-})
-</script>
+- `core/` contains shared endpoints for profile, locale, events, and user-related resources.
 
-<meta http-equiv="refresh" content="0; url=/core/">
-<link rel="canonical" href="/core/">
+Use the navigation to explore the available resources and their models.
