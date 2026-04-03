@@ -8,6 +8,7 @@ from infomaniak.resources.domain import AsyncDomain, Domain
 from infomaniak.resources.kchat import AsyncKchat, Kchat
 from infomaniak.resources.kmeet import AsyncKmeet, Kmeet
 from infomaniak.resources.newsletter import AsyncNewsletter, Newsletter
+from infomaniak.resources.radio import AsyncRadio, Radio
 from infomaniak.resources.url import AsyncUrl, Url
 
 
@@ -24,6 +25,7 @@ class Client(BaseClient):
         self.kchat = Kchat(self)
         self.kmeet = Kmeet(self)
         self.newsletter = Newsletter(self)
+        self.radio = Radio(self)
         self.url = Url(self)
 
 
@@ -40,4 +42,5 @@ class AsyncClient(AsyncBaseClient):
         self.kchat = AsyncKchat(self)
         self.kmeet = AsyncKmeet(self)
         self.newsletter = AsyncNewsletter(self)
+        self.radio = AsyncRadio(self)
         self.url = AsyncUrl(self)
