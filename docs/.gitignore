@@ -49,3 +49,6 @@ Thumbs.db
 
 .vitepress/*
 !.vitepress/config.mts
+!.vitepress/theme/
+!.vitepress/theme/index.ts
+!.vitepress/theme/custom.css
