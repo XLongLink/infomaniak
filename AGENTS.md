@@ -1,0 +1,2 @@
+- For the time being, do not write an test cases
+- Target Python 3.11+ and use modern type-hint syntax everywhere, such as `str | None`, `list[str]`, and `dict[str, Any]` instead of `Optional[str]`, `List[str]`, or `Dict[str, Any]`.

@@ -1,8 +1,5 @@
-"""Library-first Infomaniak client package."""
+# Metadata
+__openapi__ = "3.1.0"
 
-__version__ = "0.7.0"
-API_BASE = "https://api.infomaniak.com"
 
-from infomaniak.client import AsyncClient, AsyncDNSClient, Client, DNSClient
-
-__all__ = ["AsyncClient", "AsyncDNSClient", "Client", "DNSClient"]
+from infomaniak.base import AsyncClient, Client

@@ -8,7 +8,7 @@ version = "0.7.0"
 description = "Python client library for the Infomaniak API with a minimal token-page helper CLI."
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 authors = [
     { name = "Doruk Tan Ozturk", email = "peak@peaktwilight.com" },
 ]
@@ -20,9 +20,6 @@ classifiers = [
     "Intended Audience :: System Administrators",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -45,7 +42,7 @@ Issues = "https://github.com/peaktwilight/infomaniak-cli/issues"
 dev = ["pytest>=7.0", "pytest-cov"]
 
 [project.scripts]
-infomaniak = "infomaniak.cli:main"
+infomaniak = "infomaniak:main"
 
 [tool.setuptools.packages.find]
 include = ["infomaniak*"]
