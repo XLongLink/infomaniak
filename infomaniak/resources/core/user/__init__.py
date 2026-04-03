@@ -1,6 +1,6 @@
 from typing import Literal
-
-from infomaniak.models.core.user import AccountInvitationResponse
+from dacite import from_dict
+from infomaniak.models.core.user import AccountInvitation
 from infomaniak.resource import Resouce, AsyncResource
 
 
@@ -23,7 +23,7 @@ class User(Resouce):
         strict: bool | None = None,
         teams: list[int] | None = None,
         with_: str | None = None,
-    ) -> AccountInvitationResponse:
+    ) -> AccountInvitation:
         """
         Invite a User.
 
@@ -51,7 +51,7 @@ class User(Resouce):
             with_: Optional related resources to include in the response.
 
         Returns:
-            The deserialized account invitation response.
+            The created account invitation.
 
         Notes:
             API endpoint:
@@ -90,9 +90,9 @@ class User(Resouce):
             payload["teams"] = teams
 
         response = self._client.post(url, json=payload, params=params)
-        return AccountInvitationResponse.from_dict(response.json())
+        return from_dict(AccountInvitation, response.json()["data"])
 
-    def revoke(self, account: int, invitation: int) -> AccountInvitationResponse:
+    def revoke(self, account: int, invitation: int) -> bool:
         """
         Cancel an invitation to join an account.
 
@@ -105,7 +105,7 @@ class User(Resouce):
             invitation: Unique identifier of the user invitation.
 
         Returns:
-            The deserialized account invitation response.
+            `True` when the invitation was successfully revoked.
 
         Raises:
             UnauthorizedError: If authentication is missing or invalid (HTTP 401).
@@ -119,7 +119,8 @@ class User(Resouce):
         """
         url = f"/1/accounts/{account}/invitations/{invitation}"
         response = self._client.delete(url)
-        return AccountInvitationResponse.from_dict(response.json())
+        payload = response.json()
+        return bool(payload.get("result") == "success")
 
     
 class AsyncUser(AsyncResource):
@@ -144,7 +145,7 @@ class AsyncUser(AsyncResource):
         strict: bool | None = None,
         teams: list[int] | None = None,
         with_: str | None = None,
-    ) -> AccountInvitationResponse:
+    ) -> AccountInvitation:
         """
         Invite a User.
 
@@ -172,7 +173,7 @@ class AsyncUser(AsyncResource):
             with_: Optional related resources to include in the response.
 
         Returns:
-            The deserialized account invitation response.
+            The created account invitation.
 
         Notes:
             API endpoint:
@@ -211,13 +212,13 @@ class AsyncUser(AsyncResource):
             payload["teams"] = teams
 
         response = await self._client.post(url, json=payload, params=params)
-        return AccountInvitationResponse.from_dict(response.json())
+        return from_dict(AccountInvitation, response.json()["data"])
 
     async def user(self):
         """Get the current authenticated user."""
         return await self._client._request("GET", "/user")
 
-    async def revoke(self, account: int, invitation: int) -> AccountInvitationResponse:
+    async def revoke(self, account: int, invitation: int) -> bool:
         """
         Cancel an invitation to join an account.
 
@@ -230,7 +231,7 @@ class AsyncUser(AsyncResource):
             invitation: Unique identifier of the user invitation.
 
         Returns:
-            The deserialized account invitation response.
+            `True` when the invitation was successfully revoked.
 
         Notes:
             API endpoint:
@@ -238,5 +239,6 @@ class AsyncUser(AsyncResource):
         """
         url = f"/1/accounts/{account}/invitations/{invitation}"
         response = await self._client.delete(url)
-        return AccountInvitationResponse.from_dict(response.json())
+        payload = response.json()
+        return bool(payload.get("result") == "success")
     
