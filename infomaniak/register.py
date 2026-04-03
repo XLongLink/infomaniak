@@ -1,6 +1,7 @@
 from infomaniak.clients import AsyncBaseClient, BaseClient
 
 # Load and connect resources to the clients
+from infomaniak.resources.cloud import AsyncCloud, Cloud
 from infomaniak.resources.core import AsyncCore, Core
 from infomaniak.resources.kchat import AsyncKchat, Kchat
 from infomaniak.resources.kmeet import AsyncKmeet, Kmeet
@@ -12,6 +13,7 @@ class Client(BaseClient):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.cloud = Cloud(self)
         self.core = Core(self)
         self.kchat = Kchat(self)
         self.kmeet = Kmeet(self)
@@ -23,6 +25,7 @@ class AsyncClient(AsyncBaseClient):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.cloud = AsyncCloud(self)
         self.core = AsyncCore(self)
         self.kchat = AsyncKchat(self)
         self.kmeet = AsyncKmeet(self)
