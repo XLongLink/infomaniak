@@ -11,9 +11,14 @@
 
 </div>
 
+<br />
+<br />
+
 ```bash
 pip install xinfomaniak
 ```
+
+<br />
 
 ## Usage
 
