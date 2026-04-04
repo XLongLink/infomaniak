@@ -8,6 +8,7 @@ from infomaniak.resources.dns import AsyncDNS, DNS
 from infomaniak.resources.domain import AsyncDomain, Domain
 from infomaniak.resources.etickets import AsyncEtickets, Etickets
 from infomaniak.resources.kchat import AsyncKchat, Kchat
+from infomaniak.resources.kdrive import AsyncKdrive, Kdrive
 from infomaniak.resources.kmeet import AsyncKmeet, Kmeet
 from infomaniak.resources.newsletter import AsyncNewsletter, Newsletter
 from infomaniak.resources.radio import AsyncRadio, Radio
@@ -28,6 +29,7 @@ class Client(BaseClient):
         self.domain = Domain(self)
         self.etickets = Etickets(self)
         self.kchat = Kchat(self)
+        self.kdrive = Kdrive(self)
         self.kmeet = Kmeet(self)
         self.newsletter = Newsletter(self)
         self.radio = Radio(self)
@@ -48,6 +50,7 @@ class AsyncClient(AsyncBaseClient):
         self.domain = AsyncDomain(self)
         self.etickets = AsyncEtickets(self)
         self.kchat = AsyncKchat(self)
+        self.kdrive = AsyncKdrive(self)
         self.kmeet = AsyncKmeet(self)
         self.newsletter = AsyncNewsletter(self)
         self.radio = AsyncRadio(self)
