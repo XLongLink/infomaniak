@@ -23,6 +23,3 @@ class AsyncInvitations(AsyncResource):
     async def send_webmail_access_link(self) -> None:
         """Send a webmail access link by email."""
         raise NotImplementedError("Mailbox invitations send_webmail_access_link endpoint is not implemented yet.")
-
-
-__all__ = ["Invitations", "AsyncInvitations"]

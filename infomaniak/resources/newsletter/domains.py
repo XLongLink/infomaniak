@@ -23,6 +23,3 @@ class AsyncDomains(AsyncResource):
     async def delete(self) -> None:
         """Delete a domain."""
         raise NotImplementedError("Newsletter domains delete endpoint is not implemented yet.")
-
-
-__all__ = ["Domains", "AsyncDomains"]

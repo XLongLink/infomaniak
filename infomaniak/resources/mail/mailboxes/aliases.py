@@ -39,6 +39,3 @@ class AsyncAliases(AsyncResource):
     async def delete(self) -> None:
         """Delete an alias from a mailbox."""
         raise NotImplementedError("Mailbox aliases delete endpoint is not implemented yet.")
-
-
-__all__ = ["Aliases", "AsyncAliases"]

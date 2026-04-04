@@ -39,6 +39,3 @@ class AsyncTeam(AsyncResource):
     async def update(self) -> None:
         """Update a team webmail access."""
         raise NotImplementedError("Mailbox webmail team update endpoint is not implemented yet.")
-
-
-__all__ = ["Team", "AsyncTeam"]

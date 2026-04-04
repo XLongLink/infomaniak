@@ -15,6 +15,3 @@ class AsyncTemplatesThumbnail(AsyncResource):
     async def update(self) -> None:
         """Update a template thumbnail."""
         raise NotImplementedError("Newsletter templates thumbnail update endpoint is not implemented yet.")
-
-
-__all__ = ["TemplatesThumbnail", "AsyncTemplatesThumbnail"]

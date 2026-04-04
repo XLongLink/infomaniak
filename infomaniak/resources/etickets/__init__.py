@@ -31,21 +31,3 @@ class AsyncEtickets(AsyncResource):
         self.reservations = AsyncReservations(client)
         self.surveys = AsyncSurveys(client)
         self.ticket = AsyncTicket(client)
-
-
-__all__ = [
-    "Etickets",
-    "AsyncEtickets",
-    "Address",
-    "AsyncAddress",
-    "Customers",
-    "AsyncCustomers",
-    "Date",
-    "AsyncDate",
-    "Reservations",
-    "AsyncReservations",
-    "Surveys",
-    "AsyncSurveys",
-    "Ticket",
-    "AsyncTicket",
-]

@@ -5,9 +5,9 @@ from typing import Literal
 from .order import Order, AsyncOrder
 from .dnssec import DNSSEC, AsyncDNSSEC
 from .nameservers import Nameservers, AsyncNameservers
+from infomaniak.utils import PaginatedList
 from infomaniak.resource import Resouce, AsyncResource
 from infomaniak.models.domain import Domain as DomainModel
-from infomaniak.models.domain import DomainListResponse
 
 
 class Domain(Resouce):
@@ -31,7 +31,7 @@ class Domain(Resouce):
         tld: str | None = None,
         page: int | None = None,
         per_page: int | None = None,
-    ) -> DomainListResponse:
+    ) -> PaginatedList[DomainModel]:
         """
         List domains from `GET /2/domains/domains`.
 
@@ -47,7 +47,7 @@ class Domain(Resouce):
             per_page: Number of items per page.
 
         Returns:
-            DomainListResponse: The list of domains with optional pagination metadata.
+            PaginatedList[DomainModel]: The list of domains with pagination metadata.
         """
         params: dict[str, str | int] = {}
         if account_id is not None:
@@ -71,12 +71,11 @@ class Domain(Resouce):
 
         response = self._client.get("/2/domains/domains", params=params or None)
         payload = response.json()
-        return DomainListResponse(
-            data=[from_dict(DomainModel, item) for item in payload["data"]],
-            total=payload.get("total"),
-            page=payload.get("page"),
-            pages=payload.get("pages"),
-            items_per_page=payload.get("items_per_page"),
+        return PaginatedList(
+            [from_dict(DomainModel, item) for item in payload["data"]],
+            page=payload.get("page") or 1,
+            pages=payload.get("pages") or 1,
+            items=payload.get("total") or 0,
         )
 
     def show(self, domain: str) -> DomainModel:
@@ -126,7 +125,7 @@ class AsyncDomain(AsyncResource):
         tld: str | None = None,
         page: int | None = None,
         per_page: int | None = None,
-    ) -> DomainListResponse:
+    ) -> PaginatedList[DomainModel]:
         """
         List domains from `GET /2/domains/domains`.
 
@@ -142,7 +141,7 @@ class AsyncDomain(AsyncResource):
             per_page: Number of items per page.
 
         Returns:
-            DomainListResponse: The list of domains with optional pagination metadata.
+            PaginatedList[DomainModel]: The list of domains with pagination metadata.
         """
         params: dict[str, str | int] = {}
         if account_id is not None:
@@ -166,12 +165,11 @@ class AsyncDomain(AsyncResource):
 
         response = await self._client.get("/2/domains/domains", params=params or None)
         payload = response.json()
-        return DomainListResponse(
-            data=[from_dict(DomainModel, item) for item in payload["data"]],
-            total=payload.get("total"),
-            page=payload.get("page"),
-            pages=payload.get("pages"),
-            items_per_page=payload.get("items_per_page"),
+        return PaginatedList(
+            [from_dict(DomainModel, item) for item in payload["data"]],
+            page=payload.get("page") or 1,
+            pages=payload.get("pages") or 1,
+            items=payload.get("total") or 0,
         )
 
     async def show(self, domain: str) -> DomainModel:
@@ -198,15 +196,3 @@ class AsyncDomain(AsyncResource):
             DomainModel: The matching domain details.
         """
         return await self.show(domain)
-
-
-__all__ = [
-    "Domain",
-    "AsyncDomain",
-    "DNSSEC",
-    "AsyncDNSSEC",
-    "Nameservers",
-    "AsyncNameservers",
-    "Order",
-    "AsyncOrder",
-]

@@ -11,27 +11,3 @@ from infomaniak.models.cloud.projects import (
     PublicCloudProject, PublicCloudProjectTag, PublicCloudProjectListResponse,
     CreatePublicCloudProjectResponse, PublicCloudProjectInvitationResponse,
     PublicCloudProjectAsyncActionResponse)
-
-__all__ = [
-    "CreateDatabaseServiceBackupScheduleRequest",
-    "DatabaseServiceProject",
-    "DatabaseServicePack",
-    "DatabaseServiceTag",
-    "DatabaseServiceBackupSchedule",
-    "DatabaseServiceBackup",
-    "DatabaseService",
-    "DatabaseServiceListResponse",
-    "DatabaseServiceCreation",
-    "DatabaseServiceCreationResponse",
-    "DatabaseServiceConnection",
-    "DatabaseServiceConnectionResponse",
-    "DatabaseServiceBoolResponse",
-    "PublicCloudConfig",
-    "PublicCloudConfigResponse",
-    "PublicCloudProjectTag",
-    "PublicCloudProject",
-    "PublicCloudProjectAsyncActionResponse",
-    "PublicCloudProjectInvitationResponse",
-    "CreatePublicCloudProjectResponse",
-    "PublicCloudProjectListResponse",
-]

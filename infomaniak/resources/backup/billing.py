@@ -15,6 +15,3 @@ class AsyncBilling(AsyncResource):
     async def list(self) -> None:
         """List prices and discounts for Swiss Backup plans."""
         raise NotImplementedError("AsyncBackup.billing.list is not implemented yet.")
-
-
-__all__ = ["Billing", "AsyncBilling"]

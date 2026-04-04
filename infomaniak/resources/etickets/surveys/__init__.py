@@ -24,11 +24,3 @@ class AsyncSurveys(AsyncResource):
     async def list(self) -> None:
         """List surveys (GET /2/etickets/surveys)."""
         raise NotImplementedError("AsyncEtickets.surveys.list is not implemented yet.")
-
-
-__all__ = [
-    "Surveys",
-    "AsyncSurveys",
-    "Answers",
-    "AsyncAnswers",
-]

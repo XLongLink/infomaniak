@@ -31,21 +31,3 @@ class AsyncKdrive(AsyncResource):
         self.settings = AsyncSettings(client)
         self.statistics = AsyncStatistics(client)
         self.users = AsyncUsers(client)
-
-
-__all__ = [
-    "Drive",
-    "Files",
-    "Invitations",
-    "Settings",
-    "Statistics",
-    "Users",
-    "AsyncDrive",
-    "AsyncFiles",
-    "AsyncInvitations",
-    "AsyncSettings",
-    "AsyncStatistics",
-    "AsyncUsers",
-    "Kdrive",
-    "AsyncKdrive",
-]

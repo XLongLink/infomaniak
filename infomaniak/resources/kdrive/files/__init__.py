@@ -190,15 +190,3 @@ class AsyncFiles(AsyncResource):
     async def temp_url(self) -> None:
         """Get a temporary download URL."""
         raise NotImplementedError("kDrive files.temp_url endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Upload",
-    "Trash",
-    "Search",
-    "AsyncUpload",
-    "AsyncTrash",
-    "AsyncSearch",
-    "Files",
-    "AsyncFiles",
-]

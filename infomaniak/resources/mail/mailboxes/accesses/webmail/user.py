@@ -85,6 +85,3 @@ class AsyncUser(AsyncResource):
         raise NotImplementedError(
             "Mailbox webmail user delete_access_for_current_user endpoint is not implemented yet."
         )
-
-
-__all__ = ["User", "AsyncUser"]

@@ -64,11 +64,3 @@ class AsyncSegments(AsyncResource):
     async def delete(self) -> None:
         """Delete a segment."""
         raise NotImplementedError("Newsletter segments delete endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Segments",
-    "AsyncSegments",
-    "SegmentsSubscribers",
-    "AsyncSegmentsSubscribers",
-]

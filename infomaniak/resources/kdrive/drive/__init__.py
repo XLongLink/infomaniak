@@ -48,6 +48,3 @@ class AsyncDrive(AsyncResource):
     async def wake(self) -> None:
         """Wake a sleeping drive."""
         raise NotImplementedError("kDrive drive.wake endpoint is not implemented yet.")
-
-
-__all__ = ["Users", "AsyncUsers", "Drive", "AsyncDrive"]

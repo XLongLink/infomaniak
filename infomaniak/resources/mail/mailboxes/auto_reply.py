@@ -55,6 +55,3 @@ class AsyncAutoReply(AsyncResource):
     async def update_model(self) -> None:
         """Update an auto-reply model for a mailbox."""
         raise NotImplementedError("Mailbox auto-reply update_model endpoint is not implemented yet.")
-
-
-__all__ = ["AutoReply", "AsyncAutoReply"]

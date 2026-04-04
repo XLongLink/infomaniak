@@ -15,9 +15,3 @@ class AsyncSegmentsSubscribers(AsyncResource):
     async def list(self) -> None:
         """List subscribers in a segment."""
         raise NotImplementedError("Newsletter segments subscribers list endpoint is not implemented yet.")
-
-
-__all__ = [
-    "SegmentsSubscribers",
-    "AsyncSegmentsSubscribers",
-]

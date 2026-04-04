@@ -15,6 +15,3 @@ class AsyncCampaignsTemplate(AsyncResource):
     async def test(self) -> None:
         """Send a test using a campaign template."""
         raise NotImplementedError("Newsletter campaigns template test endpoint is not implemented yet.")
-
-
-__all__ = ["CampaignsTemplate", "AsyncCampaignsTemplate"]

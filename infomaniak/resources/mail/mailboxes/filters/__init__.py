@@ -64,11 +64,3 @@ class AsyncFilters(AsyncResource):
     async def update(self) -> None:
         """Update a mailbox filter."""
         raise NotImplementedError("Mailbox filters update endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Filters",
-    "AsyncFilters",
-    "Scripts",
-    "AsyncScripts",
-]

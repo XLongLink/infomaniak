@@ -19,13 +19,3 @@ class AsyncKmeet(AsyncResource):
         super().__init__(client)
         self.plan = AsyncPlan(client)
         self.room = AsyncRoom(client)
-
-
-__all__ = [
-    "Kmeet",
-    "AsyncKmeet",
-    "Plan",
-    "AsyncPlan",
-    "Room",
-    "AsyncRoom",
-]

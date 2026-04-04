@@ -40,11 +40,3 @@ class AsyncTemplates(AsyncResource):
     async def create_from_campaign(self) -> None:
         """Create a template from a campaign."""
         raise NotImplementedError("Newsletter templates create_from_campaign endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Templates",
-    "AsyncTemplates",
-    "TemplatesThumbnail",
-    "AsyncTemplatesThumbnail",
-]

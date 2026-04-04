@@ -23,9 +23,3 @@ class AsyncSubscribersAddressbooks(AsyncResource):
     async def select(self) -> None:
         """Select subscriber address books."""
         raise NotImplementedError("Newsletter subscribers addressbooks select endpoint is not implemented yet.")
-
-
-__all__ = [
-    "SubscribersAddressbooks",
-    "AsyncSubscribersAddressbooks",
-]

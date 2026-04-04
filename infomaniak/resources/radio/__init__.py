@@ -49,33 +49,3 @@ class AsyncRadio(AsyncResource):
         self.products = AsyncProducts(client)
         self.server_events = AsyncServerEvents(client)
         self.stats = AsyncStats(client)
-
-
-__all__ = [
-    "Radio",
-    "AsyncRadio",
-    "Autodj",
-    "AsyncAutodj",
-    "EncoderEvents",
-    "AsyncEncoderEvents",
-    "HlsStream",
-    "AsyncHlsStream",
-    "Mediapulse",
-    "AsyncMediapulse",
-    "Notifications",
-    "AsyncNotifications",
-    "Options",
-    "AsyncOptions",
-    "Packs",
-    "AsyncPacks",
-    "Players",
-    "AsyncPlayers",
-    "ProductOptions",
-    "AsyncProductOptions",
-    "Products",
-    "AsyncProducts",
-    "ServerEvents",
-    "AsyncServerEvents",
-    "Stats",
-    "AsyncStats",
-]

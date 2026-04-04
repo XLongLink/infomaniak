@@ -23,6 +23,3 @@ class AsyncPasswords(AsyncResource):
     async def slot(self) -> None:
         """Request the password for a specific backup slot."""
         raise NotImplementedError("AsyncBackup.passwords.slot is not implemented yet.")
-
-
-__all__ = ["Passwords", "AsyncPasswords"]

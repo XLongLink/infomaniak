@@ -46,31 +46,3 @@ class AsyncNewsletter(AsyncResource):
         self.subscribers = AsyncSubscribers(client)
         self.templates = AsyncTemplates(client)
         self.webforms = AsyncWebforms(client)
-
-
-__all__ = [
-    "Newsletter",
-    "AsyncNewsletter",
-    "Campaigns",
-    "AsyncCampaigns",
-    "Credits",
-    "AsyncCredits",
-    "Dashboard",
-    "AsyncDashboard",
-    "Domains",
-    "AsyncDomains",
-    "Fields",
-    "AsyncFields",
-    "Groups",
-    "AsyncGroups",
-    "Operations",
-    "AsyncOperations",
-    "Segments",
-    "AsyncSegments",
-    "Subscribers",
-    "AsyncSubscribers",
-    "Templates",
-    "AsyncTemplates",
-    "Webforms",
-    "AsyncWebforms",
-]

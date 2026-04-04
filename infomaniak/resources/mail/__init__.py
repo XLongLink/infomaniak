@@ -19,13 +19,3 @@ class AsyncMail(AsyncResource):
         super().__init__(client)
         self.mailbox_management = AsyncMailboxManagement(client)
         self.mailboxes = AsyncMailboxes(client)
-
-
-__all__ = [
-    "Mail",
-    "AsyncMail",
-    "MailboxManagement",
-    "AsyncMailboxManagement",
-    "Mailboxes",
-    "AsyncMailboxes",
-]

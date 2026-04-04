@@ -47,6 +47,3 @@ class AsyncScheduled(AsyncResource):
     async def update(self) -> None:
         """Update a scheduled backup for a managed cloud database."""
         raise NotImplementedError("Cloud database scheduled backups update endpoint is not implemented yet.")
-
-
-__all__ = ["Scheduled", "AsyncScheduled"]

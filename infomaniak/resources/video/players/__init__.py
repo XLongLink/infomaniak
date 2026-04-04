@@ -58,15 +58,3 @@ class AsyncPlayers(AsyncResource):
 
     async def delete(self) -> None:
         raise NotImplementedError("AsyncVideo.players.delete is not implemented yet.")
-
-
-__all__ = [
-    "Players",
-    "AsyncPlayers",
-    "Ads",
-    "AsyncAds",
-    "Embeds",
-    "AsyncEmbeds",
-    "Picture",
-    "AsyncPicture",
-]

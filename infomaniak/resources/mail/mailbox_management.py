@@ -47,6 +47,3 @@ class AsyncMailboxManagement(AsyncResource):
     async def delete(self) -> None:
         """Delete a mailbox."""
         raise NotImplementedError("Mailbox management delete endpoint is not implemented yet.")
-
-
-__all__ = ["MailboxManagement", "AsyncMailboxManagement"]

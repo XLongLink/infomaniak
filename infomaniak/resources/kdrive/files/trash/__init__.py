@@ -72,11 +72,3 @@ class AsyncTrash(AsyncResource):
     async def display(self) -> None:
         """Get a specific trashed file."""
         raise NotImplementedError("kDrive files.trash.display endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Directory",
-    "AsyncDirectory",
-    "Trash",
-    "AsyncTrash",
-]

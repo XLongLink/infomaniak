@@ -15,6 +15,3 @@ class AsyncWebformsFields(AsyncResource):
     async def list(self) -> None:
         """List fields of a webform."""
         raise NotImplementedError("Newsletter webforms fields list endpoint is not implemented yet.")
-
-
-__all__ = ["WebformsFields", "AsyncWebformsFields"]

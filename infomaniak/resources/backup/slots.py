@@ -71,6 +71,3 @@ class AsyncSlots(AsyncResource):
     async def rclone(self) -> None:
         """Retrieve rclone details for a backup slot."""
         raise NotImplementedError("AsyncBackup.slots.rclone is not implemented yet.")
-
-
-__all__ = ["Slots", "AsyncSlots"]

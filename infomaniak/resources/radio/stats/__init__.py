@@ -19,13 +19,3 @@ class AsyncStats(AsyncResource):
         super().__init__(client)
         self.hls_stream = AsyncHlsStream(client)
         self.product = AsyncProduct(client)
-
-
-__all__ = [
-    "Stats",
-    "AsyncStats",
-    "HlsStream",
-    "AsyncHlsStream",
-    "Product",
-    "AsyncProduct",
-]

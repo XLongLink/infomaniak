@@ -103,6 +103,3 @@ class AsyncDevices(AsyncResource):
     async def update(self) -> None:
         """Update a device access."""
         raise NotImplementedError("Mailbox devices update endpoint is not implemented yet.")
-
-
-__all__ = ["Devices", "AsyncDevices"]

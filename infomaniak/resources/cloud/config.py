@@ -43,6 +43,3 @@ class AsyncConfig(AsyncResource):
             params={"account_id": account_id},
         )
         return from_dict(PublicCloudConfigResponse, response.json())
-
-
-__all__ = ["Config", "AsyncConfig"]

@@ -55,37 +55,3 @@ class AsyncVideo(AsyncResource):
         self.stream = AsyncStream(client)
         self.thumbnail = AsyncThumbnail(client)
         self.timezones = AsyncTimezones(client)
-
-
-__all__ = [
-    "Video",
-    "AsyncVideo",
-    "Channel",
-    "AsyncChannel",
-    "Countries",
-    "AsyncCountries",
-    "Event",
-    "AsyncEvent",
-    "Integrations",
-    "AsyncIntegrations",
-    "Live",
-    "AsyncLive",
-    "Options",
-    "AsyncOptions",
-    "Order",
-    "AsyncOrder",
-    "Players",
-    "AsyncPlayers",
-    "Prices",
-    "AsyncPrices",
-    "Restrictions",
-    "AsyncRestrictions",
-    "Stats",
-    "AsyncStats",
-    "Stream",
-    "AsyncStream",
-    "Thumbnail",
-    "AsyncThumbnail",
-    "Timezones",
-    "AsyncTimezones",
-]

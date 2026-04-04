@@ -226,11 +226,3 @@ class AsyncZone(AsyncResource):
         url = f"/2/zones/{zone}/exists"
         response = await self._client.get(url)
         return _extract_zone_exists_payload(response.json())
-
-
-__all__ = [
-    "Zone",
-    "AsyncZone",
-    "Records",
-    "AsyncRecords",
-]

@@ -37,25 +37,3 @@ class AsyncMailboxes(AsyncResource):
         self.forwarding = AsyncForwarding(client)
         self.signatures = AsyncSignatures(client)
         self.users = AsyncUsers(client)
-
-
-__all__ = [
-    "Mailboxes",
-    "AsyncMailboxes",
-    "Accesses",
-    "AsyncAccesses",
-    "Aliases",
-    "AsyncAliases",
-    "AutoReply",
-    "AsyncAutoReply",
-    "Filters",
-    "AsyncFilters",
-    "Folders",
-    "AsyncFolders",
-    "Forwarding",
-    "AsyncForwarding",
-    "Signatures",
-    "AsyncSignatures",
-    "Users",
-    "AsyncUsers",
-]

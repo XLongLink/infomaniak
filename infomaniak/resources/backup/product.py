@@ -39,6 +39,3 @@ class AsyncProduct(AsyncResource):
     async def acronis(self) -> None:
         """Retrieve Acronis-specific details for a Swiss Backup product."""
         raise NotImplementedError("AsyncBackup.product.acronis is not implemented yet.")
-
-
-__all__ = ["Product", "AsyncProduct"]

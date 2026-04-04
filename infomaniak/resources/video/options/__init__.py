@@ -49,17 +49,3 @@ class AsyncOptions(AsyncResource):
 
     async def delete(self) -> None:
         raise NotImplementedError("AsyncVideo.options.delete is not implemented yet.")
-
-
-__all__ = [
-    "Options",
-    "AsyncOptions",
-    "Record",
-    "AsyncRecord",
-    "Simulcast",
-    "AsyncSimulcast",
-    "Timeshift",
-    "AsyncTimeshift",
-    "Watermarking",
-    "AsyncWatermarking",
-]

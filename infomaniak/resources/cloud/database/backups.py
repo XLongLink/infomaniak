@@ -40,11 +40,3 @@ class AsyncBackups(AsyncResource):
     async def delete(self) -> None:
         """Delete a backup for a managed cloud database."""
         raise NotImplementedError("Cloud database backups delete endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Scheduled",
-    "AsyncScheduled",
-    "Backups",
-    "AsyncBackups",
-]
