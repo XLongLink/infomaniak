@@ -6,6 +6,7 @@ from infomaniak.resources.cloud import AsyncCloud, Cloud
 from infomaniak.resources.core import AsyncCore, Core
 from infomaniak.resources.dns import AsyncDNS, DNS
 from infomaniak.resources.domain import AsyncDomain, Domain
+from infomaniak.resources.etickets import AsyncEtickets, Etickets
 from infomaniak.resources.kchat import AsyncKchat, Kchat
 from infomaniak.resources.kmeet import AsyncKmeet, Kmeet
 from infomaniak.resources.newsletter import AsyncNewsletter, Newsletter
@@ -25,6 +26,7 @@ class Client(BaseClient):
         self.core = Core(self)
         self.dns = DNS(self)
         self.domain = Domain(self)
+        self.etickets = Etickets(self)
         self.kchat = Kchat(self)
         self.kmeet = Kmeet(self)
         self.newsletter = Newsletter(self)
@@ -44,6 +46,7 @@ class AsyncClient(AsyncBaseClient):
         self.core = AsyncCore(self)
         self.dns = AsyncDNS(self)
         self.domain = AsyncDomain(self)
+        self.etickets = AsyncEtickets(self)
         self.kchat = AsyncKchat(self)
         self.kmeet = AsyncKmeet(self)
         self.newsletter = AsyncNewsletter(self)

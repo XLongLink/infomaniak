@@ -140,6 +140,34 @@ export default defineConfig({
         ],
       },
       {
+        text: 'eTickets',
+        collapsed: true,
+        items: [
+          { text: 'Overview', link: '/etickets/' },
+          { text: 'Address', link: '/etickets/address' },
+          { text: 'Customers', link: '/etickets/customers' },
+          { text: 'Date', link: '/etickets/date' },
+          { text: 'Reservations', link: '/etickets/reservations' },
+          {
+            text: 'Surveys',
+            collapsed: true,
+            items: [
+              { text: 'Overview', link: '/etickets/surveys' },
+              {
+                text: 'Answers',
+                collapsed: true,
+                items: [
+                  { text: 'Overview', link: '/etickets/surveys/answers' },
+                  { text: 'Passes', link: '/etickets/surveys/answers/passes' },
+                  { text: 'Tickets', link: '/etickets/surveys/answers/tickets' },
+                ],
+              },
+            ],
+          },
+          { text: 'Ticket', link: '/etickets/ticket' },
+        ],
+      },
+      {
         text: 'kDrive',
         collapsed: true,
         items: [{ text: 'Overview', link: '/kdrive/' }],
