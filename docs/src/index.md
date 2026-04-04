@@ -10,24 +10,26 @@ This SDK and its documentation are currently in active development. Endpoints, m
 pip install xinfomaniak
 ```
 
-## API Areas (Infomaniak OpenAPI v3.1.0)
+## API Resources
 
-| API area                     | Overview                            | Documented methods | Status  |
-| ---------------------------- | ----------------------------------- | ------------------ | ------- |
-| [`ai`](/ai/)                 | [AI Overview](/ai/)                 | 0                  |         |
-| [`backup`](/backup/)         | [Backup Overview](/backup/)         | 17                 | 🧪 Beta |
-| [`cloud`](/cloud/)           | [Cloud Overview](/cloud/)           | 51                 |         |
-| [`core`](/core/)             | [Core Overview](/core/)             | 48                 |         |
-| [`dns`](/dns/)               | [DNS Overview](/dns/)               | 24                 |         |
-| [`domain`](/domain/)         | [Domain Overview](/domain/)         | 10                 |         |
-| [`etickets`](/etickets/)     | [eTickets Overview](/etickets/)     | 11                 |         |
-| [`kchat`](/kchat/)           | [kChat Overview](/kchat/)           | 85                 |         |
-| [`kdrive`](/kdrive/)         | [kDrive Overview](/kdrive/)         | 64                 |         |
-| [`kmeet`](/kmeet/)           | [kMeet Overview](/kmeet/)           | 2                  |         |
-| [`mail`](/mail/)             | [Mail Overview](/mail/)             | 71                 |         |
-| [`newsletter`](/newsletter/) | [Newsletter Overview](/newsletter/) | 74                 |         |
-| [`radio`](/radio/)           | [Radio Overview](/radio/)           | 85                 |         |
-| [`tickets`](/tickets/)       | [Tickets Overview](/tickets/)       | 0                  |         |
-| [`url`](/url/)               | [URL Overview](/url/)               | 4                  |         |
-| [`video`](/video/)           | [Video Overview](/video/)           | 77                 |         |
-| [`vod`](/vod/)               | [VOD Overview](/vod/)               | 0                  | 🧪 Beta |
+Infomaniak OpenAPI v3.1.0
+
+| Resource                     | Infomaniak Reference                      | Documented methods | Status  |
+| ---------------------------- | ----------------------------------------- | ------------------ | ------- |
+| [`ai`](/ai/)                 | AI Tools                                  | 0                  |         |
+| [`backup`](/backup/)         | Swiss Backup                              | 17                 | 🧪 Beta |
+| [`cloud`](/cloud/)           | Cloud Overview                            | 51                 |         |
+| [`core`](/core/)             | Core Resources                            | 48                 |         |
+| [`dns`](/dns/)               | Domain and Zones                          | 24                 |         |
+| [`domain`](/domain/)         | Domain Overview                           | 10                 |         |
+| [`etickets`](/etickets/)     | [ETickets](https://chk.me/kOM6ZoO)        | 11                 |         |
+| [`kchat`](/kchat/)           | [kChat](https://chk.me/sXgWvJp)           | 85                 |         |
+| [`kdrive`](/kdrive/)         | [kDrive](https://chk.me/qlJozmn)          | 64                 |         |
+| [`kmeet`](/kmeet/)           | [kMeet](https://chk.me/xgAjld6)           | 2                  |         |
+| [`mail`](/mail/)             | Mail Services                             | 71                 |         |
+| [`newsletter`](/newsletter/) | Newsletter Overview                       | 74                 |         |
+| [`radio`](/radio/)           | [Streaming Radio](https://chk.me/u4XqnUZ) | 85                 |         |
+| [`tickets`](/tickets/)       | Tickets Overview                          | 0                  |         |
+| [`url`](/url/)               | URL Overview                              | 4                  |         |
+| [`video`](/video/)           | [Streaming Video](https://chk.me/BWbluEg) | 77                 |         |
+| [`vod`](/vod/)               | [VOD](https://chk.me/MRAj6ne)             | 0                  | 🧪 Beta |
