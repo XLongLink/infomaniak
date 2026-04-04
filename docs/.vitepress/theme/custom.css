@@ -17,3 +17,8 @@
 		padding-top: 6px;
 	}
 }
+
+/* Let markdown tables use the full available content width. */
+.vp-doc table {
+	width: 100%;
+}
