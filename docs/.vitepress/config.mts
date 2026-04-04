@@ -11,11 +11,13 @@ export default defineConfig({
     sidebar: [
       {
         text: 'AI',
+        link: '/ai/',
         collapsed: true,
         items: [{ text: 'Overview', link: '/ai/' }],
       },
       {
         text: 'Backup',
+        link: '/backup/',
         collapsed: true,
         items: [
           { text: 'Overview', link: '/backup/' },
@@ -28,6 +30,7 @@ export default defineConfig({
       },
       {
         text: 'Cloud',
+        link: '/cloud/',
         collapsed: true,
         items: [
           { text: 'Overview', link: '/cloud/' },
@@ -58,6 +61,7 @@ export default defineConfig({
       },
       {
         text: 'Core',
+        link: '/core/',
         collapsed: true,
         items: [
           { text: 'Overview', link: '/core/' },
@@ -101,11 +105,13 @@ export default defineConfig({
       },
       {
         text: 'DNS',
+        link: '/dns/',
         collapsed: true,
         items: [{ text: 'Overview', link: '/dns/' }],
       },
       {
         text: 'Domain',
+        link: '/domain/',
         collapsed: true,
         items: [
           { text: 'Overview', link: '/domain/' },
@@ -117,6 +123,7 @@ export default defineConfig({
       },
       {
         text: 'kChat',
+        link: '/kchat/',
         collapsed: true,
         items: [
           { text: 'Overview', link: '/kchat/' },
@@ -141,11 +148,13 @@ export default defineConfig({
       },
       {
         text: 'kDrive',
+        link: '/kdrive/',
         collapsed: true,
         items: [{ text: 'Overview', link: '/kdrive/' }],
       },
       {
         text: 'kMeet',
+        link: '/kmeet/',
         collapsed: true,
         items: [
           { text: 'Overview', link: '/kmeet/' },
@@ -155,11 +164,13 @@ export default defineConfig({
       },
       {
         text: 'Mail',
+        link: '/mail/',
         collapsed: true,
         items: [{ text: 'Overview', link: '/mail/' }],
       },
       {
         text: 'Newsletter',
+        link: '/newsletter/',
         collapsed: true,
         items: [
           { text: 'Overview', link: '/newsletter/' },
@@ -221,6 +232,7 @@ export default defineConfig({
       },
       {
         text: 'Radio',
+        link: '/radio/',
         collapsed: true,
         items: [
           { text: 'Overview', link: '/radio/' },
@@ -289,11 +301,13 @@ export default defineConfig({
       },
       {
         text: 'Tickets',
+        link: '/tickets/',
         collapsed: true,
         items: [{ text: 'Overview', link: '/tickets/' }],
       },
       {
         text: 'URL',
+        link: '/url/',
         collapsed: true,
         items: [
           { text: 'Overview', link: '/url/' },
@@ -302,6 +316,7 @@ export default defineConfig({
       },
       {
         text: 'Video',
+        link: '/video/',
         collapsed: true,
         items: [
           { text: 'Overview', link: '/video/' },
@@ -360,6 +375,7 @@ export default defineConfig({
       },
       {
         text: 'VOD',
+        link: '/vod/',
         collapsed: true,
         items: [{ text: 'Overview', link: '/vod/' }],
       },
