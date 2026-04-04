@@ -1,11 +1,7 @@
 from infomaniak.models.cloud.projects import (
-    CreatePublicCloudProjectResponse,
-    PublicCloudProject,
-    PublicCloudProjectAsyncActionResponse,
-    PublicCloudProjectInvitationResponse,
-    PublicCloudProjectListResponse,
-    PublicCloudProjectTag,
-)
+    PublicCloudProject, PublicCloudProjectTag, PublicCloudProjectListResponse,
+    CreatePublicCloudProjectResponse, PublicCloudProjectInvitationResponse,
+    PublicCloudProjectAsyncActionResponse)
 
 __all__ = [
     "PublicCloudProjectTag",

@@ -1,11 +1,10 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .drive import AsyncDrive, Drive
-from .files import AsyncFiles, Files
-from .invitations import AsyncInvitations, Invitations
-from .settings import AsyncSettings, Settings
-from .statistics import AsyncStatistics, Statistics
-from .users import AsyncUsers, Users
+from .drive import Drive, AsyncDrive
+from .files import Files, AsyncFiles
+from .users import Users, AsyncUsers
+from .settings import Settings, AsyncSettings
+from .statistics import Statistics, AsyncStatistics
+from .invitations import Invitations, AsyncInvitations
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Kdrive(Resouce):

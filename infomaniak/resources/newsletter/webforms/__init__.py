@@ -1,7 +1,6 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .fields import AsyncWebformsFields, WebformsFields
-from .themes import AsyncWebformsThemes, WebformsThemes
+from .fields import WebformsFields, AsyncWebformsFields
+from .themes import WebformsThemes, AsyncWebformsThemes
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Webforms(Resouce):
@@ -70,4 +69,11 @@ class AsyncWebforms(AsyncResource):
         raise NotImplementedError("Newsletter webforms delete endpoint is not implemented yet.")
 
 
-__all__ = ["Webforms", "AsyncWebforms", "WebformsThemes", "AsyncWebformsThemes", "WebformsFields", "AsyncWebformsFields"]
+__all__ = [
+    "Webforms",
+    "AsyncWebforms",
+    "WebformsThemes",
+    "AsyncWebformsThemes",
+    "WebformsFields",
+    "AsyncWebformsFields",
+]

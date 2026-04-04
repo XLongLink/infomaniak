@@ -1,7 +1,6 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .channel import AsyncChannelStats, ChannelStats
-from .globals_ import AsyncGlobalStats, GlobalStats
+from .channel import ChannelStats, AsyncChannelStats
+from .globals_ import GlobalStats, AsyncGlobalStats
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Stats(Resouce):
@@ -22,4 +21,11 @@ class AsyncStats(AsyncResource):
         self.globals = AsyncGlobalStats(client)
 
 
-__all__ = ["Stats", "AsyncStats", "ChannelStats", "AsyncChannelStats", "GlobalStats", "AsyncGlobalStats"]
+__all__ = [
+    "Stats",
+    "AsyncStats",
+    "ChannelStats",
+    "AsyncChannelStats",
+    "GlobalStats",
+    "AsyncGlobalStats",
+]

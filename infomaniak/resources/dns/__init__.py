@@ -1,8 +1,7 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .domain import AsyncDomain, Domain
-from .tld import AsyncTLD, TLD
-from .zone import AsyncZone, Zone
+from .tld import TLD, AsyncTLD
+from .zone import Zone, AsyncZone
+from .domain import Domain, AsyncDomain
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class DNS(Resouce):
@@ -23,4 +22,3 @@ class AsyncDNS(AsyncResource):
         self.domain = AsyncDomain(client)
         self.tld = AsyncTLD(client)
         self.zone = AsyncZone(client)
-

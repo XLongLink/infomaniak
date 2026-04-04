@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .scripts import AsyncScripts, Scripts
+from .scripts import Scripts, AsyncScripts
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Filters(Resouce):
@@ -67,4 +66,9 @@ class AsyncFilters(AsyncResource):
         raise NotImplementedError("Mailbox filters update endpoint is not implemented yet.")
 
 
-__all__ = ["Filters", "AsyncFilters", "Scripts", "AsyncScripts"]
+__all__ = [
+    "Filters",
+    "AsyncFilters",
+    "Scripts",
+    "AsyncScripts",
+]

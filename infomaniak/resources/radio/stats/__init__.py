@@ -1,7 +1,6 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .hls_stream import AsyncHlsStream, HlsStream
-from .product import AsyncProduct, Product
+from .product import Product, AsyncProduct
+from .hls_stream import HlsStream, AsyncHlsStream
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Stats(Resouce):
@@ -22,4 +21,11 @@ class AsyncStats(AsyncResource):
         self.product = AsyncProduct(client)
 
 
-__all__ = ["Stats", "AsyncStats", "HlsStream", "AsyncHlsStream", "Product", "AsyncProduct"]
+__all__ = [
+    "Stats",
+    "AsyncStats",
+    "HlsStream",
+    "AsyncHlsStream",
+    "Product",
+    "AsyncProduct",
+]

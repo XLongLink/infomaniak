@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .scheduled import AsyncScheduled, Scheduled
+from .scheduled import Scheduled, AsyncScheduled
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Backups(Resouce):
@@ -43,4 +42,9 @@ class AsyncBackups(AsyncResource):
         raise NotImplementedError("Cloud database backups delete endpoint is not implemented yet.")
 
 
-__all__ = ["Scheduled", "AsyncScheduled", "Backups", "AsyncBackups"]
+__all__ = [
+    "Scheduled",
+    "AsyncScheduled",
+    "Backups",
+    "AsyncBackups",
+]

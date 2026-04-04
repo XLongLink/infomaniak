@@ -1,15 +1,12 @@
 from __future__ import annotations
 
 from dacite import from_dict
-
-from infomaniak.models.cloud import (
-    CreatePublicCloudProjectResponse,
-    PublicCloudProject,
-    PublicCloudProjectAsyncActionResponse,
-    PublicCloudProjectInvitationResponse,
-    PublicCloudProjectListResponse,
-)
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
+from infomaniak.models.cloud import (PublicCloudProject,
+                                     PublicCloudProjectListResponse,
+                                     CreatePublicCloudProjectResponse,
+                                     PublicCloudProjectInvitationResponse,
+                                     PublicCloudProjectAsyncActionResponse)
 
 
 class Projects(Resouce):
@@ -48,7 +45,10 @@ class Projects(Resouce):
             payload["user_email"] = user_email
 
         response = self._client.post(url, json=payload)
-        return from_dict(CreatePublicCloudProjectResponse, response.json())
+        return from_dict(
+            CreatePublicCloudProjectResponse,
+            response.json(),
+        )
 
     def create_with_invitation(
         self,
@@ -79,7 +79,10 @@ class Projects(Resouce):
             payload["user_description"] = user_description
 
         response = self._client.post(url, json=payload)
-        return from_dict(PublicCloudProjectInvitationResponse, response.json())
+        return from_dict(
+            PublicCloudProjectInvitationResponse,
+            response.json(),
+        )
 
     def update(
         self,
@@ -100,7 +103,10 @@ class Projects(Resouce):
         """
         url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}"
         response = self._client.patch(url, json={"name": name})
-        return from_dict(PublicCloudProjectAsyncActionResponse, response.json())
+        return from_dict(
+            PublicCloudProjectAsyncActionResponse,
+            response.json(),
+        )
 
     def delete(
         self,
@@ -119,7 +125,10 @@ class Projects(Resouce):
         """
         url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}"
         response = self._client.delete(url)
-        return from_dict(PublicCloudProjectAsyncActionResponse, response.json())
+        return from_dict(
+            PublicCloudProjectAsyncActionResponse,
+            response.json(),
+        )
 
     def list(
         self,
@@ -211,7 +220,10 @@ class AsyncProjects(AsyncResource):
             payload["user_email"] = user_email
 
         response = await self._client.post(url, json=payload)
-        return from_dict(CreatePublicCloudProjectResponse, response.json())
+        return from_dict(
+            CreatePublicCloudProjectResponse,
+            response.json(),
+        )
 
     async def create_with_invitation(
         self,
@@ -242,7 +254,10 @@ class AsyncProjects(AsyncResource):
             payload["user_description"] = user_description
 
         response = await self._client.post(url, json=payload)
-        return from_dict(PublicCloudProjectInvitationResponse, response.json())
+        return from_dict(
+            PublicCloudProjectInvitationResponse,
+            response.json(),
+        )
 
     async def update(
         self,
@@ -263,7 +278,10 @@ class AsyncProjects(AsyncResource):
         """
         url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}"
         response = await self._client.patch(url, json={"name": name})
-        return from_dict(PublicCloudProjectAsyncActionResponse, response.json())
+        return from_dict(
+            PublicCloudProjectAsyncActionResponse,
+            response.json(),
+        )
 
     async def delete(
         self,
@@ -282,7 +300,10 @@ class AsyncProjects(AsyncResource):
         """
         url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}"
         response = await self._client.delete(url)
-        return from_dict(PublicCloudProjectAsyncActionResponse, response.json())
+        return from_dict(
+            PublicCloudProjectAsyncActionResponse,
+            response.json(),
+        )
 
     async def list(
         self,

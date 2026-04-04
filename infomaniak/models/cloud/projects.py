@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import Any, Literal
+from dataclasses import dataclass
 
 
 @dataclass(slots=True)
@@ -23,7 +23,15 @@ class PublicCloudProject:
     name: str
     price: float
     resource_level: int
-    status: Literal["creating", "deleting", "disabled", "disabling", "error", "ok", "updating"]
+    status: Literal[
+        "creating",
+        "deleting",
+        "disabled",
+        "disabling",
+        "error",
+        "ok",
+        "updating",
+    ]
     price_updated_at: int
     billing_start_at: int
     billing_end_at: int

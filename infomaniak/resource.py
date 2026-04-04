@@ -1,4 +1,4 @@
-from infomaniak.clients import AsyncBaseClient, BaseClient
+from infomaniak.clients import BaseClient, AsyncBaseClient
 
 
 class Resouce:

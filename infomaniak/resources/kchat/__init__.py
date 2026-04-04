@@ -1,22 +1,21 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .users import AsyncUsers, Users
-from .bots import AsyncBots, Bots
-from .teams import AsyncTeams, Teams
-from .channels import AsyncChannels, Channels
-from .posts import AsyncPosts, Posts
-from .threads import AsyncThreads, Threads
-from .files import AsyncFiles, Files
-from .preferences import AsyncPreferences, Preferences
-from .status import AsyncStatus, Status
-from .emoji import AsyncEmoji, Emoji
-from .reactions import AsyncReactions, Reactions
-from .webhooks import AsyncWebhooks, Webhooks
-from .commands import AsyncCommands, Commands
-from .system import AsyncSystem, System
-from .groups import AsyncGroups, Groups
-from .roles import AsyncRoles, Roles
-from .insights import AsyncInsights, Insights
+from .bots import Bots, AsyncBots
+from .emoji import Emoji, AsyncEmoji
+from .files import Files, AsyncFiles
+from .posts import Posts, AsyncPosts
+from .roles import Roles, AsyncRoles
+from .teams import Teams, AsyncTeams
+from .users import Users, AsyncUsers
+from .groups import Groups, AsyncGroups
+from .status import Status, AsyncStatus
+from .system import System, AsyncSystem
+from .threads import Threads, AsyncThreads
+from .channels import Channels, AsyncChannels
+from .commands import Commands, AsyncCommands
+from .insights import Insights, AsyncInsights
+from .webhooks import Webhooks, AsyncWebhooks
+from .reactions import Reactions, AsyncReactions
+from .preferences import Preferences, AsyncPreferences
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Kchat(Resouce):

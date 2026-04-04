@@ -1,7 +1,6 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .plan import AsyncPlan, Plan
-from .room import AsyncRoom, Room
+from .plan import Plan, AsyncPlan
+from .room import Room, AsyncRoom
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Kmeet(Resouce):

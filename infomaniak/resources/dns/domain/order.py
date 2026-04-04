@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Order(Resouce):
@@ -14,9 +14,7 @@ class Order(Resouce):
 
     def retry_create(self) -> None:
         """Retry the creation of a domain order."""
-        raise NotImplementedError(
-            "DNS.domain.order.retry_create is not implemented yet."
-        )
+        raise NotImplementedError("DNS.domain.order.retry_create is not implemented yet.")
 
     def transfer(self) -> None:
         """Transfer a domain."""
@@ -24,9 +22,7 @@ class Order(Resouce):
 
     def retry_transfer(self) -> None:
         """Retry the transfer of a domain."""
-        raise NotImplementedError(
-            "DNS.domain.order.retry_transfer is not implemented yet."
-        )
+        raise NotImplementedError("DNS.domain.order.retry_transfer is not implemented yet.")
 
 
 class AsyncOrder(AsyncResource):
@@ -42,9 +38,7 @@ class AsyncOrder(AsyncResource):
 
     async def retry_create(self) -> None:
         """Retry the creation of a domain order."""
-        raise NotImplementedError(
-            "AsyncDNS.domain.order.retry_create is not implemented yet."
-        )
+        raise NotImplementedError("AsyncDNS.domain.order.retry_create is not implemented yet.")
 
     async def transfer(self) -> None:
         """Transfer a domain."""
@@ -52,6 +46,4 @@ class AsyncOrder(AsyncResource):
 
     async def retry_transfer(self) -> None:
         """Retry the transfer of a domain."""
-        raise NotImplementedError(
-            "AsyncDNS.domain.order.retry_transfer is not implemented yet."
-        )
+        raise NotImplementedError("AsyncDNS.domain.order.retry_transfer is not implemented yet.")

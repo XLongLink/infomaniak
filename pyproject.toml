@@ -40,7 +40,9 @@ Issues = "https://github.com/XLongLink/infomaniak/issues"
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0", 
-    "pytest-cov"
+    "pytest-cov",
+    "black",
+    "isort"
 ]
 
 [project.scripts]
@@ -51,3 +53,13 @@ include = ["infomaniak*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+from_first = false
+no_sections = true
+lines_between_types = 0
+length_sort = true

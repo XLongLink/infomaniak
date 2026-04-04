@@ -1,9 +1,8 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .events import AsyncEvents, Events
-from .media import AsyncMedia, Media
-from .playing_playlist import AsyncPlayingPlaylist, PlayingPlaylist
-from .playlists import AsyncPlaylists, Playlists
+from .media import Media, AsyncMedia
+from .events import Events, AsyncEvents
+from .playlists import Playlists, AsyncPlaylists
+from .playing_playlist import PlayingPlaylist, AsyncPlayingPlaylist
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Autodj(Resouce):

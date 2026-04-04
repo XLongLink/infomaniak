@@ -1,8 +1,7 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .data import AsyncData, Data
-from .ip import AsyncIp, Ip
-from .pools import AsyncPools, Pools
+from .ip import Ip, AsyncIp
+from .data import Data, AsyncData
+from .pools import Pools, AsyncPools
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Kubernetes(Resouce):

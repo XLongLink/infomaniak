@@ -1,12 +1,9 @@
-from typing import Literal
-
 from dacite import from_dict
-
+from typing import Literal
+from .teams import UserTeams, AsyncUserTeams
+from .accounts import UserAccounts, AsyncUserAccounts
+from infomaniak.resource import Resouce, AsyncResource
 from infomaniak.models.core.user import AccountInvitation
-from infomaniak.resource import AsyncResource, Resouce
-
-from .accounts import AsyncUserAccounts, UserAccounts
-from .teams import AsyncUserTeams, UserTeams
 
 
 class User(Resouce):

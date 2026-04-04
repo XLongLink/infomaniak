@@ -1,7 +1,6 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .config import AsyncConfig, Config
-from .thumbnail import AsyncThumbnail, Thumbnail
+from .config import Config, AsyncConfig
+from .thumbnail import Thumbnail, AsyncThumbnail
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Players(Resouce):
@@ -102,4 +101,11 @@ class AsyncPlayers(AsyncResource):
         raise NotImplementedError("AsyncRadio.players.reset is not implemented yet.")
 
 
-__all__ = ["Players", "AsyncPlayers", "Config", "AsyncConfig", "Thumbnail", "AsyncThumbnail"]
+__all__ = [
+    "Players",
+    "AsyncPlayers",
+    "Config",
+    "AsyncConfig",
+    "Thumbnail",
+    "AsyncThumbnail",
+]

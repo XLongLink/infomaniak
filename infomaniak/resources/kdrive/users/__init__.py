@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .roles import AsyncRoles, Roles
+from .roles import Roles, AsyncRoles
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Users(Resouce):

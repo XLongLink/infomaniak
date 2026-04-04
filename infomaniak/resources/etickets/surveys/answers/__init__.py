@@ -1,7 +1,6 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .passes import AsyncPasses, Passes
-from .tickets import AsyncTickets, Tickets
+from .passes import Passes, AsyncPasses
+from .tickets import Tickets, AsyncTickets
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Answers(Resouce):
@@ -22,4 +21,11 @@ class AsyncAnswers(AsyncResource):
         self.tickets = AsyncTickets(client)
 
 
-__all__ = ["Answers", "AsyncAnswers", "Passes", "AsyncPasses", "Tickets", "AsyncTickets"]
+__all__ = [
+    "Answers",
+    "AsyncAnswers",
+    "Passes",
+    "AsyncPasses",
+    "Tickets",
+    "AsyncTickets",
+]

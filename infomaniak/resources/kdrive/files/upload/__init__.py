@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .session import AsyncSession, Session
+from .session import Session, AsyncSession
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Upload(Resouce):
@@ -35,4 +34,9 @@ class AsyncUpload(AsyncResource):
         raise NotImplementedError("kDrive files.upload.cancel_by_path endpoint is not implemented yet.")
 
 
-__all__ = ["Session", "AsyncSession", "Upload", "AsyncUpload"]
+__all__ = [
+    "Session",
+    "AsyncSession",
+    "Upload",
+    "AsyncUpload",
+]

@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .subscribers import AsyncGroupsSubscribers, GroupsSubscribers
+from .subscribers import GroupsSubscribers, AsyncGroupsSubscribers
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Groups(Resouce):
@@ -67,4 +66,9 @@ class AsyncGroups(AsyncResource):
         raise NotImplementedError("Newsletter groups delete endpoint is not implemented yet.")
 
 
-__all__ = ["Groups", "AsyncGroups", "GroupsSubscribers", "AsyncGroupsSubscribers"]
+__all__ = [
+    "Groups",
+    "AsyncGroups",
+    "GroupsSubscribers",
+    "AsyncGroupsSubscribers",
+]

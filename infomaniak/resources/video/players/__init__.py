@@ -1,8 +1,7 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .ads import AsyncAds, Ads
-from .embeds import AsyncEmbeds, Embeds
-from .picture import AsyncPicture, Picture
+from .ads import Ads, AsyncAds
+from .embeds import Embeds, AsyncEmbeds
+from .picture import Picture, AsyncPicture
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Players(Resouce):
@@ -61,4 +60,13 @@ class AsyncPlayers(AsyncResource):
         raise NotImplementedError("AsyncVideo.players.delete is not implemented yet.")
 
 
-__all__ = ["Players", "AsyncPlayers", "Ads", "AsyncAds", "Embeds", "AsyncEmbeds", "Picture", "AsyncPicture"]
+__all__ = [
+    "Players",
+    "AsyncPlayers",
+    "Ads",
+    "AsyncAds",
+    "Embeds",
+    "AsyncEmbeds",
+    "Picture",
+    "AsyncPicture",
+]

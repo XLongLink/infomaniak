@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class User(Resouce):
@@ -6,9 +6,7 @@ class User(Resouce):
 
     def list_access_and_invitations(self) -> None:
         """List user accesses, team accesses, and invitations."""
-        raise NotImplementedError(
-            "Mailbox webmail user list_access_and_invitations endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox webmail user list_access_and_invitations endpoint is not implemented yet.")
 
     def set_primary_mailbox(self) -> None:
         """Set the primary mailbox for current user."""
@@ -20,15 +18,11 @@ class User(Resouce):
 
     def get_team_accesses_for_user(self) -> None:
         """Get team accesses for a user."""
-        raise NotImplementedError(
-            "Mailbox webmail user get_team_accesses_for_user endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox webmail user get_team_accesses_for_user endpoint is not implemented yet.")
 
     def get_user_accesses_for_team(self) -> None:
         """Get user accesses for a team."""
-        raise NotImplementedError(
-            "Mailbox webmail user get_user_accesses_for_team endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox webmail user get_user_accesses_for_team endpoint is not implemented yet.")
 
     def list_accesses_for_current_user(self) -> None:
         """List accesses for current user."""
@@ -54,9 +48,7 @@ class AsyncUser(AsyncResource):
 
     async def list_access_and_invitations(self) -> None:
         """List user accesses, team accesses, and invitations."""
-        raise NotImplementedError(
-            "Mailbox webmail user list_access_and_invitations endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox webmail user list_access_and_invitations endpoint is not implemented yet.")
 
     async def set_primary_mailbox(self) -> None:
         """Set the primary mailbox for current user."""
@@ -68,15 +60,11 @@ class AsyncUser(AsyncResource):
 
     async def get_team_accesses_for_user(self) -> None:
         """Get team accesses for a user."""
-        raise NotImplementedError(
-            "Mailbox webmail user get_team_accesses_for_user endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox webmail user get_team_accesses_for_user endpoint is not implemented yet.")
 
     async def get_user_accesses_for_team(self) -> None:
         """Get user accesses for a team."""
-        raise NotImplementedError(
-            "Mailbox webmail user get_user_accesses_for_team endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox webmail user get_user_accesses_for_team endpoint is not implemented yet.")
 
     async def list_accesses_for_current_user(self) -> None:
         """List accesses for current user."""
@@ -84,7 +72,9 @@ class AsyncUser(AsyncResource):
             "Mailbox webmail user list_accesses_for_current_user endpoint is not implemented yet."
         )
 
-    async def list_accesses_for_account_and_user(self) -> None:
+    async def list_accesses_for_account_and_user(
+        self,
+    ) -> None:
         """List accesses for an account and a user."""
         raise NotImplementedError(
             "Mailbox webmail user list_accesses_for_account_and_user endpoint is not implemented yet."

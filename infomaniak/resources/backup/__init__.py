@@ -1,10 +1,9 @@
-from infomaniak.resource import AsyncResource, Resouce
-
+from .slots import Slots, AsyncSlots
+from .billing import Billing, AsyncBilling
+from .product import Product, AsyncProduct
+from .passwords import Passwords, AsyncPasswords
 from .administrator import Administrator, AsyncAdministrator
-from .billing import AsyncBilling, Billing
-from .passwords import AsyncPasswords, Passwords
-from .product import AsyncProduct, Product
-from .slots import AsyncSlots, Slots
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Backup(Resouce):

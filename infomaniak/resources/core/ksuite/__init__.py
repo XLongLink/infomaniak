@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .mailbox import AsyncKsuiteMailbox, KsuiteMailbox
+from .mailbox import KsuiteMailbox, AsyncKsuiteMailbox
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Ksuite(Resouce):

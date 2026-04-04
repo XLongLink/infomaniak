@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .directory import AsyncDirectory, Directory
+from .directory import Directory, AsyncDirectory
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Trash(Resouce):
@@ -75,4 +74,9 @@ class AsyncTrash(AsyncResource):
         raise NotImplementedError("kDrive files.trash.display endpoint is not implemented yet.")
 
 
-__all__ = ["Directory", "AsyncDirectory", "Trash", "AsyncTrash"]
+__all__ = [
+    "Directory",
+    "AsyncDirectory",
+    "Trash",
+    "AsyncTrash",
+]

@@ -1,8 +1,7 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .database import AsyncDatabase, Database
-from .kubernetes import AsyncKubernetes, Kubernetes
-from .projects import AsyncProjects, Projects
+from .database import Database, AsyncDatabase
+from .projects import Projects, AsyncProjects
+from .kubernetes import Kubernetes, AsyncKubernetes
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Cloud(Resouce):

@@ -1,9 +1,7 @@
-from infomaniak.resource import AsyncResource, Resouce
-from infomaniak.models.domain import (
-    UpdateNameserversRequest,
-    UpdateNameserversResponse,
-)
 from dacite import from_dict
+from infomaniak.resource import Resouce, AsyncResource
+from infomaniak.models.domain import (UpdateNameserversRequest,
+                                      UpdateNameserversResponse)
 
 
 class Nameservers(Resouce):
@@ -36,9 +34,7 @@ class Nameservers(Resouce):
                 `nameservers` contains fewer than 2 values.
         """
         if nameservers is None and use_infomaniak_ns is None:
-            raise ValueError(
-                "Either nameservers or use_infomaniak_ns must be provided."
-            )
+            raise ValueError("Either nameservers or use_infomaniak_ns must be provided.")
         if nameservers is not None and len(nameservers) < 2:
             raise ValueError("nameservers must contain at least 2 values.")
 
@@ -47,9 +43,7 @@ class Nameservers(Resouce):
             use_infomaniak_ns=use_infomaniak_ns,
             verify_ns_availability=verify_ns_availability,
         )
-        json_payload = {
-            key: value for key, value in payload.__dict__.items() if value is not None
-        }
+        json_payload = {key: value for key, value in payload.__dict__.items() if value is not None}
 
         response = self._client.put(
             f"/2/domains/domains/{domain}/nameservers",
@@ -88,9 +82,7 @@ class AsyncNameservers(AsyncResource):
                 `nameservers` contains fewer than 2 values.
         """
         if nameservers is None and use_infomaniak_ns is None:
-            raise ValueError(
-                "Either nameservers or use_infomaniak_ns must be provided."
-            )
+            raise ValueError("Either nameservers or use_infomaniak_ns must be provided.")
         if nameservers is not None and len(nameservers) < 2:
             raise ValueError("nameservers must contain at least 2 values.")
 
@@ -99,9 +91,7 @@ class AsyncNameservers(AsyncResource):
             use_infomaniak_ns=use_infomaniak_ns,
             verify_ns_availability=verify_ns_availability,
         )
-        json_payload = {
-            key: value for key, value in payload.__dict__.items() if value is not None
-        }
+        json_payload = {key: value for key, value in payload.__dict__.items() if value is not None}
         response = await self._client.put(
             f"/2/domains/domains/{domain}/nameservers",
             json=json_payload,

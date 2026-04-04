@@ -1,10 +1,9 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .avatar import AsyncProfileAvatar, ProfileAvatar
-from .email import AsyncProfileEmail, ProfileEmail
-from .info import AsyncProfileInfo, ProfileInfo
-from .password import AsyncProfilePassword, ProfilePassword
-from .phone import AsyncProfilePhone, ProfilePhone
+from .info import ProfileInfo, AsyncProfileInfo
+from .email import ProfileEmail, AsyncProfileEmail
+from .phone import ProfilePhone, AsyncProfilePhone
+from .avatar import ProfileAvatar, AsyncProfileAvatar
+from .password import ProfilePassword, AsyncProfilePassword
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Profile(Resouce):

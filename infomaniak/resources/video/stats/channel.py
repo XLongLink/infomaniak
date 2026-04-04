@@ -1,8 +1,7 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .geolocation import AsyncStatsGeolocation, StatsGeolocation
-from .viewers import AsyncStatsViewers, StatsViewers
-from .viewing import AsyncStatsViewing, StatsViewing
+from .viewers import StatsViewers, AsyncStatsViewers
+from .viewing import StatsViewing, AsyncStatsViewing
+from .geolocation import StatsGeolocation, AsyncStatsGeolocation
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class ChannelStats(Resouce):

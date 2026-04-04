@@ -1,13 +1,12 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .accesses import Accesses, AsyncAccesses
+from .users import Users, AsyncUsers
 from .aliases import Aliases, AsyncAliases
-from .auto_reply import AsyncAutoReply, AutoReply
-from .filters import AsyncFilters, Filters
-from .folders import AsyncFolders, Folders
-from .forwarding import AsyncForwarding, Forwarding
-from .signatures import AsyncSignatures, Signatures
-from .users import AsyncUsers, Users
+from .filters import Filters, AsyncFilters
+from .folders import Folders, AsyncFolders
+from .accesses import Accesses, AsyncAccesses
+from .auto_reply import AutoReply, AsyncAutoReply
+from .forwarding import Forwarding, AsyncForwarding
+from .signatures import Signatures, AsyncSignatures
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Mailboxes(Resouce):

@@ -1,8 +1,7 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .search import AsyncSearch, Search
-from .trash import AsyncTrash, Trash
-from .upload import AsyncUpload, Upload
+from .trash import Trash, AsyncTrash
+from .search import Search, AsyncSearch
+from .upload import Upload, AsyncUpload
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Files(Resouce):
@@ -193,4 +192,13 @@ class AsyncFiles(AsyncResource):
         raise NotImplementedError("kDrive files.temp_url endpoint is not implemented yet.")
 
 
-__all__ = ["Upload", "Trash", "Search", "AsyncUpload", "AsyncTrash", "AsyncSearch", "Files", "AsyncFiles"]
+__all__ = [
+    "Upload",
+    "Trash",
+    "Search",
+    "AsyncUpload",
+    "AsyncTrash",
+    "AsyncSearch",
+    "Files",
+    "AsyncFiles",
+]

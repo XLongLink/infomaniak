@@ -1,19 +1,18 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .channel import AsyncChannel, Channel
-from .countries import AsyncCountries, Countries
-from .event import AsyncEvent, Event
-from .integrations import AsyncIntegrations, Integrations
-from .live import AsyncLive, Live
-from .options import AsyncOptions, Options
-from .order import AsyncOrder, Order
-from .players import AsyncPlayers, Players
-from .prices import AsyncPrices, Prices
-from .restrictions import AsyncRestrictions, Restrictions
-from .stats import AsyncStats, Stats
-from .stream import AsyncStream, Stream
-from .thumbnail import AsyncThumbnail, Thumbnail
-from .timezones import AsyncTimezones, Timezones
+from .live import Live, AsyncLive
+from .event import Event, AsyncEvent
+from .order import Order, AsyncOrder
+from .stats import Stats, AsyncStats
+from .prices import Prices, AsyncPrices
+from .stream import Stream, AsyncStream
+from .channel import Channel, AsyncChannel
+from .options import Options, AsyncOptions
+from .players import Players, AsyncPlayers
+from .countries import Countries, AsyncCountries
+from .thumbnail import Thumbnail, AsyncThumbnail
+from .timezones import Timezones, AsyncTimezones
+from .integrations import Integrations, AsyncIntegrations
+from .restrictions import Restrictions, AsyncRestrictions
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Video(Resouce):

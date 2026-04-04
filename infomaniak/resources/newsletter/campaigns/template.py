@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class CampaignsTemplate(Resouce):
@@ -6,9 +6,7 @@ class CampaignsTemplate(Resouce):
 
     def test(self) -> None:
         """Send a test using a campaign template."""
-        raise NotImplementedError(
-            "Newsletter campaigns template test endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter campaigns template test endpoint is not implemented yet.")
 
 
 class AsyncCampaignsTemplate(AsyncResource):
@@ -16,9 +14,7 @@ class AsyncCampaignsTemplate(AsyncResource):
 
     async def test(self) -> None:
         """Send a test using a campaign template."""
-        raise NotImplementedError(
-            "Newsletter campaigns template test endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter campaigns template test endpoint is not implemented yet.")
 
 
 __all__ = ["CampaignsTemplate", "AsyncCampaignsTemplate"]

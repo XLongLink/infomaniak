@@ -1,8 +1,7 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .dnssec import AsyncDNSSEC, DNSSEC
-from .nameservers import AsyncNameservers, Nameservers
-from .order import AsyncOrder, Order
+from .order import Order, AsyncOrder
+from .dnssec import DNSSEC, AsyncDNSSEC
+from .nameservers import Nameservers, AsyncNameservers
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Domain(Resouce):

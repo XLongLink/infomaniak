@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .templates import AsyncTemplates, Templates
+from .templates import Templates, AsyncTemplates
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Signatures(Resouce):
@@ -75,4 +74,9 @@ class AsyncSignatures(AsyncResource):
         raise NotImplementedError("Mailbox signatures update endpoint is not implemented yet.")
 
 
-__all__ = ["Signatures", "AsyncSignatures", "Templates", "AsyncTemplates"]
+__all__ = [
+    "Signatures",
+    "AsyncSignatures",
+    "Templates",
+    "AsyncTemplates",
+]

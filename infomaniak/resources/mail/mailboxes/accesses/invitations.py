@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Invitations(Resouce):
@@ -6,15 +6,11 @@ class Invitations(Resouce):
 
     def create_webmail_access_link(self) -> None:
         """Create a webmail access link."""
-        raise NotImplementedError(
-            "Mailbox invitations create_webmail_access_link endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox invitations create_webmail_access_link endpoint is not implemented yet.")
 
     def send_webmail_access_link(self) -> None:
         """Send a webmail access link by email."""
-        raise NotImplementedError(
-            "Mailbox invitations send_webmail_access_link endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox invitations send_webmail_access_link endpoint is not implemented yet.")
 
 
 class AsyncInvitations(AsyncResource):
@@ -22,15 +18,11 @@ class AsyncInvitations(AsyncResource):
 
     async def create_webmail_access_link(self) -> None:
         """Create a webmail access link."""
-        raise NotImplementedError(
-            "Mailbox invitations create_webmail_access_link endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox invitations create_webmail_access_link endpoint is not implemented yet.")
 
     async def send_webmail_access_link(self) -> None:
         """Send a webmail access link by email."""
-        raise NotImplementedError(
-            "Mailbox invitations send_webmail_access_link endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox invitations send_webmail_access_link endpoint is not implemented yet.")
 
 
 __all__ = ["Invitations", "AsyncInvitations"]

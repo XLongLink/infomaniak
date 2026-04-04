@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .addressbooks import AsyncSubscribersAddressbooks, SubscribersAddressbooks
+from .addressbooks import SubscribersAddressbooks, AsyncSubscribersAddressbooks
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Subscribers(Resouce):
@@ -20,15 +19,11 @@ class Subscribers(Resouce):
 
     def delete_bulk(self) -> None:
         """Bulk delete subscribers."""
-        raise NotImplementedError(
-            "Newsletter subscribers delete_bulk endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter subscribers delete_bulk endpoint is not implemented yet.")
 
     def count_status(self) -> None:
         """Count subscribers by status."""
-        raise NotImplementedError(
-            "Newsletter subscribers count_status endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter subscribers count_status endpoint is not implemented yet.")
 
     def display(self) -> None:
         """Get subscriber details."""
@@ -92,15 +87,11 @@ class AsyncSubscribers(AsyncResource):
 
     async def delete_bulk(self) -> None:
         """Bulk delete subscribers."""
-        raise NotImplementedError(
-            "Newsletter subscribers delete_bulk endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter subscribers delete_bulk endpoint is not implemented yet.")
 
     async def count_status(self) -> None:
         """Count subscribers by status."""
-        raise NotImplementedError(
-            "Newsletter subscribers count_status endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter subscribers count_status endpoint is not implemented yet.")
 
     async def display(self) -> None:
         """Get subscriber details."""

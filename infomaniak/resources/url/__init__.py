@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .short import AsyncShort, Short
+from .short import Short, AsyncShort
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Url(Resouce):

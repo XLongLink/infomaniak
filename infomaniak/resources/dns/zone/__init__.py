@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 from dacite import from_dict
-
+from typing import Any
+from .records import Records, AsyncRecords
+from infomaniak.resource import Resouce, AsyncResource
 from infomaniak.models.dns.zone import DNSZone
-from infomaniak.resource import AsyncResource, Resouce
-
-from .records import AsyncRecords, Records
 
 
 def _build_with_values(
@@ -28,6 +27,16 @@ def _build_with_values(
     if label:
         with_values.append("label")
     return ",".join(with_values) if with_values else None
+
+
+def _extract_zone_payload(
+    payload: dict[str, Any],
+) -> dict[str, Any]:
+    """Normalize DNS zone responses that may be wrapped or returned directly."""
+    data = payload.get("data")
+    if isinstance(data, dict):
+        return data
+    return payload
 
 
 class Zone(Resouce):
@@ -58,7 +67,7 @@ class Zone(Resouce):
         )
         params = {"with": with_values} if with_values is not None else None
         response = self._client.get(url, params=params)
-        return from_dict(DNSZone, response.json()["data"])
+        return from_dict(DNSZone, _extract_zone_payload(response.json()))
 
     def update(
         self,
@@ -80,7 +89,7 @@ class Zone(Resouce):
         )
         params = {"with": with_values} if with_values is not None else None
         response = self._client.put(url, json={"skel": zone_skel}, params=params)
-        return from_dict(DNSZone, response.json()["data"])
+        return from_dict(DNSZone, _extract_zone_payload(response.json()))
 
     def store(
         self,
@@ -103,7 +112,7 @@ class Zone(Resouce):
         params = {"with": with_values} if with_values is not None else None
         payload = {"skel": zone_skel} if zone_skel is not None else None
         response = self._client.post(url, json=payload, params=params)
-        return from_dict(DNSZone, response.json()["data"])
+        return from_dict(DNSZone, _extract_zone_payload(response.json()))
 
     def delete(self, zone: str) -> bool:
         """Delete a given zone."""
@@ -146,7 +155,7 @@ class AsyncZone(AsyncResource):
         )
         params = {"with": with_values} if with_values is not None else None
         response = await self._client.get(url, params=params)
-        return from_dict(DNSZone, response.json()["data"])
+        return from_dict(DNSZone, _extract_zone_payload(response.json()))
 
     async def update(
         self,
@@ -168,7 +177,7 @@ class AsyncZone(AsyncResource):
         )
         params = {"with": with_values} if with_values is not None else None
         response = await self._client.put(url, json={"skel": zone_skel}, params=params)
-        return from_dict(DNSZone, response.json()["data"])
+        return from_dict(DNSZone, _extract_zone_payload(response.json()))
 
     async def store(
         self,
@@ -191,7 +200,7 @@ class AsyncZone(AsyncResource):
         params = {"with": with_values} if with_values is not None else None
         payload = {"skel": zone_skel} if zone_skel is not None else None
         response = await self._client.post(url, json=payload, params=params)
-        return from_dict(DNSZone, response.json()["data"])
+        return from_dict(DNSZone, _extract_zone_payload(response.json()))
 
     async def delete(self, zone: str) -> bool:
         """Delete a given zone."""

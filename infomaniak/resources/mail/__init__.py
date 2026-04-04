@@ -1,7 +1,6 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .mailbox_management import AsyncMailboxManagement, MailboxManagement
-from .mailboxes import AsyncMailboxes, Mailboxes
+from .mailboxes import Mailboxes, AsyncMailboxes
+from infomaniak.resource import Resouce, AsyncResource
+from .mailbox_management import MailboxManagement, AsyncMailboxManagement
 
 
 class Mail(Resouce):

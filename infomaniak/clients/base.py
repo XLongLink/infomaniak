@@ -1,8 +1,7 @@
-
 import httpx
 from typing import Any
-from infomaniak.constants import API
 from .__root__ import RootClient
+from infomaniak.constants import API
 
 
 class BaseClient(RootClient):
@@ -75,4 +74,3 @@ class BaseClient(RootClient):
         tb: Any,
     ) -> None:
         self.close()
-

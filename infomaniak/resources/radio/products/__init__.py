@@ -1,8 +1,8 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .conflict_restrictions import AsyncConflictRestrictions, ConflictRestrictions
-from .restrictions import AsyncRestrictions, Restrictions
-from .users import AsyncUsers, Users
+from .users import Users, AsyncUsers
+from .restrictions import Restrictions, AsyncRestrictions
+from infomaniak.resource import Resouce, AsyncResource
+from .conflict_restrictions import (ConflictRestrictions,
+                                    AsyncConflictRestrictions)
 
 
 class Products(Resouce):

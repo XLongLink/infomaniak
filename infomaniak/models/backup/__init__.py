@@ -1,8 +1,5 @@
-from infomaniak.models.backup.common import (
-    BackupBillingPlan,
-    BackupProduct,
-    BackupSlot,
-)
+from infomaniak.models.backup.common import (BackupSlot, BackupProduct,
+                                             BackupBillingPlan)
 
 __all__ = [
     "BackupProduct",

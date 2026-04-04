@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .thumbnail import AsyncTemplatesThumbnail, TemplatesThumbnail
+from .thumbnail import TemplatesThumbnail, AsyncTemplatesThumbnail
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Templates(Resouce):
@@ -20,9 +19,7 @@ class Templates(Resouce):
 
     def create_from_campaign(self) -> None:
         """Create a template from a campaign."""
-        raise NotImplementedError(
-            "Newsletter templates create_from_campaign endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter templates create_from_campaign endpoint is not implemented yet.")
 
 
 class AsyncTemplates(AsyncResource):
@@ -42,9 +39,12 @@ class AsyncTemplates(AsyncResource):
 
     async def create_from_campaign(self) -> None:
         """Create a template from a campaign."""
-        raise NotImplementedError(
-            "Newsletter templates create_from_campaign endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter templates create_from_campaign endpoint is not implemented yet.")
 
 
-__all__ = ["Templates", "AsyncTemplates", "TemplatesThumbnail", "AsyncTemplatesThumbnail"]
+__all__ = [
+    "Templates",
+    "AsyncTemplates",
+    "TemplatesThumbnail",
+    "AsyncTemplatesThumbnail",
+]

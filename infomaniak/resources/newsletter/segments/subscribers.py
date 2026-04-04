@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class SegmentsSubscribers(Resouce):
@@ -6,9 +6,7 @@ class SegmentsSubscribers(Resouce):
 
     def list(self) -> None:
         """List subscribers in a segment."""
-        raise NotImplementedError(
-            "Newsletter segments subscribers list endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter segments subscribers list endpoint is not implemented yet.")
 
 
 class AsyncSegmentsSubscribers(AsyncResource):
@@ -16,9 +14,10 @@ class AsyncSegmentsSubscribers(AsyncResource):
 
     async def list(self) -> None:
         """List subscribers in a segment."""
-        raise NotImplementedError(
-            "Newsletter segments subscribers list endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter segments subscribers list endpoint is not implemented yet.")
 
 
-__all__ = ["SegmentsSubscribers", "AsyncSegmentsSubscribers"]
+__all__ = [
+    "SegmentsSubscribers",
+    "AsyncSegmentsSubscribers",
+]

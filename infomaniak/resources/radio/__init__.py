@@ -1,17 +1,16 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .autodj import AsyncAutodj, Autodj
-from .encoder_events import AsyncEncoderEvents, EncoderEvents
-from .hls_stream import AsyncHlsStream, HlsStream
-from .mediapulse import AsyncMediapulse, Mediapulse
-from .notifications import AsyncNotifications, Notifications
-from .options import AsyncOptions, Options
-from .packs import AsyncPacks, Packs
-from .players import AsyncPlayers, Players
-from .product_options import AsyncProductOptions, ProductOptions
-from .products import AsyncProducts, Products
-from .server_events import AsyncServerEvents, ServerEvents
-from .stats import AsyncStats, Stats
+from .packs import Packs, AsyncPacks
+from .stats import Stats, AsyncStats
+from .autodj import Autodj, AsyncAutodj
+from .options import Options, AsyncOptions
+from .players import Players, AsyncPlayers
+from .products import Products, AsyncProducts
+from .hls_stream import HlsStream, AsyncHlsStream
+from .mediapulse import Mediapulse, AsyncMediapulse
+from .notifications import Notifications, AsyncNotifications
+from .server_events import ServerEvents, AsyncServerEvents
+from .encoder_events import EncoderEvents, AsyncEncoderEvents
+from .product_options import ProductOptions, AsyncProductOptions
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Radio(Resouce):

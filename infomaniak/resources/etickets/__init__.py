@@ -1,11 +1,10 @@
-from infomaniak.resource import AsyncResource, Resouce
-
+from .date import Date, AsyncDate
+from .ticket import Ticket, AsyncTicket
 from .address import Address, AsyncAddress
-from .customers import AsyncCustomers, Customers
-from .date import AsyncDate, Date
-from .reservations import AsyncReservations, Reservations
-from .surveys import AsyncSurveys, Surveys
-from .ticket import AsyncTicket, Ticket
+from .surveys import Surveys, AsyncSurveys
+from .customers import Customers, AsyncCustomers
+from .reservations import Reservations, AsyncReservations
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Etickets(Resouce):

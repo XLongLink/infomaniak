@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import Literal
+from dataclasses import dataclass
 
 TldFieldType = Literal[
     "checkbox",

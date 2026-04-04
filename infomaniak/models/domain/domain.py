@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import Literal
+from dataclasses import dataclass
 
 
 @dataclass(slots=True)
@@ -73,33 +73,36 @@ class Domain:
     expires_at: int
     options: DomainOptions
     contacts: DomainContacts
-    status: list[
-        Literal[
-            "addPeriod",
-            "autoRenewPeriod",
-            "clientDeleteProhibited",
-            "clientHold",
-            "clientRenewProhibited",
-            "clientTransferProhibited",
-            "clientUpdateProhibited",
-            "inactive",
-            "ok",
-            "pendingCreate",
-            "pendingDelete",
-            "pendingRenew",
-            "pendingRestore",
-            "pendingTransfer",
-            "pendingUpdate",
-            "redemptionPeriod",
-            "renewPeriod",
-            "serverDeleteProhibited",
-            "serverHold",
-            "serverRenewProhibited",
-            "serverTransferProhibited",
-            "serverUpdateProhibited",
-            "transferPeriod",
+    status: (
+        list[
+            Literal[
+                "addPeriod",
+                "autoRenewPeriod",
+                "clientDeleteProhibited",
+                "clientHold",
+                "clientRenewProhibited",
+                "clientTransferProhibited",
+                "clientUpdateProhibited",
+                "inactive",
+                "ok",
+                "pendingCreate",
+                "pendingDelete",
+                "pendingRenew",
+                "pendingRestore",
+                "pendingTransfer",
+                "pendingUpdate",
+                "redemptionPeriod",
+                "renewPeriod",
+                "serverDeleteProhibited",
+                "serverHold",
+                "serverRenewProhibited",
+                "serverTransferProhibited",
+                "serverUpdateProhibited",
+                "transferPeriod",
+            ]
         ]
-    ] | None = None
+        | None
+    ) = None
 
 
 @dataclass(slots=True)

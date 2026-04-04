@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .users import AsyncUsers, Users
+from .users import Users, AsyncUsers
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Drive(Resouce):

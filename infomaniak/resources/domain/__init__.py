@@ -1,17 +1,14 @@
 from __future__ import annotations
 
-from typing import Literal
-
+from .zone import Zone, AsyncZone
 from dacite import from_dict
-
+from typing import Literal
+from .order import Order, AsyncOrder
+from .dnssec import DNSSEC, AsyncDNSSEC
+from .nameservers import Nameservers, AsyncNameservers
+from infomaniak.resource import Resouce, AsyncResource
 from infomaniak.models.domain import Domain as DomainModel
 from infomaniak.models.domain import DomainListResponse
-from infomaniak.resource import AsyncResource, Resouce
-
-from .dnssec import AsyncDNSSEC, DNSSEC
-from .nameservers import AsyncNameservers, Nameservers
-from .order import AsyncOrder, Order
-from .zone import AsyncZone, Zone
 
 
 class Domain(Resouce):

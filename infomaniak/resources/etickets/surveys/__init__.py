@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
 from .answers import Answers, AsyncAnswers
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Surveys(Resouce):
@@ -27,4 +26,9 @@ class AsyncSurveys(AsyncResource):
         raise NotImplementedError("AsyncEtickets.surveys.list is not implemented yet.")
 
 
-__all__ = ["Surveys", "AsyncSurveys", "Answers", "AsyncAnswers"]
+__all__ = [
+    "Surveys",
+    "AsyncSurveys",
+    "Answers",
+    "AsyncAnswers",
+]

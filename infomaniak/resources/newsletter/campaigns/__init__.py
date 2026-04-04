@@ -1,6 +1,5 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .template import AsyncCampaignsTemplate, CampaignsTemplate
+from .template import CampaignsTemplate, AsyncCampaignsTemplate
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Campaigns(Resouce):
@@ -44,9 +43,7 @@ class Campaigns(Resouce):
 
     def subscribers_activity(self) -> None:
         """Get subscriber activity for a campaign."""
-        raise NotImplementedError(
-            "Newsletter campaigns subscribers_activity endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter campaigns subscribers_activity endpoint is not implemented yet.")
 
     def test(self) -> None:
         """Send a test of a specific campaign."""
@@ -106,9 +103,7 @@ class AsyncCampaigns(AsyncResource):
 
     async def subscribers_activity(self) -> None:
         """Get subscriber activity for a campaign."""
-        raise NotImplementedError(
-            "Newsletter campaigns subscribers_activity endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter campaigns subscribers_activity endpoint is not implemented yet.")
 
     async def test(self) -> None:
         """Send a test of a specific campaign."""
@@ -127,4 +122,9 @@ class AsyncCampaigns(AsyncResource):
         raise NotImplementedError("Newsletter campaigns schedule endpoint is not implemented yet.")
 
 
-__all__ = ["Campaigns", "AsyncCampaigns", "CampaignsTemplate", "AsyncCampaignsTemplate"]
+__all__ = [
+    "Campaigns",
+    "AsyncCampaigns",
+    "CampaignsTemplate",
+    "AsyncCampaignsTemplate",
+]

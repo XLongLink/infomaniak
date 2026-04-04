@@ -1,8 +1,7 @@
 from dacite import from_dict
-
-from infomaniak.models.dns.tld import Tld
-from infomaniak.resource import AsyncResource, Resouce
 from infomaniak.utils import _with
+from infomaniak.resource import Resouce, AsyncResource
+from infomaniak.models.dns.tld import Tld
 
 
 class TLD(Resouce):

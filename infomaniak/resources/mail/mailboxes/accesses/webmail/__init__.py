@@ -1,7 +1,6 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .team import AsyncTeam, Team
-from .user import AsyncUser, User
+from .team import Team, AsyncTeam
+from .user import User, AsyncUser
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Webmail(Resouce):
@@ -22,4 +21,11 @@ class AsyncWebmail(AsyncResource):
         self.user = AsyncUser(client)
 
 
-__all__ = ["Webmail", "AsyncWebmail", "Team", "AsyncTeam", "User", "AsyncUser"]
+__all__ = [
+    "Webmail",
+    "AsyncWebmail",
+    "Team",
+    "AsyncTeam",
+    "User",
+    "AsyncUser",
+]

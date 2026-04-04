@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from typing import Literal
-
 from dacite import from_dict
-
+from typing import Literal
+from infomaniak.resource import Resouce, AsyncResource
 from infomaniak.models.dns.zone import DNSRecord
-from infomaniak.resource import AsyncResource, Resouce
 
 DNSRecordType = Literal[
     "A",
@@ -40,7 +38,17 @@ class Records(Resouce):
         with_: str | None = None,
         page: int | None = None,
         per_page: int | None = None,
-        order_by: Literal["id", "source_idn", "target", "type", "ttl", "updated_at"] | None = None,
+        order_by: (
+            Literal[
+                "id",
+                "source_idn",
+                "target",
+                "type",
+                "ttl",
+                "updated_at",
+            ]
+            | None
+        ) = None,
         order: Literal["asc", "desc"] | None = None,
     ) -> list[DNSRecord]:
         """Retrieve all DNS records for a given zone."""
@@ -96,11 +104,23 @@ class Records(Resouce):
         response = self._client.get(url)
         return from_dict(DNSRecord, response.json()["data"])
 
-    def update(self, zone: str, record: int, target: str, ttl: int, *, with_: str | None = None) -> DNSRecord:
+    def update(
+        self,
+        zone: str,
+        record: int,
+        target: str,
+        ttl: int,
+        *,
+        with_: str | None = None,
+    ) -> DNSRecord:
         """Update a DNS record."""
         url = f"/2/zones/{zone}/records/{record}"
         params = {"with": with_} if with_ is not None else None
-        response = self._client.put(url, json={"target": target, "ttl": ttl}, params=params)
+        response = self._client.put(
+            url,
+            json={"target": target, "ttl": ttl},
+            params=params,
+        )
         return from_dict(DNSRecord, response.json()["data"])
 
     def delete(self, zone: str, record: int) -> bool:
@@ -115,7 +135,14 @@ class Records(Resouce):
         response = self._client.get(url)
         return bool(response.json()["data"])
 
-    def match(self, zone: str, source: str, type_: DNSRecordType, target: str, ttl: int = 3600) -> DNSRecord:
+    def match(
+        self,
+        zone: str,
+        source: str,
+        type_: DNSRecordType,
+        target: str,
+        ttl: int = 3600,
+    ) -> DNSRecord:
         """Ensure one DNS record exists with the expected target and TTL."""
         normalized_source = self._normalize_source(zone, source)
         records = self.list(zone, source=normalized_source, types=[type_])
@@ -124,7 +151,13 @@ class Records(Resouce):
                 if record.target != target or record.ttl != ttl:
                     return self.update(zone, record.id, target, ttl)
                 return record
-        return self.store(zone, target, ttl, type_, source=normalized_source)
+        return self.store(
+            zone,
+            target,
+            ttl,
+            type_,
+            source=normalized_source,
+        )
 
     @staticmethod
     def _normalize_source(zone: str, source: str) -> str:
@@ -147,7 +180,17 @@ class AsyncRecords(AsyncResource):
         with_: str | None = None,
         page: int | None = None,
         per_page: int | None = None,
-        order_by: Literal["id", "source_idn", "target", "type", "ttl", "updated_at"] | None = None,
+        order_by: (
+            Literal[
+                "id",
+                "source_idn",
+                "target",
+                "type",
+                "ttl",
+                "updated_at",
+            ]
+            | None
+        ) = None,
         order: Literal["asc", "desc"] | None = None,
     ) -> list[DNSRecord]:
         """Retrieve all DNS records for a given zone."""
@@ -215,7 +258,11 @@ class AsyncRecords(AsyncResource):
         """Update a DNS record."""
         url = f"/2/zones/{zone}/records/{record}"
         params = {"with": with_} if with_ is not None else None
-        response = await self._client.put(url, json={"target": target, "ttl": ttl}, params=params)
+        response = await self._client.put(
+            url,
+            json={"target": target, "ttl": ttl},
+            params=params,
+        )
         return from_dict(DNSRecord, response.json()["data"])
 
     async def delete(self, zone: str, record: int) -> bool:
@@ -246,7 +293,13 @@ class AsyncRecords(AsyncResource):
                 if record.target != target or record.ttl != ttl:
                     return await self.update(zone, record.id, target, ttl)
                 return record
-        return await self.store(zone, target, ttl, type_, source=normalized_source)
+        return await self.store(
+            zone,
+            target,
+            ttl,
+            type_,
+            source=normalized_source,
+        )
 
     @staticmethod
     def _normalize_source(zone: str, source: str) -> str:

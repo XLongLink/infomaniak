@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class TemplatesThumbnail(Resouce):
@@ -6,9 +6,7 @@ class TemplatesThumbnail(Resouce):
 
     def update(self) -> None:
         """Update a template thumbnail."""
-        raise NotImplementedError(
-            "Newsletter templates thumbnail update endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter templates thumbnail update endpoint is not implemented yet.")
 
 
 class AsyncTemplatesThumbnail(AsyncResource):
@@ -16,9 +14,7 @@ class AsyncTemplatesThumbnail(AsyncResource):
 
     async def update(self) -> None:
         """Update a template thumbnail."""
-        raise NotImplementedError(
-            "Newsletter templates thumbnail update endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter templates thumbnail update endpoint is not implemented yet.")
 
 
 __all__ = ["TemplatesThumbnail", "AsyncTemplatesThumbnail"]

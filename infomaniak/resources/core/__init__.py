@@ -1,15 +1,14 @@
-from infomaniak.resource import AsyncResource, Resouce
-
+from .user import User, AsyncUser
+from .tasks import Tasks, AsyncTasks
+from .events import Events, AsyncEvents
+from .ksuite import Ksuite, AsyncKsuite
 from .actions import Actions, AsyncActions
-from .countries import AsyncCountries, Countries
-from .events import AsyncEvents, Events
-from .ksuite import AsyncKsuite, Ksuite
-from .languages import AsyncLanguages, Languages
-from .products import AsyncProducts, Products
-from .profile import AsyncProfile, Profile
-from .tasks import AsyncTasks, Tasks
-from .timezones import AsyncTimezones, Timezones
-from .user import AsyncUser, User
+from .profile import Profile, AsyncProfile
+from .products import Products, AsyncProducts
+from .countries import Countries, AsyncCountries
+from .languages import Languages, AsyncLanguages
+from .timezones import Timezones, AsyncTimezones
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Core(Resouce):

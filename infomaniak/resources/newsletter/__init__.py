@@ -1,16 +1,15 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .campaigns import AsyncCampaigns, Campaigns
-from .credits import AsyncCredits, Credits
-from .dashboard import AsyncDashboard, Dashboard
-from .domains import AsyncDomains, Domains
-from .fields import AsyncFields, Fields
-from .groups import AsyncGroups, Groups
-from .operations import AsyncOperations, Operations
-from .segments import AsyncSegments, Segments
-from .subscribers import AsyncSubscribers, Subscribers
-from .templates import AsyncTemplates, Templates
-from .webforms import AsyncWebforms, Webforms
+from .fields import Fields, AsyncFields
+from .groups import Groups, AsyncGroups
+from .credits import Credits, AsyncCredits
+from .domains import Domains, AsyncDomains
+from .segments import Segments, AsyncSegments
+from .webforms import Webforms, AsyncWebforms
+from .campaigns import Campaigns, AsyncCampaigns
+from .dashboard import Dashboard, AsyncDashboard
+from .templates import Templates, AsyncTemplates
+from .operations import Operations, AsyncOperations
+from .subscribers import Subscribers, AsyncSubscribers
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Newsletter(Resouce):

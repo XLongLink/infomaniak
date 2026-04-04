@@ -1,5 +1,5 @@
-from collections.abc import Callable, Iterator
 from typing import TypeVar
+from collections.abc import Callable, Iterator
 
 TPage = TypeVar("TPage")
 TCursor = TypeVar("TCursor")

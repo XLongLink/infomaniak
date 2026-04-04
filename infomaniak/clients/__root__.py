@@ -15,9 +15,7 @@ class RootClient:
     ) -> None:
         self._token: str = token or os.environ.get("INFOMANIAK_API_TOKEN", "")
         if not self._token:
-            raise ValueError(
-                "No API token configured. Pass token=... or set INFOMANIAK_API_TOKEN."
-            )
+            raise ValueError("No API token configured. Pass token=... or set INFOMANIAK_API_TOKEN.")
 
         self._base_url: str = base_url.rstrip("/")
         self._headers: dict[str, str] = {
@@ -30,4 +28,3 @@ class RootClient:
 
         self._timeout: float = timeout
         self._transport: httpx.BaseTransport | httpx.AsyncBaseTransport | None = transport
-

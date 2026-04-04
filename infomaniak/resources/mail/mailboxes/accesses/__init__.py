@@ -1,8 +1,7 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .devices import AsyncDevices, Devices
-from .invitations import AsyncInvitations, Invitations
-from .webmail import AsyncWebmail, Webmail
+from .devices import Devices, AsyncDevices
+from .webmail import Webmail, AsyncWebmail
+from .invitations import Invitations, AsyncInvitations
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Accesses(Resouce):

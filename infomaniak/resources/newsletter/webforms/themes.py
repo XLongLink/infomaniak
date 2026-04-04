@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class WebformsThemes(Resouce):
@@ -6,9 +6,7 @@ class WebformsThemes(Resouce):
 
     def list(self) -> None:
         """List available webform themes."""
-        raise NotImplementedError(
-            "Newsletter webforms themes list endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter webforms themes list endpoint is not implemented yet.")
 
 
 class AsyncWebformsThemes(AsyncResource):
@@ -16,9 +14,7 @@ class AsyncWebformsThemes(AsyncResource):
 
     async def list(self) -> None:
         """List available webform themes."""
-        raise NotImplementedError(
-            "Newsletter webforms themes list endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter webforms themes list endpoint is not implemented yet.")
 
 
 __all__ = ["WebformsThemes", "AsyncWebformsThemes"]

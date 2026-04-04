@@ -1,8 +1,7 @@
-
 import httpx
 from typing import Any
-from infomaniak.constants import API
 from .__root__ import RootClient
+from infomaniak.constants import API
 
 
 class AsyncBaseClient(RootClient):

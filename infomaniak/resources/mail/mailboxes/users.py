@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Users(Resouce):
@@ -10,9 +10,7 @@ class Users(Resouce):
 
     def update_invitation_permission(self) -> None:
         """Update permissions of a mailbox invitation."""
-        raise NotImplementedError(
-            "Mailbox users update_invitation_permission endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox users update_invitation_permission endpoint is not implemented yet.")
 
 
 class AsyncUsers(AsyncResource):
@@ -24,9 +22,7 @@ class AsyncUsers(AsyncResource):
 
     async def update_invitation_permission(self) -> None:
         """Update permissions of a mailbox invitation."""
-        raise NotImplementedError(
-            "Mailbox users update_invitation_permission endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Mailbox users update_invitation_permission endpoint is not implemented yet.")
 
 
 __all__ = ["Users", "AsyncUsers"]

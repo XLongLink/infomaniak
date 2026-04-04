@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class SubscribersAddressbooks(Resouce):
@@ -6,15 +6,11 @@ class SubscribersAddressbooks(Resouce):
 
     def list(self) -> None:
         """List subscriber address books."""
-        raise NotImplementedError(
-            "Newsletter subscribers addressbooks list endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter subscribers addressbooks list endpoint is not implemented yet.")
 
     def select(self) -> None:
         """Select subscriber address books."""
-        raise NotImplementedError(
-            "Newsletter subscribers addressbooks select endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter subscribers addressbooks select endpoint is not implemented yet.")
 
 
 class AsyncSubscribersAddressbooks(AsyncResource):
@@ -22,15 +18,14 @@ class AsyncSubscribersAddressbooks(AsyncResource):
 
     async def list(self) -> None:
         """List subscriber address books."""
-        raise NotImplementedError(
-            "Newsletter subscribers addressbooks list endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter subscribers addressbooks list endpoint is not implemented yet.")
 
     async def select(self) -> None:
         """Select subscriber address books."""
-        raise NotImplementedError(
-            "Newsletter subscribers addressbooks select endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter subscribers addressbooks select endpoint is not implemented yet.")
 
 
-__all__ = ["SubscribersAddressbooks", "AsyncSubscribersAddressbooks"]
+__all__ = [
+    "SubscribersAddressbooks",
+    "AsyncSubscribersAddressbooks",
+]

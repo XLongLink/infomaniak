@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Nameservers(Resouce):
@@ -14,6 +14,4 @@ class AsyncNameservers(AsyncResource):
 
     async def update(self) -> None:
         """Update nameservers for a domain."""
-        raise NotImplementedError(
-            "AsyncDNS.domain.nameservers.update is not implemented yet."
-        )
+        raise NotImplementedError("AsyncDNS.domain.nameservers.update is not implemented yet.")

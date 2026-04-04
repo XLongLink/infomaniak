@@ -1,4 +1,4 @@
-from infomaniak.resource import AsyncResource, Resouce
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class WebformsFields(Resouce):
@@ -6,9 +6,7 @@ class WebformsFields(Resouce):
 
     def list(self) -> None:
         """List fields of a webform."""
-        raise NotImplementedError(
-            "Newsletter webforms fields list endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter webforms fields list endpoint is not implemented yet.")
 
 
 class AsyncWebformsFields(AsyncResource):
@@ -16,9 +14,7 @@ class AsyncWebformsFields(AsyncResource):
 
     async def list(self) -> None:
         """List fields of a webform."""
-        raise NotImplementedError(
-            "Newsletter webforms fields list endpoint is not implemented yet."
-        )
+        raise NotImplementedError("Newsletter webforms fields list endpoint is not implemented yet.")
 
 
 __all__ = ["WebformsFields", "AsyncWebformsFields"]

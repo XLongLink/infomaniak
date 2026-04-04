@@ -1,9 +1,8 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .record import AsyncRecord, Record
-from .simulcast import AsyncSimulcast, Simulcast
-from .timeshift import AsyncTimeshift, Timeshift
-from .watermarking import AsyncWatermarking, Watermarking
+from .record import Record, AsyncRecord
+from .simulcast import Simulcast, AsyncSimulcast
+from .timeshift import Timeshift, AsyncTimeshift
+from .watermarking import Watermarking, AsyncWatermarking
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Options(Resouce):

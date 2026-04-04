@@ -1,10 +1,9 @@
-from infomaniak.resource import AsyncResource, Resouce
-
-from .backups import AsyncBackups, Backups
-from .config import AsyncConfig, Config
-from .data import AsyncData, Data
-from .ip import AsyncIp, Ip
-from .restore import AsyncRestore, Restore
+from .ip import Ip, AsyncIp
+from .data import Data, AsyncData
+from .config import Config, AsyncConfig
+from .backups import Backups, AsyncBackups
+from .restore import Restore, AsyncRestore
+from infomaniak.resource import Resouce, AsyncResource
 
 
 class Database(Resouce):
