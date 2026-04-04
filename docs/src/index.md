@@ -16,20 +16,20 @@ Infomaniak OpenAPI v3.1.0
 
 | Resource                     | Infomaniak Reference                      | Documented methods | Status  |
 | ---------------------------- | ----------------------------------------- | ------------------ | ------- |
-| [`ai`](/ai/)                 | AI Tools                                  | 0                  |         |
-| [`backup`](/backup/)         | Swiss Backup                              | 17                 | 🧪 Beta |
-| [`cloud`](/cloud/)           | Cloud Overview                            | 51                 |         |
-| [`core`](/core/)             | Core Resources                            | 48                 |         |
-| [`dns`](/dns/)               | Domain and Zones                          | 24                 |         |
-| [`domain`](/domain/)         | Domain Overview                           | 10                 |         |
-| [`etickets`](/etickets/)     | [ETickets](https://chk.me/kOM6ZoO)        | 11                 |         |
-| [`kchat`](/kchat/)           | [kChat](https://chk.me/sXgWvJp)           | 85                 |         |
-| [`kdrive`](/kdrive/)         | [kDrive](https://chk.me/qlJozmn)          | 64                 |         |
-| [`kmeet`](/kmeet/)           | [kMeet](https://chk.me/xgAjld6)           | 2                  |         |
-| [`mail`](/mail/)             | Mail Services                             | 71                 |         |
-| [`newsletter`](/newsletter/) | Newsletter Overview                       | 74                 |         |
-| [`radio`](/radio/)           | [Streaming Radio](https://chk.me/u4XqnUZ) | 85                 |         |
-| [`tickets`](/tickets/)       | Tickets Overview                          | 0                  |         |
-| [`url`](/url/)               | URL Overview                              | 4                  |         |
-| [`video`](/video/)           | [Streaming Video](https://chk.me/BWbluEg) | 77                 |         |
-| [`vod`](/vod/)               | [VOD](https://chk.me/MRAj6ne)             | 0                  | 🧪 Beta |
+| [`ai`](/ai/)                 | AI Tools                                  | 0                  | Low priority |
+| [`backup`](/backup/)         | Swiss Backup                              | 17                 | Low priority |
+| [`cloud`](/cloud/)           | Cloud Overview                            | 51                 | Planned |
+| [`core`](/core/)             | Core Resources                            | 48                 | Low priority |
+| [`dns`](/dns/)               | Domain and Zones                          | 24                 | In progress |
+| [`domain`](/domain/)         | Domain Overview                           | 10                 | Low priority |
+| [`etickets`](/etickets/)     | [ETickets](https://chk.me/kOM6ZoO)        | 11                 | Low priority |
+| [`kchat`](/kchat/)           | [kChat](https://chk.me/sXgWvJp)           | 85                 | Low priority |
+| [`kdrive`](/kdrive/)         | [kDrive](https://chk.me/qlJozmn)          | 64                 | Low priority |
+| [`kmeet`](/kmeet/)           | [kMeet](https://chk.me/xgAjld6)           | 2                  | Low priority |
+| [`mail`](/mail/)             | Mail Services                             | 71                 | Low priority |
+| [`newsletter`](/newsletter/) | Newsletter Overview                       | 74                 | Low priority |
+| [`radio`](/radio/)           | [Streaming Radio](https://chk.me/u4XqnUZ) | 85                 | Low priority |
+| [`tickets`](/tickets/)       | Tickets Overview                          | 0                  | Low priority |
+| [`url`](/url/)               | URL Overview                              | 4                  | Low priority |
+| [`video`](/video/)           | [Streaming Video](https://chk.me/BWbluEg) | 77                 | Low priority |
+| [`vod`](/vod/)               | [VOD](https://chk.me/MRAj6ne)             | 0                  | Low priority |
