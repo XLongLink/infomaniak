@@ -20,5 +20,7 @@
 
 /* Let markdown tables use the full available content width. */
 .vp-doc table {
+	display: table;
 	width: 100%;
+	max-width: 100%;
 }
