@@ -1,6 +1,6 @@
 # kDrive Invitations
 
-Resource for drive invitation operations.
+Manage invitations to join a drive.
 
 ## Available methods
 
@@ -10,6 +10,14 @@ Resource for drive invitation operations.
 - `client.kdrive.invitations.update()`
 - `client.kdrive.invitations.delete()`
 
+## Request models
+
+No dedicated request models are defined yet.
+
+## Returned models
+
+No dedicated response models are defined yet.
+
 ::: warning
-All methods are currently unimplemented and raise `NotImplementedError`.
+All methods currently raise `NotImplementedError`.
 :::

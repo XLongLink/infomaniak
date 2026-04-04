@@ -1,6 +1,6 @@
 # kDrive Files Trash
 
-Resource for trash operations.
+Trash operations for files and directories.
 
 ## Available methods
 
@@ -12,6 +12,18 @@ Resource for trash operations.
 - `client.kdrive.files.trash.list()`
 - `client.kdrive.files.trash.display()`
 
+## Nested resources
+
+- [`files.trash.directory`](/kdrive/files/trash/directory)
+
+## Request models
+
+No dedicated request models are defined yet.
+
+## Returned models
+
+No dedicated response models are defined yet.
+
 ::: warning
-All methods are currently unimplemented and raise `NotImplementedError`.
+All methods currently raise `NotImplementedError`.
 :::

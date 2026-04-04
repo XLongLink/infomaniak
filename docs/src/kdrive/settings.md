@@ -1,12 +1,20 @@
 # kDrive Settings
 
-Resource for drive settings operations.
+Drive settings operations.
 
 ## Available methods
 
 - `client.kdrive.settings.display()`
 - `client.kdrive.settings.update()`
 
+## Request models
+
+No dedicated request models are defined yet.
+
+## Returned models
+
+No dedicated response models are defined yet.
+
 ::: warning
-All methods are currently unimplemented and raise `NotImplementedError`.
+All methods currently raise `NotImplementedError`.
 :::

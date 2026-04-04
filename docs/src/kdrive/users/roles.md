@@ -1,11 +1,19 @@
 # kDrive Users Roles
 
-Resource for changing user roles and permissions.
+Role and permission operations for drive users.
 
 ## Available methods
 
 - `client.kdrive.users.roles.update()`
 
+## Request models
+
+No dedicated request models are defined yet.
+
+## Returned models
+
+No dedicated response models are defined yet.
+
 ::: warning
-This method is currently unimplemented and raises `NotImplementedError`.
+All methods currently raise `NotImplementedError`.
 :::

@@ -1,6 +1,6 @@
 # kDrive Files Upload Session
 
-Resource for chunked upload sessions.
+Chunked upload session operations.
 
 ## Available methods
 
@@ -12,6 +12,14 @@ Resource for chunked upload sessions.
 - `client.kdrive.files.upload.session.cancel()`
 - `client.kdrive.files.upload.session.batch_cancel()`
 
+## Request models
+
+No dedicated request models are defined yet.
+
+## Returned models
+
+No dedicated response models are defined yet.
+
 ::: warning
-All methods are currently unimplemented and raise `NotImplementedError`.
+All methods currently raise `NotImplementedError`.
 :::
