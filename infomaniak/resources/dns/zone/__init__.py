@@ -35,6 +35,23 @@ def _extract_zone_payload(
     return payload
 
 
+def _extract_zone_exists_payload(
+    payload: dict[str, Any],
+) -> bool:
+    """Normalize DNS zone existence responses into a boolean."""
+    data = payload.get("data")
+    if isinstance(data, bool):
+        return data
+    if data is not None:
+        return bool(data)
+
+    error = payload.get("error")
+    if isinstance(error, dict) and error.get("code") == "zone_does_not_exists":
+        return False
+
+    raise KeyError("Expected 'data' in DNS zone exists response payload.")
+
+
 class Zone(Resouce):
     """DNS zone endpoints."""
 
@@ -120,7 +137,7 @@ class Zone(Resouce):
         """Check whether one zone exists."""
         url = f"/2/zones/{zone}/exists"
         response = self._client.get(url)
-        return bool(response.json()["data"])
+        return _extract_zone_exists_payload(response.json())
 
 
 class AsyncZone(AsyncResource):
@@ -208,7 +225,7 @@ class AsyncZone(AsyncResource):
         """Check whether one zone exists."""
         url = f"/2/zones/{zone}/exists"
         response = await self._client.get(url)
-        return bool(response.json()["data"])
+        return _extract_zone_exists_payload(response.json())
 
 
 __all__ = [
