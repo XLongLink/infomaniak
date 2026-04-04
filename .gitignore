@@ -8,3 +8,6 @@ build/
 venv/
 *.egg
 .eggs/
+
+
+test.py

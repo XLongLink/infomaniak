@@ -24,14 +24,3 @@ class AsyncDNS(AsyncResource):
         self.tld = AsyncTLD(client)
         self.zone = AsyncZone(client)
 
-
-__all__ = [
-    "DNS",
-    "AsyncDNS",
-    "Domain",
-    "AsyncDomain",
-    "TLD",
-    "AsyncTLD",
-    "Zone",
-    "AsyncZone",
-]
