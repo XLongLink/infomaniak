@@ -1,6 +1,6 @@
 # kDrive Files
 
-Resource for file and directory operations.
+File and directory operations in kDrive.
 
 ## Available methods
 
@@ -26,6 +26,22 @@ Resource for file and directory operations.
 - `client.kdrive.files.hash()`
 - `client.kdrive.files.temp_url()`
 
+## Nested resources
+
+- [`files.upload`](/kdrive/files/upload)
+- [`files.upload.session`](/kdrive/files/upload/session)
+- [`files.trash`](/kdrive/files/trash)
+- [`files.trash.directory`](/kdrive/files/trash/directory)
+- [`files.search`](/kdrive/files/search)
+
+## Request models
+
+No dedicated request models are defined yet.
+
+## Returned models
+
+No dedicated response models are defined yet.
+
 ::: warning
-All methods are currently unimplemented and raise `NotImplementedError`.
+All methods currently raise `NotImplementedError`.
 :::

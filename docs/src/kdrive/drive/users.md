@@ -1,11 +1,19 @@
 # kDrive Drive Users
 
-Resource for drive user listing operations.
+Operations for listing users attached to a specific drive.
 
 ## Available methods
 
 - `client.kdrive.drive.users.list()`
 
+## Request models
+
+No dedicated request models are defined yet.
+
+## Returned models
+
+No dedicated response models are defined yet.
+
 ::: warning
-This method is currently unimplemented and raises `NotImplementedError`.
+All methods currently raise `NotImplementedError`.
 :::

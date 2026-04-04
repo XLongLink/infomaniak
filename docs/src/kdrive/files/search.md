@@ -1,6 +1,6 @@
 # kDrive Files Search
 
-Resource for file search and shared file operations.
+Search operations for files and shared content.
 
 ## Available methods
 
@@ -13,6 +13,14 @@ Resource for file search and shared file operations.
 - `client.kdrive.files.search.create_team_directory()`
 - `client.kdrive.files.search.recent()`
 
+## Request models
+
+No dedicated request models are defined yet.
+
+## Returned models
+
+No dedicated response models are defined yet.
+
 ::: warning
-All methods are currently unimplemented and raise `NotImplementedError`.
+All methods currently raise `NotImplementedError`.
 :::

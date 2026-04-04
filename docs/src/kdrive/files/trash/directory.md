@@ -1,12 +1,20 @@
 # kDrive Files Trash Directory
 
-Resource for trashed directory operations.
+Operations scoped to trashed directories.
 
 ## Available methods
 
 - `client.kdrive.files.trash.directory.count()`
 - `client.kdrive.files.trash.directory.list()`
 
+## Request models
+
+No dedicated request models are defined yet.
+
+## Returned models
+
+No dedicated response models are defined yet.
+
 ::: warning
-All methods are currently unimplemented and raise `NotImplementedError`.
+All methods currently raise `NotImplementedError`.
 :::

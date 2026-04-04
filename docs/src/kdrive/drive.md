@@ -1,6 +1,6 @@
 # kDrive Drive
 
-Resource for top-level drive operations.
+Drive-level operations for listing, reading, and updating drives.
 
 ## Available methods
 
@@ -9,6 +9,14 @@ Resource for top-level drive operations.
 - `client.kdrive.drive.update()`
 - `client.kdrive.drive.wake()`
 
+## Request models
+
+No dedicated request models are defined yet.
+
+## Returned models
+
+No dedicated response models are defined yet.
+
 ::: warning
-All methods are currently unimplemented and raise `NotImplementedError`.
+All methods currently raise `NotImplementedError`.
 :::
