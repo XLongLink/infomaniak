@@ -24,7 +24,7 @@ pip install infomaniak
 | [`domain`](/domain/) | [Domain Overview](/domain/) | 10 |
 | [`etickets`](/etickets/) | [eTickets Overview](/etickets/) | 11 |
 | [`kchat`](/kchat/) | [kChat Overview](/kchat/) | 85 |
-| [`kdrive`](/kdrive/) | [kDrive Overview](/kdrive/) | 0 |
+| [`kdrive`](/kdrive/) | [kDrive Overview](/kdrive/) | 64 |
 | [`kmeet`](/kmeet/) | [kMeet Overview](/kmeet/) | 2 |
 | [`mail`](/mail/) | [Mail Overview](/mail/) | 0 |
 | [`newsletter`](/newsletter/) | [Newsletter Overview](/newsletter/) | 74 |
