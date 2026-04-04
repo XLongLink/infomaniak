@@ -13,14 +13,12 @@ export default defineConfig({
         text: 'AI',
         link: '/ai/',
         collapsed: true,
-        items: [{ text: 'Overview', link: '/ai/' }],
       },
       {
         text: 'Backup',
         link: '/backup/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/backup/' },
           { text: 'Administrator', link: '/backup/administrator' },
           { text: 'Billing', link: '/backup/billing' },
           { text: 'Passwords', link: '/backup/passwords' },
@@ -33,12 +31,10 @@ export default defineConfig({
         link: '/cloud/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/cloud/' },
           {
             text: 'Database',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/cloud/database' },
               { text: 'Backups', link: '/cloud/database/backups' },
               { text: 'Config', link: '/cloud/database/config' },
               { text: 'Data', link: '/cloud/database/data' },
@@ -51,7 +47,6 @@ export default defineConfig({
             text: 'Kubernetes',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/cloud/kubernetes' },
               { text: 'Data', link: '/cloud/kubernetes/data' },
               { text: 'IP', link: '/cloud/kubernetes/ip' },
               { text: 'Pools', link: '/cloud/kubernetes/pools' },
@@ -64,7 +59,6 @@ export default defineConfig({
         link: '/core/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/core/' },
           { text: 'Actions', link: '/core/actions' },
           { text: 'Countries', link: '/core/countries' },
           { text: 'Events', link: '/core/events' },
@@ -76,7 +70,6 @@ export default defineConfig({
             text: 'kSuite',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/core/ksuite' },
               { text: 'Mailbox', link: '/core/ksuite/mailbox' },
             ],
           },
@@ -84,7 +77,6 @@ export default defineConfig({
             text: 'Profile',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/core/profile' },
               { text: 'Avatar', link: '/core/profile/avatar' },
               { text: 'Email', link: '/core/profile/email' },
               { text: 'Info', link: '/core/profile/info' },
@@ -96,7 +88,6 @@ export default defineConfig({
             text: 'User',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/core/user' },
               { text: 'Accounts', link: '/core/user/accounts' },
               { text: 'Teams', link: '/core/user/teams' },
             ],
@@ -108,7 +99,6 @@ export default defineConfig({
         link: '/dns/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/dns/' },
           { text: 'Domain', link: '/dns/domain' },
           { text: 'TLD', link: '/dns/tld' },
           { text: 'Zone', link: '/dns/zone' },
@@ -133,7 +123,6 @@ export default defineConfig({
         link: '/domain/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/domain/' },
           { text: 'DNSSEC', link: '/domain/dnssec' },
           { text: 'Nameservers', link: '/domain/nameservers' },
           { text: 'Order', link: '/domain/order' },
@@ -145,7 +134,6 @@ export default defineConfig({
         link: '/kchat/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/kchat/' },
           { text: 'Bots', link: '/kchat/bots' },
           { text: 'Channels', link: '/kchat/channels' },
           { text: 'Commands', link: '/kchat/commands' },
@@ -167,9 +155,9 @@ export default defineConfig({
       },
       {
         text: 'eTickets',
+        link: '/etickets/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/etickets/' },
           { text: 'Address', link: '/etickets/address' },
           { text: 'Customers', link: '/etickets/customers' },
           { text: 'Date', link: '/etickets/date' },
@@ -178,12 +166,10 @@ export default defineConfig({
             text: 'Surveys',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/etickets/surveys' },
               {
                 text: 'Answers',
                 collapsed: true,
                 items: [
-                  { text: 'Overview', link: '/etickets/surveys/answers' },
                   { text: 'Passes', link: '/etickets/surveys/answers/passes' },
                   { text: 'Tickets', link: '/etickets/surveys/answers/tickets' },
                 ],
@@ -197,14 +183,12 @@ export default defineConfig({
         text: 'kDrive',
         link: '/kdrive/',
         collapsed: true,
-        items: [{ text: 'Overview', link: '/kdrive/' }],
       },
       {
         text: 'kMeet',
         link: '/kmeet/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/kmeet/' },
           { text: 'Plan', link: '/kmeet/plan' },
           { text: 'Room', link: '/kmeet/room' },
         ],
@@ -213,14 +197,12 @@ export default defineConfig({
         text: 'Mail',
         link: '/mail/',
         collapsed: true,
-        items: [{ text: 'Overview', link: '/mail/' }],
       },
       {
         text: 'Newsletter',
         link: '/newsletter/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/newsletter/' },
           { text: 'Credits', link: '/newsletter/credits' },
           { text: 'Dashboard', link: '/newsletter/dashboard' },
           { text: 'Domains', link: '/newsletter/domains' },
@@ -230,7 +212,6 @@ export default defineConfig({
             text: 'Campaigns',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/newsletter/campaigns' },
               { text: 'Template', link: '/newsletter/campaigns/template' },
             ],
           },
@@ -238,7 +219,6 @@ export default defineConfig({
             text: 'Groups',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/newsletter/groups' },
               { text: 'Subscribers', link: '/newsletter/groups/subscribers' },
             ],
           },
@@ -246,7 +226,6 @@ export default defineConfig({
             text: 'Segments',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/newsletter/segments' },
               { text: 'Subscribers', link: '/newsletter/segments/subscribers' },
             ],
           },
@@ -254,7 +233,6 @@ export default defineConfig({
             text: 'Subscribers',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/newsletter/subscribers' },
               { text: 'Addressbooks', link: '/newsletter/subscribers/addressbooks' },
             ],
           },
@@ -262,7 +240,6 @@ export default defineConfig({
             text: 'Templates',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/newsletter/templates' },
               { text: 'Thumbnail', link: '/newsletter/templates/thumbnail' },
             ],
           },
@@ -270,7 +247,6 @@ export default defineConfig({
             text: 'Webforms',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/newsletter/webforms' },
               { text: 'Fields', link: '/newsletter/webforms/fields' },
               { text: 'Themes', link: '/newsletter/webforms/themes' },
             ],
@@ -282,7 +258,6 @@ export default defineConfig({
         link: '/radio/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/radio/' },
           { text: 'Encoder Events', link: '/radio/encoder_events' },
           { text: 'HLS Stream', link: '/radio/hls_stream' },
           { text: 'Mediapulse', link: '/radio/mediapulse' },
@@ -295,14 +270,12 @@ export default defineConfig({
             text: 'AutoDJ',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/radio/autodj' },
               { text: 'Events', link: '/radio/autodj/events' },
               { text: 'Media', link: '/radio/autodj/media' },
               {
                 text: 'Playing Playlist',
                 collapsed: true,
                 items: [
-                  { text: 'Overview', link: '/radio/autodj/playing_playlist' },
                   { text: 'Medias', link: '/radio/autodj/playing_playlist/medias' },
                 ],
               },
@@ -310,7 +283,6 @@ export default defineConfig({
                 text: 'Playlists',
                 collapsed: true,
                 items: [
-                  { text: 'Overview', link: '/radio/autodj/playlists' },
                   { text: 'Medias', link: '/radio/autodj/playlists/medias' },
                 ],
               },
@@ -320,7 +292,6 @@ export default defineConfig({
             text: 'Players',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/radio/players' },
               { text: 'Config', link: '/radio/players/config' },
               { text: 'Thumbnail', link: '/radio/players/thumbnail' },
             ],
@@ -329,7 +300,6 @@ export default defineConfig({
             text: 'Products',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/radio/products' },
               { text: 'Conflict Restrictions', link: '/radio/products/conflict_restrictions' },
               { text: 'Restrictions', link: '/radio/products/restrictions' },
               { text: 'Users', link: '/radio/products/users' },
@@ -339,7 +309,6 @@ export default defineConfig({
             text: 'Stats',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/radio/stats' },
               { text: 'HLS Stream', link: '/radio/stats/hls_stream' },
               { text: 'Product', link: '/radio/stats/product' },
             ],
@@ -350,14 +319,12 @@ export default defineConfig({
         text: 'Tickets',
         link: '/tickets/',
         collapsed: true,
-        items: [{ text: 'Overview', link: '/tickets/' }],
       },
       {
         text: 'URL',
         link: '/url/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/url/' },
           { text: 'Short', link: '/url/short' },
         ],
       },
@@ -366,7 +333,6 @@ export default defineConfig({
         link: '/video/',
         collapsed: true,
         items: [
-          { text: 'Overview', link: '/video/' },
           { text: 'Channel', link: '/video/channel' },
           { text: 'Countries', link: '/video/countries' },
           { text: 'Event', link: '/video/event' },
@@ -382,12 +348,10 @@ export default defineConfig({
             text: 'Options',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/video/options' },
               {
                 text: 'Record',
                 collapsed: true,
                 items: [
-                  { text: 'Overview', link: '/video/options/record' },
                   { text: 'Storage', link: '/video/options/record/storage' },
                 ],
               },
@@ -400,7 +364,6 @@ export default defineConfig({
             text: 'Players',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/video/players' },
               { text: 'Ads', link: '/video/players/ads' },
               { text: 'Embeds', link: '/video/players/embeds' },
               { text: 'Picture', link: '/video/players/picture' },
@@ -410,7 +373,6 @@ export default defineConfig({
             text: 'Stats',
             collapsed: true,
             items: [
-              { text: 'Overview', link: '/video/stats' },
               { text: 'Channel', link: '/video/stats/channel' },
               { text: 'Geolocation', link: '/video/stats/geolocation' },
               { text: 'Globals', link: '/video/stats/globals' },
@@ -424,7 +386,6 @@ export default defineConfig({
         text: 'VOD',
         link: '/vod/',
         collapsed: true,
-        items: [{ text: 'Overview', link: '/vod/' }],
       },
     ],
     search: {
