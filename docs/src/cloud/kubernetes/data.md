@@ -1,12 +1,8 @@
 # Cloud Kubernetes Data
 
-This page documents the `infomaniak/resources/cloud/kubernetes/data` resource.
+## SDK Function Coverage
 
-## Methods
-
-- `list()`
-- `versions()`
-- `regions()`
-- `reagions()`
-- `zones()`
-- `flavors()`
+| Resource methods                                                                                                                   | Api Reference | Implemented |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------- |
+| [`cloud.kubernetes.data.reagions`](https://github.com/XLongLink/infomaniak/blob/main/infomaniak/resources/cloud/kubernetes/data.py) |               | Yes         |
+| `TODO`                                                                                                                              |               | No          |
