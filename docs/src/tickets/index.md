@@ -1,5 +1,7 @@
 # Tickets Overview
 
-This section contains the `tickets` resources for the Infomaniak Python SDK.
+## SDK Function Coverage
 
-Use this overview as the entry point for `tickets` endpoints.
+| Resource methods | Api Reference | Implemented |
+| ---------------- | ------------- | ----------- |
+| TODO             |               | No          |

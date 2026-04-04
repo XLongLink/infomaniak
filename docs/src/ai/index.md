@@ -1,5 +1,7 @@
 # AI Overview
 
-This section contains the `ai` resources for the Infomaniak Python SDK.
+## SDK Function Coverage
 
-Use this overview as the entry point for `ai` endpoints.
+| Resource methods | Api Reference | Implemented |
+| ---------------- | ------------- | ----------- |
+| TODO             |               | No          |
