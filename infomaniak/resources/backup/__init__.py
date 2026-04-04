@@ -28,19 +28,3 @@ class AsyncBackup(AsyncResource):
         self.administrator = AsyncAdministrator(client)
         self.passwords = AsyncPasswords(client)
         self.billing = AsyncBilling(client)
-
-
-__all__ = [
-    "Backup",
-    "AsyncBackup",
-    "Product",
-    "AsyncProduct",
-    "Slots",
-    "AsyncSlots",
-    "Administrator",
-    "AsyncAdministrator",
-    "Passwords",
-    "AsyncPasswords",
-    "Billing",
-    "AsyncBilling",
-]

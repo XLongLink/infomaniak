@@ -39,6 +39,3 @@ class AsyncScripts(AsyncResource):
     async def set_activation(self) -> None:
         """Enable or disable a mailbox sieve script."""
         raise NotImplementedError("Mailbox filter scripts set_activation endpoint is not implemented yet.")
-
-
-__all__ = ["Scripts", "AsyncScripts"]

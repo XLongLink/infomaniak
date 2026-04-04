@@ -23,6 +23,3 @@ class AsyncTemplates(AsyncResource):
     async def show(self) -> None:
         """Show a mailbox signature template."""
         raise NotImplementedError("Mailbox signature templates show endpoint is not implemented yet.")
-
-
-__all__ = ["Templates", "AsyncTemplates"]

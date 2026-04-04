@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from dacite import from_dict
+from infomaniak.utils import PaginatedList
 from infomaniak.resource import Resouce, AsyncResource
 from infomaniak.models.cloud import (PublicCloudProject,
-                                     PublicCloudProjectListResponse,
                                      CreatePublicCloudProjectResponse,
                                      PublicCloudProjectInvitationResponse,
                                      PublicCloudProjectAsyncActionResponse)
@@ -135,7 +135,7 @@ class Projects(Resouce):
         public_cloud_id: int,
         *,
         with_: str | None = None,
-    ) -> PublicCloudProjectListResponse:
+    ) -> PaginatedList[PublicCloudProject]:
         """
         List all projects of a public cloud product.
 
@@ -144,19 +144,18 @@ class Projects(Resouce):
             with_ (str | None): Optional expansion parameter, such as ``services``.
 
         Returns:
-            PublicCloudProjectListResponse: The list of public cloud projects and pagination metadata.
+            PaginatedList[PublicCloudProject]: The list of public cloud projects and pagination metadata.
         """
         url = f"/1/public_clouds/{public_cloud_id}/projects"
         params = {"with": with_} if with_ is not None else None
 
         response = self._client.get(url, params=params)
         payload = response.json()
-        return PublicCloudProjectListResponse(
-            data=[from_dict(PublicCloudProject, item) for item in payload["data"]],
-            total=payload.get("total"),
-            page=payload.get("page"),
-            pages=payload.get("pages"),
-            items_per_page=payload.get("items_per_page"),
+        return PaginatedList(
+            [from_dict(PublicCloudProject, item) for item in payload["data"]],
+            page=payload.get("page") or 1,
+            pages=payload.get("pages") or 1,
+            items=payload.get("total") or 0,
         )
 
     def get(
@@ -310,7 +309,7 @@ class AsyncProjects(AsyncResource):
         public_cloud_id: int,
         *,
         with_: str | None = None,
-    ) -> PublicCloudProjectListResponse:
+    ) -> PaginatedList[PublicCloudProject]:
         """
         List all projects of a public cloud product.
 
@@ -319,19 +318,18 @@ class AsyncProjects(AsyncResource):
             with_ (str | None): Optional expansion parameter, such as ``services``.
 
         Returns:
-            PublicCloudProjectListResponse: The list of public cloud projects and pagination metadata.
+            PaginatedList[PublicCloudProject]: The list of public cloud projects and pagination metadata.
         """
         url = f"/1/public_clouds/{public_cloud_id}/projects"
         params = {"with": with_} if with_ is not None else None
 
         response = await self._client.get(url, params=params)
         payload = response.json()
-        return PublicCloudProjectListResponse(
-            data=[from_dict(PublicCloudProject, item) for item in payload["data"]],
-            total=payload.get("total"),
-            page=payload.get("page"),
-            pages=payload.get("pages"),
-            items_per_page=payload.get("items_per_page"),
+        return PaginatedList(
+            [from_dict(PublicCloudProject, item) for item in payload["data"]],
+            page=payload.get("page") or 1,
+            pages=payload.get("pages") or 1,
+            items=payload.get("total") or 0,
         )
 
     async def get(
@@ -357,6 +355,3 @@ class AsyncProjects(AsyncResource):
 
         response = await self._client.get(url, params=params)
         return from_dict(PublicCloudProject, response.json()["data"])
-
-
-__all__ = ["Projects", "AsyncProjects"]

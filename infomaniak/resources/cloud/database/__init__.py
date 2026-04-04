@@ -6,9 +6,10 @@ from dacite import from_dict
 from .config import Config, AsyncConfig
 from .backups import Backups, AsyncBackups
 from .restore import Restore, AsyncRestore
+from infomaniak.utils import PaginatedList
 from infomaniak.resource import Resouce, AsyncResource
 from infomaniak.models.cloud import (
-    DatabaseService, DatabaseServiceBoolResponse, DatabaseServiceListResponse,
+    DatabaseService, DatabaseServiceBoolResponse,
     DatabaseServiceCreationResponse, DatabaseServiceConnectionResponse,
     CreateDatabaseServiceBackupScheduleRequest)
 
@@ -30,7 +31,7 @@ class Database(Resouce):
         public_cloud_project_id: int,
         *,
         with_: str | None = None,
-    ) -> DatabaseServiceListResponse:
+    ) -> PaginatedList[DatabaseService]:
         """
         List database services for a public cloud project.
 
@@ -40,7 +41,7 @@ class Database(Resouce):
             with_: Optional expansion parameter such as ``projects`` or ``backups``.
 
         Returns:
-            DatabaseServiceListResponse: The list of database services and pagination metadata.
+            PaginatedList[DatabaseService]: The list of database services and pagination metadata.
         """
         url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/dbaas"
         params = {"with": with_} if with_ is not None else None
@@ -48,12 +49,11 @@ class Database(Resouce):
         response = self._client.get(url, params=params)
         payload = response.json()
 
-        return DatabaseServiceListResponse(
-            data=[from_dict(DatabaseService, item) for item in payload["data"]],
-            total=payload.get("total"),
-            page=payload.get("page"),
-            pages=payload.get("pages"),
-            items_per_page=payload.get("items_per_page"),
+        return PaginatedList(
+            [from_dict(DatabaseService, item) for item in payload["data"]],
+            page=payload.get("page") or 1,
+            pages=payload.get("pages") or 1,
+            items=payload.get("total") or 0,
         )
 
     def list_all(
@@ -61,7 +61,7 @@ class Database(Resouce):
         account_id: int,
         *,
         with_: str | None = None,
-    ) -> DatabaseServiceListResponse:
+    ) -> PaginatedList[DatabaseService]:
         """
         List database services for all public clouds in an account.
 
@@ -70,7 +70,7 @@ class Database(Resouce):
             with_: Optional expansion parameter such as ``projects`` or ``backups``.
 
         Returns:
-            DatabaseServiceListResponse: The list of database services and pagination metadata.
+            PaginatedList[DatabaseService]: The list of database services and pagination metadata.
         """
         url = "/1/public_clouds/dbaas"
         params: dict[str, str | int] = {"account_id": account_id}
@@ -80,12 +80,11 @@ class Database(Resouce):
         response = self._client.get(url, params=params)
         payload = response.json()
 
-        return DatabaseServiceListResponse(
-            data=[from_dict(DatabaseService, item) for item in payload["data"]],
-            total=payload.get("total"),
-            page=payload.get("page"),
-            pages=payload.get("pages"),
-            items_per_page=payload.get("items_per_page"),
+        return PaginatedList(
+            [from_dict(DatabaseService, item) for item in payload["data"]],
+            page=payload.get("page") or 1,
+            pages=payload.get("pages") or 1,
+            items=payload.get("total") or 0,
         )
 
     def create(
@@ -259,7 +258,7 @@ class AsyncDatabase(AsyncResource):
         public_cloud_project_id: int,
         *,
         with_: str | None = None,
-    ) -> DatabaseServiceListResponse:
+    ) -> PaginatedList[DatabaseService]:
         """
         List database services for a public cloud project.
 
@@ -269,7 +268,7 @@ class AsyncDatabase(AsyncResource):
             with_: Optional expansion parameter such as ``projects`` or ``backups``.
 
         Returns:
-            DatabaseServiceListResponse: The list of database services and pagination metadata.
+            PaginatedList[DatabaseService]: The list of database services and pagination metadata.
         """
         url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/dbaas"
         params = {"with": with_} if with_ is not None else None
@@ -277,12 +276,11 @@ class AsyncDatabase(AsyncResource):
         response = await self._client.get(url, params=params)
         payload = response.json()
 
-        return DatabaseServiceListResponse(
-            data=[from_dict(DatabaseService, item) for item in payload["data"]],
-            total=payload.get("total"),
-            page=payload.get("page"),
-            pages=payload.get("pages"),
-            items_per_page=payload.get("items_per_page"),
+        return PaginatedList(
+            [from_dict(DatabaseService, item) for item in payload["data"]],
+            page=payload.get("page") or 1,
+            pages=payload.get("pages") or 1,
+            items=payload.get("total") or 0,
         )
 
     async def list_all(
@@ -290,7 +288,7 @@ class AsyncDatabase(AsyncResource):
         account_id: int,
         *,
         with_: str | None = None,
-    ) -> DatabaseServiceListResponse:
+    ) -> PaginatedList[DatabaseService]:
         """
         List database services for all public clouds in an account.
 
@@ -299,7 +297,7 @@ class AsyncDatabase(AsyncResource):
             with_: Optional expansion parameter such as ``projects`` or ``backups``.
 
         Returns:
-            DatabaseServiceListResponse: The list of database services and pagination metadata.
+            PaginatedList[DatabaseService]: The list of database services and pagination metadata.
         """
         url = "/1/public_clouds/dbaas"
         params: dict[str, str | int] = {"account_id": account_id}
@@ -309,12 +307,11 @@ class AsyncDatabase(AsyncResource):
         response = await self._client.get(url, params=params)
         payload = response.json()
 
-        return DatabaseServiceListResponse(
-            data=[from_dict(DatabaseService, item) for item in payload["data"]],
-            total=payload.get("total"),
-            page=payload.get("page"),
-            pages=payload.get("pages"),
-            items_per_page=payload.get("items_per_page"),
+        return PaginatedList(
+            [from_dict(DatabaseService, item) for item in payload["data"]],
+            page=payload.get("page") or 1,
+            pages=payload.get("pages") or 1,
+            items=payload.get("total") or 0,
         )
 
     async def create(
@@ -469,19 +466,3 @@ class AsyncDatabase(AsyncResource):
         )
         response = await self._client.post(url)
         return from_dict(DatabaseServiceConnectionResponse, response.json())
-
-
-__all__ = [
-    "Backups",
-    "Config",
-    "Data",
-    "Ip",
-    "Restore",
-    "AsyncBackups",
-    "AsyncConfig",
-    "AsyncData",
-    "AsyncIp",
-    "AsyncRestore",
-    "Database",
-    "AsyncDatabase",
-]

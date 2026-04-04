@@ -19,13 +19,3 @@ class AsyncAnswers(AsyncResource):
         super().__init__(client)
         self.passes = AsyncPasses(client)
         self.tickets = AsyncTickets(client)
-
-
-__all__ = [
-    "Answers",
-    "AsyncAnswers",
-    "Passes",
-    "AsyncPasses",
-    "Tickets",
-    "AsyncTickets",
-]

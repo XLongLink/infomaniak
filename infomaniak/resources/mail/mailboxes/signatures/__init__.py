@@ -72,11 +72,3 @@ class AsyncSignatures(AsyncResource):
     async def update(self) -> None:
         """Update a mailbox signature."""
         raise NotImplementedError("Mailbox signatures update endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Signatures",
-    "AsyncSignatures",
-    "Templates",
-    "AsyncTemplates",
-]

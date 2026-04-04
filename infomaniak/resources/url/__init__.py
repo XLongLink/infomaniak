@@ -16,6 +16,3 @@ class AsyncUrl(AsyncResource):
     def __init__(self, client) -> None:
         super().__init__(client)
         self.short = AsyncShort(client)
-
-
-__all__ = ["Url", "AsyncUrl", "Short", "AsyncShort"]

@@ -22,15 +22,3 @@ class AsyncAccesses(AsyncResource):
         self.devices = AsyncDevices(client)
         self.invitations = AsyncInvitations(client)
         self.webmail = AsyncWebmail(client)
-
-
-__all__ = [
-    "Accesses",
-    "AsyncAccesses",
-    "Devices",
-    "AsyncDevices",
-    "Invitations",
-    "AsyncInvitations",
-    "Webmail",
-    "AsyncWebmail",
-]

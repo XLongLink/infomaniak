@@ -120,11 +120,3 @@ class AsyncCampaigns(AsyncResource):
     async def schedule(self) -> None:
         """Schedule a campaign."""
         raise NotImplementedError("Newsletter campaigns schedule endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Campaigns",
-    "AsyncCampaigns",
-    "CampaignsTemplate",
-    "AsyncCampaignsTemplate",
-]

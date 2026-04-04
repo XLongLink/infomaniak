@@ -23,6 +23,3 @@ class AsyncRestore(AsyncResource):
     async def create(self) -> None:
         """Create a cloud database restore operation."""
         raise NotImplementedError("Cloud database restore create endpoint is not implemented yet.")
-
-
-__all__ = ["Restore", "AsyncRestore"]

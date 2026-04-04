@@ -99,13 +99,3 @@ class AsyncPlayers(AsyncResource):
     async def reset(self) -> None:
         """Reset a player."""
         raise NotImplementedError("AsyncRadio.players.reset is not implemented yet.")
-
-
-__all__ = [
-    "Players",
-    "AsyncPlayers",
-    "Config",
-    "AsyncConfig",
-    "Thumbnail",
-    "AsyncThumbnail",
-]

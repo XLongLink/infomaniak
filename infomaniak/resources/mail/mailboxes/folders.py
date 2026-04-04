@@ -39,6 +39,3 @@ class AsyncFolders(AsyncResource):
     async def empty_trash(self) -> None:
         """Empty trash folder for a mailbox."""
         raise NotImplementedError("Mailbox folders empty_trash endpoint is not implemented yet.")
-
-
-__all__ = ["Folders", "AsyncFolders"]

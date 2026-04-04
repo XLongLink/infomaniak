@@ -31,6 +31,3 @@ class AsyncGroupsSubscribers(AsyncResource):
     async def unassign(self) -> None:
         """Unassign subscribers from a group."""
         raise NotImplementedError("Newsletter groups subscribers unassign endpoint is not implemented yet.")
-
-
-__all__ = ["GroupsSubscribers", "AsyncGroupsSubscribers"]

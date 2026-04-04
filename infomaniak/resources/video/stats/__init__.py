@@ -19,13 +19,3 @@ class AsyncStats(AsyncResource):
         super().__init__(client)
         self.channel = AsyncChannelStats(client)
         self.globals = AsyncGlobalStats(client)
-
-
-__all__ = [
-    "Stats",
-    "AsyncStats",
-    "ChannelStats",
-    "AsyncChannelStats",
-    "GlobalStats",
-    "AsyncGlobalStats",
-]

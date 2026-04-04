@@ -19,13 +19,3 @@ class AsyncWebmail(AsyncResource):
         super().__init__(client)
         self.team = AsyncTeam(client)
         self.user = AsyncUser(client)
-
-
-__all__ = [
-    "Webmail",
-    "AsyncWebmail",
-    "Team",
-    "AsyncTeam",
-    "User",
-    "AsyncUser",
-]

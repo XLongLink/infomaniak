@@ -47,6 +47,3 @@ class AsyncPools(AsyncResource):
     async def delete(self) -> None:
         """Delete a Kubernetes worker pool."""
         raise NotImplementedError("Cloud Kubernetes pools delete endpoint is not implemented yet.")
-
-
-__all__ = ["Pools", "AsyncPools"]

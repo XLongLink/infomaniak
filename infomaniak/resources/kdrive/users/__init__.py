@@ -32,6 +32,3 @@ class AsyncUsers(AsyncResource):
     async def remove(self) -> None:
         """Remove a user from kDrive."""
         raise NotImplementedError("kDrive users.remove endpoint is not implemented yet.")
-
-
-__all__ = ["Roles", "AsyncRoles", "Users", "AsyncUsers"]

@@ -47,6 +47,3 @@ class AsyncDashboard(AsyncResource):
     async def monthly_campaigns_statistics(self) -> None:
         """List monthly campaign statistics."""
         raise NotImplementedError("Newsletter dashboard monthly_campaigns_statistics endpoint is not implemented yet.")
-
-
-__all__ = ["Dashboard", "AsyncDashboard"]

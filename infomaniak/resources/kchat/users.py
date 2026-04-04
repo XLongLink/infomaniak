@@ -209,23 +209,3 @@ class AsyncUsers(AsyncResource):
     async def patch(self) -> None:
         """Partially update a user."""
         raise NotImplementedError("kChat users.patch endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Users",
-    "AsyncUsers",
-    "UserRoles",
-    "AsyncUserRoles",
-    "UserProfile",
-    "AsyncUserProfile",
-    "UserProfileImage",
-    "AsyncUserProfileImage",
-    "UserUsername",
-    "AsyncUserUsername",
-    "UserEmail",
-    "AsyncUserEmail",
-    "UserTyping",
-    "AsyncUserTyping",
-    "UserChannels",
-    "AsyncUserChannels",
-]

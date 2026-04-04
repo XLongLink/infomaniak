@@ -55,6 +55,3 @@ class AsyncData(AsyncResource):
     async def flavors(self) -> None:
         """List available Kubernetes flavors."""
         raise NotImplementedError("Cloud Kubernetes data flavors endpoint is not implemented yet.")
-
-
-__all__ = ["Data", "AsyncData"]

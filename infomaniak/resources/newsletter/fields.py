@@ -47,6 +47,3 @@ class AsyncFields(AsyncResource):
     async def delete(self) -> None:
         """Delete a field."""
         raise NotImplementedError("Newsletter fields delete endpoint is not implemented yet.")
-
-
-__all__ = ["Fields", "AsyncFields"]

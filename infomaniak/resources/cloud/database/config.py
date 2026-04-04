@@ -47,6 +47,3 @@ class AsyncConfig(AsyncResource):
     async def remove(self) -> None:
         """Remove a database configuration entry."""
         raise NotImplementedError("Cloud database config remove endpoint is not implemented yet.")
-
-
-__all__ = ["Config", "AsyncConfig"]

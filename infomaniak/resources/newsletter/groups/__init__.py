@@ -64,11 +64,3 @@ class AsyncGroups(AsyncResource):
     async def delete(self) -> None:
         """Delete a group."""
         raise NotImplementedError("Newsletter groups delete endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Groups",
-    "AsyncGroups",
-    "GroupsSubscribers",
-    "AsyncGroupsSubscribers",
-]

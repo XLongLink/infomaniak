@@ -23,6 +23,3 @@ class AsyncAdministrator(AsyncResource):
     async def create(self) -> None:
         """Create a new administrator for a Swiss Backup product."""
         raise NotImplementedError("AsyncBackup.administrator.create is not implemented yet.")
-
-
-__all__ = ["Administrator", "AsyncAdministrator"]

@@ -23,6 +23,3 @@ class AsyncCredits(AsyncResource):
     async def display(self) -> None:
         """Get credits of a specific account."""
         raise NotImplementedError("Newsletter credits display endpoint is not implemented yet.")
-
-
-__all__ = ["Credits", "AsyncCredits"]

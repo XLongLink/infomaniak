@@ -47,15 +47,3 @@ class AsyncProducts(AsyncResource):
     async def update(self) -> None:
         """Update a radio product."""
         raise NotImplementedError("AsyncRadio.products.update is not implemented yet.")
-
-
-__all__ = [
-    "Products",
-    "AsyncProducts",
-    "Users",
-    "AsyncUsers",
-    "ConflictRestrictions",
-    "AsyncConflictRestrictions",
-    "Restrictions",
-    "AsyncRestrictions",
-]

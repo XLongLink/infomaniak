@@ -67,13 +67,3 @@ class AsyncWebforms(AsyncResource):
     async def delete(self) -> None:
         """Delete a webform."""
         raise NotImplementedError("Newsletter webforms delete endpoint is not implemented yet.")
-
-
-__all__ = [
-    "Webforms",
-    "AsyncWebforms",
-    "WebformsThemes",
-    "AsyncWebformsThemes",
-    "WebformsFields",
-    "AsyncWebformsFields",
-]

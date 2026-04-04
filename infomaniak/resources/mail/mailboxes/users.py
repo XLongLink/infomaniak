@@ -23,6 +23,3 @@ class AsyncUsers(AsyncResource):
     async def update_invitation_permission(self) -> None:
         """Update permissions of a mailbox invitation."""
         raise NotImplementedError("Mailbox users update_invitation_permission endpoint is not implemented yet.")
-
-
-__all__ = ["Users", "AsyncUsers"]

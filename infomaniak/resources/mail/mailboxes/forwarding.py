@@ -47,6 +47,3 @@ class AsyncForwarding(AsyncResource):
     async def delete(self) -> None:
         """Delete a forwarding address for a mailbox."""
         raise NotImplementedError("Mailbox forwarding delete endpoint is not implemented yet.")
-
-
-__all__ = ["Forwarding", "AsyncForwarding"]

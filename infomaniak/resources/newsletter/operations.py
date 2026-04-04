@@ -15,6 +15,3 @@ class AsyncOperations(AsyncResource):
     async def cancel(self) -> None:
         """Cancel an operation."""
         raise NotImplementedError("Newsletter operations cancel endpoint is not implemented yet.")
-
-
-__all__ = ["Operations", "AsyncOperations"]

@@ -14,34 +14,3 @@ from infomaniak.resources.domain import Domain, AsyncDomain
 from infomaniak.resources.kdrive import Kdrive, AsyncKdrive
 from infomaniak.resources.etickets import Etickets, AsyncEtickets
 from infomaniak.resources.newsletter import Newsletter, AsyncNewsletter
-
-__all__ = [
-    "AsyncBackup",
-    "Backup",
-    "AsyncCloud",
-    "Cloud",
-    "AsyncCore",
-    "Core",
-    "AsyncDNS",
-    "DNS",
-    "AsyncDomain",
-    "Domain",
-    "AsyncEtickets",
-    "Etickets",
-    "AsyncKchat",
-    "Kchat",
-    "AsyncKdrive",
-    "Kdrive",
-    "AsyncKmeet",
-    "Kmeet",
-    "AsyncMail",
-    "Mail",
-    "AsyncNewsletter",
-    "Newsletter",
-    "AsyncRadio",
-    "Radio",
-    "AsyncUrl",
-    "Url",
-    "AsyncVideo",
-    "Video",
-]

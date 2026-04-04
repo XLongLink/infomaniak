@@ -6,9 +6,9 @@ from typing import Literal
 from .order import Order, AsyncOrder
 from .dnssec import DNSSEC, AsyncDNSSEC
 from .nameservers import Nameservers, AsyncNameservers
+from infomaniak.utils import PaginatedList
 from infomaniak.resource import Resouce, AsyncResource
 from infomaniak.models.domain import Domain as DomainModel
-from infomaniak.models.domain import DomainListResponse
 
 
 class Domain(Resouce):
@@ -38,7 +38,7 @@ class Domain(Resouce):
         tld: str | None = None,
         page: int | None = None,
         per_page: int | None = None,
-    ) -> DomainListResponse:
+    ) -> PaginatedList[DomainModel]:
         """List domains from `GET /2/domains/domains`."""
         params: dict[str, str | int] = {}
         if account_id is not None:
@@ -62,12 +62,11 @@ class Domain(Resouce):
 
         response = self._client.get("/2/domains/domains", params=params or None)
         payload = response.json()
-        return DomainListResponse(
-            data=[from_dict(DomainModel, item) for item in payload["data"]],
-            total=payload.get("total"),
-            page=payload.get("page"),
-            pages=payload.get("pages"),
-            items_per_page=payload.get("items_per_page"),
+        return PaginatedList(
+            [from_dict(DomainModel, item) for item in payload["data"]],
+            page=payload.get("page") or 1,
+            pages=payload.get("pages") or 1,
+            items=payload.get("total") or 0,
         )
 
 
@@ -98,7 +97,7 @@ class AsyncDomain(AsyncResource):
         tld: str | None = None,
         page: int | None = None,
         per_page: int | None = None,
-    ) -> DomainListResponse:
+    ) -> PaginatedList[DomainModel]:
         """List domains from `GET /2/domains/domains`."""
         params: dict[str, str | int] = {}
         if account_id is not None:
@@ -122,24 +121,9 @@ class AsyncDomain(AsyncResource):
 
         response = await self._client.get("/2/domains/domains", params=params or None)
         payload = response.json()
-        return DomainListResponse(
-            data=[from_dict(DomainModel, item) for item in payload["data"]],
-            total=payload.get("total"),
-            page=payload.get("page"),
-            pages=payload.get("pages"),
-            items_per_page=payload.get("items_per_page"),
+        return PaginatedList(
+            [from_dict(DomainModel, item) for item in payload["data"]],
+            page=payload.get("page") or 1,
+            pages=payload.get("pages") or 1,
+            items=payload.get("total") or 0,
         )
-
-
-__all__ = [
-    "Domain",
-    "AsyncDomain",
-    "Zone",
-    "AsyncZone",
-    "Order",
-    "AsyncOrder",
-    "Nameservers",
-    "AsyncNameservers",
-    "DNSSEC",
-    "AsyncDNSSEC",
-]
