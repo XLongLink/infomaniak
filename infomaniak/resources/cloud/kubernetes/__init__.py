@@ -12,7 +12,7 @@ from infomaniak.resource import Resouce, AsyncResource
 class Kubernetes(Resouce):
     """Cloud Kubernetes resources."""
 
-    _DEFAULT_KUBERNETES_VERSION: Literal["1.29", "1.30", "1.31"] = "1.31"
+    _DEFAULT_KUBERNETES_VERSION: Literal["1.32", "1.33", "1.34", "1.35"] = "1.35"
     _REGIONS: tuple[Literal["dc3-a", "dc4-a"], Literal["dc3-a", "dc4-a"]] = (
         "dc3-a",
         "dc4-a",
