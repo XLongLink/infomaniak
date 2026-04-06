@@ -2,24 +2,62 @@
 
 The `cloud.kubernetes.ip` resource manages API server IP filter rules for a Kubernetes cluster.
 
-## Methods
+## List IP Rules
 
-- `cloud.kubernetes.ip.list(...)`
-- `cloud.kubernetes.ip.create(...)`
-- `cloud.kubernetes.ip.update(...)`
-- `cloud.kubernetes.ip.remove(...)`
-
-::: warning
-`cloud.kubernetes.ip` endpoints are declared in the SDK but not implemented yet.
-:::
-
-## Usage
+- No parameters are currently available in the SDK implementation.
 
 ```py
 from infomaniak import Client
 
-client = Client(token="YOUR_TOKEN")
-
-# Not implemented yet:
-# filters = client.cloud.kubernetes.ip.list(...)
+client = Client(token="<token>")
+rules: None = client.cloud.kubernetes.ip.list()
 ```
+
+`None`:
+
+- No return object is currently available in the SDK implementation.
+
+## Create IP Rule
+
+- No parameters are currently available in the SDK implementation.
+
+```py
+from infomaniak import Client
+
+client = Client(token="<token>")
+created: None = client.cloud.kubernetes.ip.create()
+```
+
+`None`:
+
+- No return object is currently available in the SDK implementation.
+
+## Update IP Rule
+
+- No parameters are currently available in the SDK implementation.
+
+```py
+from infomaniak import Client
+
+client = Client(token="<token>")
+updated: None = client.cloud.kubernetes.ip.update()
+```
+
+`None`:
+
+- No return object is currently available in the SDK implementation.
+
+## Remove IP Rule
+
+- No parameters are currently available in the SDK implementation.
+
+```py
+from infomaniak import Client
+
+client = Client(token="<token>")
+removed: None = client.cloud.kubernetes.ip.remove()
+```
+
+`None`:
+
+- No return object is currently available in the SDK implementation.
