@@ -35,7 +35,7 @@ class Kubernetes(Resouce):
         Returns:
             PaginatedList[dict[str, Any]]: The list of Kubernetes clusters and pagination metadata.
         """
-        url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/kubernetes"
+        url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/kaas"
         params = {"with": with_} if with_ is not None else None
 
         response = self._client.get(url, params=params)
@@ -65,7 +65,7 @@ class Kubernetes(Resouce):
         Returns:
             dict[str, Any]: The API response payload for the created cluster.
         """
-        url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/kubernetes"
+        url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/kaas"
         response = self._client.post(url, json=payload)
         return response.json()
 
@@ -73,7 +73,7 @@ class Kubernetes(Resouce):
         self,
         public_cloud_id: int,
         public_cloud_project_id: int,
-        kubernetes_id: int,
+        kaas_id: int,
         *,
         with_: str | None = None,
     ) -> dict[str, Any]:
@@ -83,7 +83,7 @@ class Kubernetes(Resouce):
         Args:
             public_cloud_id: The unique identifier of the public cloud product.
             public_cloud_project_id: The unique identifier of the public cloud project.
-            kubernetes_id: The unique identifier of the Kubernetes cluster.
+            kaas_id: The unique identifier of the Kubernetes cluster.
             with_: Optional expansion parameter.
 
         Returns:
@@ -91,7 +91,7 @@ class Kubernetes(Resouce):
         """
         url = (
             f"/1/public_clouds/{public_cloud_id}/projects/"
-            f"{public_cloud_project_id}/kubernetes/{kubernetes_id}"
+            f"{public_cloud_project_id}/kaas/{kaas_id}"
         )
         params = {"with": with_} if with_ is not None else None
 
@@ -102,7 +102,7 @@ class Kubernetes(Resouce):
         self,
         public_cloud_id: int,
         public_cloud_project_id: int,
-        kubernetes_id: int,
+        kaas_id: int,
     ) -> dict[str, Any]:
         """
         Delete a Kubernetes cluster.
@@ -110,14 +110,14 @@ class Kubernetes(Resouce):
         Args:
             public_cloud_id: The unique identifier of the public cloud product.
             public_cloud_project_id: The unique identifier of the public cloud project.
-            kubernetes_id: The unique identifier of the Kubernetes cluster.
+            kaas_id: The unique identifier of the Kubernetes cluster.
 
         Returns:
             dict[str, Any]: The API operation result payload.
         """
         url = (
             f"/1/public_clouds/{public_cloud_id}/projects/"
-            f"{public_cloud_project_id}/kubernetes/{kubernetes_id}"
+            f"{public_cloud_project_id}/kaas/{kaas_id}"
         )
         response = self._client.delete(url)
         return response.json()
@@ -126,7 +126,7 @@ class Kubernetes(Resouce):
         self,
         public_cloud_id: int,
         public_cloud_project_id: int,
-        kubernetes_id: int,
+        kaas_id: int,
         payload: dict[str, Any],
     ) -> dict[str, Any]:
         """
@@ -135,7 +135,7 @@ class Kubernetes(Resouce):
         Args:
             public_cloud_id: The unique identifier of the public cloud product.
             public_cloud_project_id: The unique identifier of the public cloud project.
-            kubernetes_id: The unique identifier of the Kubernetes cluster.
+            kaas_id: The unique identifier of the Kubernetes cluster.
             payload: The Kubernetes cluster update payload.
 
         Returns:
@@ -143,16 +143,16 @@ class Kubernetes(Resouce):
         """
         url = (
             f"/1/public_clouds/{public_cloud_id}/projects/"
-            f"{public_cloud_project_id}/kubernetes/{kubernetes_id}"
+            f"{public_cloud_project_id}/kaas/{kaas_id}"
         )
-        response = self._client.put(url, json=payload)
+        response = self._client.patch(url, json=payload)
         return response.json()
 
     def download(
         self,
         public_cloud_id: int,
         public_cloud_project_id: int,
-        kubernetes_id: int,
+        kaas_id: int,
     ) -> dict[str, Any]:
         """
         Download a Kubernetes cluster kubeconfig payload.
@@ -160,14 +160,14 @@ class Kubernetes(Resouce):
         Args:
             public_cloud_id: The unique identifier of the public cloud product.
             public_cloud_project_id: The unique identifier of the public cloud project.
-            kubernetes_id: The unique identifier of the Kubernetes cluster.
+            kaas_id: The unique identifier of the Kubernetes cluster.
 
         Returns:
             dict[str, Any]: The kubeconfig download payload.
         """
         url = (
             f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/"
-            f"kubernetes/{kubernetes_id}/download"
+            f"kaas/{kaas_id}/kube_config"
         )
         response = self._client.get(url)
         return response.json()
@@ -176,7 +176,7 @@ class Kubernetes(Resouce):
         self,
         public_cloud_id: int,
         public_cloud_project_id: int,
-        kubernetes_id: int,
+        kaas_id: int,
         payload: dict[str, Any],
     ) -> dict[str, Any]:
         """
@@ -185,7 +185,7 @@ class Kubernetes(Resouce):
         Args:
             public_cloud_id: The unique identifier of the public cloud product.
             public_cloud_project_id: The unique identifier of the public cloud project.
-            kubernetes_id: The unique identifier of the Kubernetes cluster.
+            kaas_id: The unique identifier of the Kubernetes cluster.
             payload: The Kubernetes cluster patch payload.
 
         Returns:
@@ -193,22 +193,22 @@ class Kubernetes(Resouce):
         """
         url = (
             f"/1/public_clouds/{public_cloud_id}/projects/"
-            f"{public_cloud_project_id}/kubernetes/{kubernetes_id}"
+            f"{public_cloud_project_id}/kaas/{kaas_id}"
         )
         response = self._client.patch(url, json=payload)
         return response.json()
 
-    def kaas(self, *, account_id: int | None = None) -> PaginatedList[dict[str, Any]]:
+    def kaas(self, *, account_id: int) -> PaginatedList[dict[str, Any]]:
         """
         List available managed Kubernetes service templates.
 
         Args:
-            account_id: Optional account identifier used to scope available templates.
+            account_id: Account identifier used to scope available templates.
 
         Returns:
             PaginatedList[dict[str, Any]]: The list of available Kubernetes templates.
         """
-        params = {"account_id": account_id} if account_id is not None else None
+        params = {"account_id": account_id}
         response = self._client.get("/1/public_clouds/kaas", params=params)
         payload = response.json()
 
@@ -247,7 +247,7 @@ class AsyncKubernetes(AsyncResource):
         Returns:
             PaginatedList[dict[str, Any]]: The list of Kubernetes clusters and pagination metadata.
         """
-        url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/kubernetes"
+        url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/kaas"
         params = {"with": with_} if with_ is not None else None
 
         response = await self._client.get(url, params=params)
@@ -277,7 +277,7 @@ class AsyncKubernetes(AsyncResource):
         Returns:
             dict[str, Any]: The API response payload for the created cluster.
         """
-        url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/kubernetes"
+        url = f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/kaas"
         response = await self._client.post(url, json=payload)
         return response.json()
 
@@ -285,7 +285,7 @@ class AsyncKubernetes(AsyncResource):
         self,
         public_cloud_id: int,
         public_cloud_project_id: int,
-        kubernetes_id: int,
+        kaas_id: int,
         *,
         with_: str | None = None,
     ) -> dict[str, Any]:
@@ -295,7 +295,7 @@ class AsyncKubernetes(AsyncResource):
         Args:
             public_cloud_id: The unique identifier of the public cloud product.
             public_cloud_project_id: The unique identifier of the public cloud project.
-            kubernetes_id: The unique identifier of the Kubernetes cluster.
+            kaas_id: The unique identifier of the Kubernetes cluster.
             with_: Optional expansion parameter.
 
         Returns:
@@ -303,7 +303,7 @@ class AsyncKubernetes(AsyncResource):
         """
         url = (
             f"/1/public_clouds/{public_cloud_id}/projects/"
-            f"{public_cloud_project_id}/kubernetes/{kubernetes_id}"
+            f"{public_cloud_project_id}/kaas/{kaas_id}"
         )
         params = {"with": with_} if with_ is not None else None
 
@@ -314,7 +314,7 @@ class AsyncKubernetes(AsyncResource):
         self,
         public_cloud_id: int,
         public_cloud_project_id: int,
-        kubernetes_id: int,
+        kaas_id: int,
     ) -> dict[str, Any]:
         """
         Delete a Kubernetes cluster.
@@ -322,14 +322,14 @@ class AsyncKubernetes(AsyncResource):
         Args:
             public_cloud_id: The unique identifier of the public cloud product.
             public_cloud_project_id: The unique identifier of the public cloud project.
-            kubernetes_id: The unique identifier of the Kubernetes cluster.
+            kaas_id: The unique identifier of the Kubernetes cluster.
 
         Returns:
             dict[str, Any]: The API operation result payload.
         """
         url = (
             f"/1/public_clouds/{public_cloud_id}/projects/"
-            f"{public_cloud_project_id}/kubernetes/{kubernetes_id}"
+            f"{public_cloud_project_id}/kaas/{kaas_id}"
         )
         response = await self._client.delete(url)
         return response.json()
@@ -338,7 +338,7 @@ class AsyncKubernetes(AsyncResource):
         self,
         public_cloud_id: int,
         public_cloud_project_id: int,
-        kubernetes_id: int,
+        kaas_id: int,
         payload: dict[str, Any],
     ) -> dict[str, Any]:
         """
@@ -347,7 +347,7 @@ class AsyncKubernetes(AsyncResource):
         Args:
             public_cloud_id: The unique identifier of the public cloud product.
             public_cloud_project_id: The unique identifier of the public cloud project.
-            kubernetes_id: The unique identifier of the Kubernetes cluster.
+            kaas_id: The unique identifier of the Kubernetes cluster.
             payload: The Kubernetes cluster update payload.
 
         Returns:
@@ -355,16 +355,16 @@ class AsyncKubernetes(AsyncResource):
         """
         url = (
             f"/1/public_clouds/{public_cloud_id}/projects/"
-            f"{public_cloud_project_id}/kubernetes/{kubernetes_id}"
+            f"{public_cloud_project_id}/kaas/{kaas_id}"
         )
-        response = await self._client.put(url, json=payload)
+        response = await self._client.patch(url, json=payload)
         return response.json()
 
     async def download(
         self,
         public_cloud_id: int,
         public_cloud_project_id: int,
-        kubernetes_id: int,
+        kaas_id: int,
     ) -> dict[str, Any]:
         """
         Download a Kubernetes cluster kubeconfig payload.
@@ -372,14 +372,14 @@ class AsyncKubernetes(AsyncResource):
         Args:
             public_cloud_id: The unique identifier of the public cloud product.
             public_cloud_project_id: The unique identifier of the public cloud project.
-            kubernetes_id: The unique identifier of the Kubernetes cluster.
+            kaas_id: The unique identifier of the Kubernetes cluster.
 
         Returns:
             dict[str, Any]: The kubeconfig download payload.
         """
         url = (
             f"/1/public_clouds/{public_cloud_id}/projects/{public_cloud_project_id}/"
-            f"kubernetes/{kubernetes_id}/download"
+            f"kaas/{kaas_id}/kube_config"
         )
         response = await self._client.get(url)
         return response.json()
@@ -388,7 +388,7 @@ class AsyncKubernetes(AsyncResource):
         self,
         public_cloud_id: int,
         public_cloud_project_id: int,
-        kubernetes_id: int,
+        kaas_id: int,
         payload: dict[str, Any],
     ) -> dict[str, Any]:
         """
@@ -397,7 +397,7 @@ class AsyncKubernetes(AsyncResource):
         Args:
             public_cloud_id: The unique identifier of the public cloud product.
             public_cloud_project_id: The unique identifier of the public cloud project.
-            kubernetes_id: The unique identifier of the Kubernetes cluster.
+            kaas_id: The unique identifier of the Kubernetes cluster.
             payload: The Kubernetes cluster patch payload.
 
         Returns:
@@ -405,22 +405,22 @@ class AsyncKubernetes(AsyncResource):
         """
         url = (
             f"/1/public_clouds/{public_cloud_id}/projects/"
-            f"{public_cloud_project_id}/kubernetes/{kubernetes_id}"
+            f"{public_cloud_project_id}/kaas/{kaas_id}"
         )
         response = await self._client.patch(url, json=payload)
         return response.json()
 
-    async def kaas(self, *, account_id: int | None = None) -> PaginatedList[dict[str, Any]]:
+    async def kaas(self, *, account_id: int) -> PaginatedList[dict[str, Any]]:
         """
         List available managed Kubernetes service templates.
 
         Args:
-            account_id: Optional account identifier used to scope available templates.
+            account_id: Account identifier used to scope available templates.
 
         Returns:
             PaginatedList[dict[str, Any]]: The list of available Kubernetes templates.
         """
-        params = {"account_id": account_id} if account_id is not None else None
+        params = {"account_id": account_id}
         response = await self._client.get("/1/public_clouds/kaas", params=params)
         payload = response.json()
 
