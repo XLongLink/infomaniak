@@ -14,11 +14,3 @@ class PublicCloudConfig:
     valid_from: int
     valid_to: int
     project_count: int
-
-
-@dataclass(slots=True)
-class PublicCloudConfigResponse:
-    """Get public cloud configuration response payload."""
-
-    result: Literal["success", "error", "asynchronous"]
-    data: PublicCloudConfig

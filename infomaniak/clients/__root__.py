@@ -1,6 +1,5 @@
 import os
 import httpx
-from typing import Any
 from infomaniak.constants import API
 
 
@@ -43,20 +42,43 @@ class RootClient:
             payload = response.json()
         except ValueError:
             return
-
+        
         if not isinstance(payload, dict):
             return
 
         if payload.get("result") != "error":
             return
 
-        error_payload = payload.get("error", {})
-        if isinstance(error_payload, dict):
-            message = error_payload.get("description")
-        else:
-            message = None
+        error_payload = payload.get("error")
+        message: str = "API request failed."
 
-        if not isinstance(message, str) or not message:
-            message = "API request failed."
+        if isinstance(error_payload, dict):
+            base_description = error_payload.get("description")
+            details = error_payload.get("errors")
+
+            if isinstance(base_description, str) and base_description.strip():
+                message = base_description.strip()
+
+            if isinstance(details, list):
+                detail_messages: list[str] = []
+                for item in details:
+                    if not isinstance(item, dict):
+                        continue
+
+                    detail_description = item.get("description")
+                    context = item.get("context")
+
+                    if isinstance(detail_description, str) and detail_description.strip():
+                        if isinstance(context, dict):
+                            attribute = context.get("attribute")
+                            if isinstance(attribute, str) and attribute.strip():
+                                detail_messages.append(f"{detail_description} (attribute: {attribute})")
+                            else:
+                                detail_messages.append(detail_description)
+                        else:
+                            detail_messages.append(detail_description)
+
+                if detail_messages:
+                    message = f"{message}: {'; '.join(detail_messages)}"
 
         raise ValueError(message)
