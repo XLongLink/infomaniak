@@ -30,7 +30,9 @@ class AsyncBaseClient(RootClient):
         path: str,
         **kwargs: Any,
     ) -> httpx.Response:
-        return await self._client.request(method, path, **kwargs)
+        response = await self._client.request(method, path, **kwargs)
+        self._raise_for_api_error(response)
+        return response
 
     async def _request(
         self,
