@@ -1,47 +1,55 @@
 # Cloud Projects
 
-The `cloud.projects` resource manages Public Cloud projects for a specific Public Cloud account.
+The `cloud.projects` resource manages Public Cloud projects.
 
 ## Create Project
 
 - `public_cloud_id`: Unique identifier of the Public Cloud account.
-- `project_name`: Name to assign to the new project.
-- `user_password`: Password for the default project user. It must satisfy the Public Cloud password policy.
+- `project_name`: Name for the new project.
+- `user_password`: Password for the default project user.
 - `user_description`: Optional description for the default project user.
 - `user_email`: Optional email for the default project user.
 
-**returns:** `CreatePublicCloudProjectResponse` with the asynchronous creation action metadata.
-
 ```py
 from infomaniak import Client
+from infomaniak.models.cloud import CreatePublicCloudProjectResponse
 
-client = Client(token="YOUR_TOKEN")
-created = client.cloud.projects.create(
+client = Client(token="<token>")
+created: CreatePublicCloudProjectResponse = client.cloud.projects.create(
     public_cloud_id=64258,
     project_name="MyProject",
     user_password="Example123",
 )
 ```
 
+`CreatePublicCloudProjectResponse`:
+
+- `data`: Created project action payload.
+- `result`: API operation status.
+
 ## Create Project with Invitation
 
 - `public_cloud_id`: Unique identifier of the Public Cloud account.
-- `project_name`: Name to assign to the new project.
-- `user_email`: Email address that will receive the project invitation.
+- `project_name`: Name for the new project.
+- `user_email`: Email address that receives the invitation.
 - `user_description`: Optional description for the invited user.
-
-**returns:** `PublicCloudProjectInvitationResponse` with invitation details and state.
 
 ```py
 from infomaniak import Client
+from infomaniak.models.cloud import PublicCloudProjectInvitationResponse
 
-client = Client(token="YOUR_TOKEN")
-invited = client.cloud.projects.create_with_invitation(
+client = Client(token="<token>")
+invited: PublicCloudProjectInvitationResponse = client.cloud.projects.create_with_invitation(
     public_cloud_id=64258,
     project_name="MyProject",
     user_email="user@example.com",
 )
 ```
+
+`PublicCloudProjectInvitationResponse`:
+
+- `data`: Invitation payload.
+- `result`: API operation status.
 
 ## Update Project
 
@@ -49,64 +57,82 @@ invited = client.cloud.projects.create_with_invitation(
 - `public_cloud_project_id`: Unique identifier of the project to update.
 - `name`: New project name (maximum `250` characters).
 
-**returns:** `PublicCloudProjectAsyncActionResponse` with the asynchronous update action metadata.
-
 ```py
 from infomaniak import Client
+from infomaniak.models.cloud import PublicCloudProjectAsyncActionResponse
 
-client = Client(token="YOUR_TOKEN")
-updated = client.cloud.projects.update(
+client = Client(token="<token>")
+updated: PublicCloudProjectAsyncActionResponse = client.cloud.projects.update(
     public_cloud_id=64258,
     public_cloud_project_id=25454,
     name="RenamedProject",
 )
 ```
 
+`PublicCloudProjectAsyncActionResponse`:
+
+- `data`: Asynchronous action payload.
+- `result`: API operation status.
+
 ## Delete Project
 
 - `public_cloud_id`: Unique identifier of the Public Cloud account.
 - `public_cloud_project_id`: Unique identifier of the project to delete.
 
-**returns:** `PublicCloudProjectAsyncActionResponse` with the asynchronous deletion action metadata.
-
 ```py
 from infomaniak import Client
+from infomaniak.models.cloud import PublicCloudProjectAsyncActionResponse
 
-client = Client(token="YOUR_TOKEN")
-removed = client.cloud.projects.delete(
+client = Client(token="<token>")
+removed: PublicCloudProjectAsyncActionResponse = client.cloud.projects.delete(
     public_cloud_id=64258,
     public_cloud_project_id=25454,
 )
 ```
 
+`PublicCloudProjectAsyncActionResponse`:
+
+- `data`: Asynchronous action payload.
+- `result`: API operation status.
+
 ## List Projects
 
 - `public_cloud_id`: Unique identifier of the Public Cloud account.
-- `with_`: Optional extra response expansions requested from the API.
-
-**returns:** `PublicCloudProjectListResponse` containing all matching projects.
+- `with_`: Optional response expansions.
 
 ```py
 from infomaniak import Client
+from infomaniak.models.cloud import PublicCloudProjectListResponse
 
-client = Client(token="YOUR_TOKEN")
-projects = client.cloud.projects.list(public_cloud_id=64258)
+client = Client(token="<token>")
+projects: PublicCloudProjectListResponse = client.cloud.projects.list(public_cloud_id=64258)
 ```
+
+`PublicCloudProjectListResponse`:
+
+- `data`: List of projects.
+- `result`: API operation status.
 
 ## Get Project
 
 - `public_cloud_id`: Unique identifier of the Public Cloud account.
 - `public_cloud_project_id`: Unique identifier of the project to retrieve.
-- `with_`: Optional extra response expansions requested from the API.
-
-**returns:** `PublicCloudProject` with full details for the requested project.
+- `with_`: Optional response expansions.
 
 ```py
 from infomaniak import Client
+from infomaniak.models.cloud import PublicCloudProject
 
-client = Client(token="YOUR_TOKEN")
-project = client.cloud.projects.get(
+client = Client(token="<token>")
+project: PublicCloudProject = client.cloud.projects.get(
     public_cloud_id=64258,
     public_cloud_project_id=25454,
 )
 ```
+
+`PublicCloudProject`:
+
+- `id`: Project identifier.
+- `name`: Project name.
+- `status`: Project status.
+- `region`: Project region.

@@ -2,25 +2,77 @@
 
 The `cloud.kubernetes.pools` resource manages worker node pools in a Kubernetes cluster.
 
-## Methods
+## List Pools
 
-- `cloud.kubernetes.pools.list(...)`
-- `cloud.kubernetes.pools.create(...)`
-- `cloud.kubernetes.pools.get(...)`
-- `cloud.kubernetes.pools.update(...)`
-- `cloud.kubernetes.pools.delete(...)`
-
-::: warning
-`cloud.kubernetes.pools` endpoints are declared in the SDK but not implemented yet.
-:::
-
-## Usage
+- No parameters are currently available in the SDK implementation.
 
 ```py
 from infomaniak import Client
 
-client = Client(token="YOUR_TOKEN")
-
-# Not implemented yet:
-# pools = client.cloud.kubernetes.pools.list(...)
+client = Client(token="<token>")
+pools: None = client.cloud.kubernetes.pools.list()
 ```
+
+`None`:
+
+- No return object is currently available in the SDK implementation.
+
+## Create Pool
+
+- No parameters are currently available in the SDK implementation.
+
+```py
+from infomaniak import Client
+
+client = Client(token="<token>")
+created: None = client.cloud.kubernetes.pools.create()
+```
+
+`None`:
+
+- No return object is currently available in the SDK implementation.
+
+## Get Pool
+
+- No parameters are currently available in the SDK implementation.
+
+```py
+from infomaniak import Client
+
+client = Client(token="<token>")
+pool: None = client.cloud.kubernetes.pools.get()
+```
+
+`None`:
+
+- No return object is currently available in the SDK implementation.
+
+## Update Pool
+
+- No parameters are currently available in the SDK implementation.
+
+```py
+from infomaniak import Client
+
+client = Client(token="<token>")
+updated: None = client.cloud.kubernetes.pools.update()
+```
+
+`None`:
+
+- No return object is currently available in the SDK implementation.
+
+## Delete Pool
+
+- No parameters are currently available in the SDK implementation.
+
+```py
+from infomaniak import Client
+
+client = Client(token="<token>")
+deleted: None = client.cloud.kubernetes.pools.delete()
+```
+
+`None`:
+
+- No return object is currently available in the SDK implementation.
