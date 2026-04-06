@@ -24,6 +24,19 @@ class Actions(Resouce):
         )
         return [parse(Action, item) for item in response.json()["data"]]
 
+    def get(self, action_id: int) -> Action:
+        """
+        Retrieve one core action by its unique identifier.
+
+        Args:
+            action_id: The unique identifier of the action to request.
+
+        Returns:
+            Action: The requested action.
+        """
+        response = self._client.get(f"/1/actions/{action_id}")
+        return parse(Action, response.json()["data"])
+
 
 class AsyncActions(AsyncResource):
     """Async core actions endpoints."""
@@ -43,3 +56,16 @@ class AsyncActions(AsyncResource):
             params=query_params(search=search),
         )
         return [parse(Action, item) for item in response.json()["data"]]
+
+    async def get(self, action_id: int) -> Action:
+        """
+        Retrieve one core action by its unique identifier.
+
+        Args:
+            action_id: The unique identifier of the action to request.
+
+        Returns:
+            Action: The requested action.
+        """
+        response = await self._client.get(f"/1/actions/{action_id}")
+        return parse(Action, response.json()["data"])
