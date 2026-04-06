@@ -9,6 +9,31 @@ ChkOrderBy = Literal["code", "url", "created_at", "expiration_date"]
 ChkOrderDirection = Literal["ASC", "DESC"]
 
 
+def _parse_short_url_response(payload: dict) -> ChkShortUrlResponse:
+    """
+    Parse a short URL write response, tolerating inconsistent API envelopes.
+
+    Args:
+        payload: Raw JSON payload returned by the API.
+
+    Returns:
+        ChkShortUrlResponse: Normalized response containing the operation result and short URL data.
+    """
+    if "result" in payload and "data" in payload:
+        return parse(ChkShortUrlResponse, payload)
+
+    if "data" in payload and isinstance(payload["data"], dict):
+        return ChkShortUrlResponse(
+            result="success",
+            data=parse(ChkShortUrl, payload["data"]),
+        )
+
+    return ChkShortUrlResponse(
+        result="success",
+        data=parse(ChkShortUrl, payload),
+    )
+
+
 class Chk(Resouce):
     """CHK URL shortener endpoints."""
 
@@ -33,7 +58,7 @@ class Chk(Resouce):
             payload["expiration_date"] = expiration_date
 
         response = self._client.post("/1/url-shortener", json=payload)
-        return parse(ChkShortUrlResponse, response.json())
+        return _parse_short_url_response(response.json())
 
     def list(
         self,
@@ -99,7 +124,7 @@ class Chk(Resouce):
             f"/1/url-shortener/{short_url_code}",
             json=payload,
         )
-        return parse(ChkShortUrlResponse, response.json())
+        return _parse_short_url_response(response.json())
 
     def quota(self) -> ChkQuota:
         """
@@ -139,7 +164,7 @@ class AsyncChk(AsyncResource):
             payload["expiration_date"] = expiration_date
 
         response = await self._client.post("/1/url-shortener", json=payload)
-        return parse(ChkShortUrlResponse, response.json())
+        return _parse_short_url_response(response.json())
 
     async def list(
         self,
@@ -205,7 +230,7 @@ class AsyncChk(AsyncResource):
             f"/1/url-shortener/{short_url_code}",
             json=payload,
         )
-        return parse(ChkShortUrlResponse, response.json())
+        return _parse_short_url_response(response.json())
 
     async def quota(self) -> ChkQuota:
         """

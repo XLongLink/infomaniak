@@ -1,4 +1,4 @@
-# CHK
+# URL shortener 
 
 The `chk` resource lets you create, list, and update short URLs, and inspect your shortener quota.
 

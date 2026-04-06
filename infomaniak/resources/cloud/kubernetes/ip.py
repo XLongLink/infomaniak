@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from infomaniak.resource import Resouce, AsyncResource
 
 
