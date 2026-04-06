@@ -30,7 +30,9 @@ class BaseClient(RootClient):
         path: str,
         **kwargs: Any,
     ) -> httpx.Response:
-        return self._client.request(method, path, **kwargs)
+        response = self._client.request(method, path, **kwargs)
+        self._raise_for_api_error(response)
+        return response
 
     def _request(
         self,
